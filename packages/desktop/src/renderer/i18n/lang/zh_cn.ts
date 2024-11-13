@@ -200,9 +200,9 @@ N: (13)(24)(35)(46) | (57)(61e)(72e)(1e6) | (75)(64)(53)(42) | (31)(27d) 1 - |||
 					"b": "B",
 					"kunb": "坤B",
 					"kb": "KB",
-					"kkunb": "K坤B",
+					"kkunb": "坤KB",
 					"mb": "MB",
-					"mkunb": "M坤B"
+					"mkunb": "坤MB"
 				}
 			},
 			"showProcessTime": {

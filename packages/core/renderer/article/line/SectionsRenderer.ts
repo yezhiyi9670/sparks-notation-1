@@ -52,7 +52,7 @@ export class SectionsRenderer {
 			return 'hsl(0deg, 0%, 60%, 80%)'
 		}
 
-		const tuneValue = ([-1, 0, 2, 4, 5, 7, 9, 11][+char] + finalDelta) * 1 % 12
+		const tuneValue = (([-1, 0, 2, 4, 5, 7, 9, 11][+char] + finalDelta) % 12 + 12) % 12
 		// const hue = tuneValue * 30
 		// const lightnessMid = 60
 		// const lightness = lightnessMid - 20 * Math.cos((hue - 60) * Math.PI / 180) + 7 * Math.cos((hue + 20) * Math.PI / 180)
