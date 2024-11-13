@@ -1,5 +1,7 @@
 <img src="./public/static/logo/logo.png" align="right" width="128" height="128"/>
 
+> ⚠ **此分支是旧版的 Sparks NMN Desktop 代码，现已弃用。**
+
 # Sparks NMN (Desktop)
 
 **简体中文** | [English](./README-en.md)

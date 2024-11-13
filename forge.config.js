@@ -32,6 +32,9 @@ module.exports = {
 		{
 			name: '@electron-forge/maker-zip',
 		},
+		{
+			name: '@pengx17/electron-forge-maker-appimage',
+		},
 		// {
 		// 	name: '@electron-forge/maker-deb',
 		// 	config: {},

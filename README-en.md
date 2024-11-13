@@ -1,5 +1,7 @@
 <img src="./public/static/logo/logo.png" align="right" width="128" height="128"/>
 
+> ⚠ **This branch contains legacy Sparks NMN Desktop code, and is now deprecated.**
+
 # Sparks NMN (Desktop)
 
 [简体中文](./README-en.md) | **English**
