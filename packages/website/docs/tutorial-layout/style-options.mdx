@@ -1,0 +1,184 @@
+---
+sidebar_position: 2
+description: 一些零碎的样式选项
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/renderprops'
+
+# 文档缩放与样式选项 {#style-options}
+
+除了字体、间距等系统性的渲染属性外，Sparks NMN 中还存在一些零碎的选项，它们主要控制一些细节样式，因而被称为**样式选项**。
+
+## 所有样式选项 {#all-style-options}
+
+<Cr.RenderPropsReference filters={['misc', 'offset']} />
+
+- `boolean` 类型的取值为 `true`(开) 或 `false`(关)。
+- 所有间距、边距、宽度选项的单位均为 `em`，表示文档页面宽度的 $\frac{1}{122}$。
+
+## 样式选项介绍 {#style-options-intro}
+
+### 调试模式 `debug` {#debug}
+
+<Cr.RenderPropType name='debug' />
+
+调试模式开启时，显示结果中将会包含一些错误提示信息，目前包括[节拍校验](/docs/tutorial-basics/complicated-beats#time-validation)以及[迭代数冲突校验](/docs/tutorial-structure/understanding-iter#iter-conflict-check)的色块。
+
+<C.RenderPropsDemo efRange={1} values={['true', 'false']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: debug=###
+====
+N: 1 1 1 (1) | 1 1 2 11 | 1 1 3 /|| 1 2 1 - |||
+`
+} />
+
+### 小节序号 `sectionorder` {#sectionorder}
+
+<Cr.RenderPropType name='sectionorder' />
+
+控制行首小节序号的显示格式。
+
+<C.RenderPropsDemo efRange={[1,5]} values={['paren','bracket','plain','none']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: sectionorder=###
+====
+N: 1. ((12)) 3. ((23)) | (2(32~))(21) 2. ((17d)) | 1. ((17d)) (1(23~))(35) | 5 - - 0 |
+---
+N: 6d. ((6d3)) (2(23~))(34) | (5.(3~))(37d) 1 - | 4. ((32)) (2(17d~))(7d2) | 1 - - 0 |||
+`
+} />
+
+### 文档整体缩放 `scale` {#scale}
+
+<Cr.RenderPropType name='scale' />
+
+控制文档的整体缩放，以适应特殊宽度的纸张。
+
+如果你的目的是在一般电脑屏幕上显示，或者在 A4 纸上打印，你可能不需要用到这个选项。
+
+<C.RenderPropsDemo efRange={[1,5]} values={['1','0.8','1.2']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: scale=###
+====
+N: 1. ((12)) 3. ((23)) | (2(32~))(21) 2. ((17d)) | 1. ((17d)) (1(23~))(35) | 5 - - 0 |
+---
+N: 6d. ((6d3)) (2(23~))(34) | (5.(3~))(37d) 1 - | 4. ((32)) (2(17d~))(7d2) | 1 - - 0 |||
+`
+} />
+
+### 额外左边距 `_left` {#_left}
+
+<Cr.RenderPropType name='gutter_left' />
+
+<Cr.RenderPropType name='connector_left' />
+
+前者控制每行第一个小节的左端与左侧装订线之间的距离，后者控制连谱号与左侧装订线之间的距离。
+
+<C.RenderPropsDemo efRange={1} values={['1, 0', '0, 0', '1, 5']} children={
+`P: 1=? 4/4
+// highlight-next-line
+Rp: gutter_left=### connector_left=###
+---
+N["M"]: (3e)3e (3e)(3e3e)(3e3e) | 3e (3e2e)(4e2e) 3e | 3e (4e2e) 3e 3e | 3e 4e 3e[brk] 0 |
+N["Ac"]: (6.6.6)(63) 6 | 4. (3) 2 3 | 6. (3) 4 6 | (6)6 (6)(22)(33) |
+`
+} />
+
+### 行首小节线 `left_separator` {#left_separator}
+
+<Cr.RenderPropType name='left_separator' />
+
+控制每行每声部第一个小节的开头是否显示一条小节线。这条小节线一般被认为是多余的，默认也是不显示的。
+
+<C.RenderPropsDemo efRange={[1,4]} values={['false', 'true']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: left_separator=###
+====
+Frp: n=3
+N: 3 - (54)(34) | (4.(3~))(32) 6d - | 4 - (43)(24) |
+---
+B:
+N: 3 - - - | 3 - (43)(23) | 4. (4) 4 - | omit
+N: 1 - - - | 1 - (21)(7d1) | 6d. (6d) 1 - | omit
+`
+} />
+
+### 弱化音符变灰 `grayout` {#grayout}
+
+<Cr.RenderPropType name='grayout' />
+
+控制是否降低被延长连音线弱化的音符的不透明度。这是一种对音乐初学者友好的视觉提示。
+
+<C.RenderPropsDemo efRange={[1,5]} values={['false', 'true']} children={
+`P: 1=F 4/4
+// highlight-next-line
+Rp: grayout=###
+====
+N: 0 5 (3) 5 (6~) | (63) 3. (2) (12) | 3 (11~) 1 - | (07) (76) (0) 3 (0) |
+---
+N: (05) (55) (3) 5 (6~) | (63) 3 (02) (12) | 3 (53~) 3 - | (01e) (1e6) (1e6) (1e2e) |
+`
+} />
+
+### 始终显示声部名称 `explicitmarkers` {#explicitmarkers}
+
+<Cr.RenderPropType name='explicitmarkers' />
+
+控制是否始终显示声部名称，即使声部构成与上一行一致。
+
+<C.RenderPropsDemo efRange={[1,6]} values={['true', 'false']} canLoad children={
+`P: 1=? 3/4
+// highlight-next-line
+Rp: n=5 explicitmarkers=###
+====
+N["P1"]: - - (11) | 6 - (66) | 4 - 6 | (56)(54)(34) | 5 - (65) |
+N["P2"]: - - (11) | 4 - (44) | 1 - 4 | (34)(32)(12) | 3 - (43) |
+---
+N["P1"]: 4 - (54) | 3 - (43) | (23)(21)(7d1) | 2 - 0 |
+N["P2"]: 2 - (32) | 1 - (21) | (7d1)(7d6d)(7d1) | 2 - 0 |
+`
+} />
+
+### 歌词行编号间距 `offset_lyrics_iter` {#offset_lyrics_iter}
+
+<Cr.RenderPropType name='offset_lyrics_iter' />
+
+控制歌词行的编号与歌词行第一个字之间的距离。
+
+<C.RenderPropsDemo efRange={1} values={['1.5', '0.6']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: offset_lyrics_iter=###
+====
+N: ||: 3 1 (33) 1 | (33) (56) 5 - | (66) (65) (44) 4 | (23) (21) 2 - |
+Lc[1.]: 门前大桥下，游过一群鸭。快来快来数一数，二四六七八。
+Lc[2.]: 赶鸭老爷爷，胡子白花花。唱呀唱着家乡戏，还会说笑话。
+`
+} />
+
+### 小节内边距 `offset_section_boundary` {#offset_section_boundary}
+
+<Cr.RenderPropType name='offset_section_boundary' />
+
+控制小节的水平方向内边距。由于还有时值空间的存在，边距设置为 0 并不会导致音符紧贴小节线。
+
+注意：布局空间不足的情况下算法会自动尝试占据边距空间来完成布局。如果布局仍然失败，减小边距不能解决问题。正确的做法是[调节小节宽度](/docs/tutorial-layout/section-lining#width-weight)。
+
+<C.RenderPropsDemo efRange={1} values={['1', '0']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: offset_section_boundary=###
+====
+N: ||: 3 1 (33) 1 | (33) (56) 5 - | (66) (65) (44) 4 | (23) (21) 2 - |
+Lc[1.]: 门前大桥下，游过一群鸭。快来快来数一数，二四六七八。
+Lc[2.]: 赶鸭老爷爷，胡子白花花。唱呀唱着家乡戏，还会说笑话。
+`
+} />
+
+## 接下来... {#next}
+
+接下来我们介绍如何在 Sparks NMN 中指定页面大小。指定页面大小后，Sparks NMN 将允许我们添加页脚并自动生成页码，这对需要打印的文档显然是比较重要的。

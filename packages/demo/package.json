@@ -1,0 +1,35 @@
+{
+  "name": "@sparks-notation/demo",
+  "version": "0.0.0",
+  "description": "A natural text format for composing numbered music notation or guitar tabulate scores, formerly known as Sparks NMN.",
+  "author": "yezhiyi9670 <yezhiyi9670@sparks-lab.art>",
+  "license": "Apache-2.0",
+  "type": "module",
+  "dependencies": {
+    "@sparks-notation/core": "workspace:^",
+    "@sparks-notation/react-editor": "workspace:^",
+    "@sparks-notation/util": "workspace:^",
+    "@types/jquery": "^3.5.32",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "jquery": "^3.7.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-jss": "^10.10.0",
+    "vorbis-encoder-js": "^1.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^3.7.1",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vite-plugin-static-copy": "^2.1.0"
+  },
+  "scripts": {
+    "dev": "vite --port 8527",
+    "build": "tsc -b && vite build --base=./",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  }
+}

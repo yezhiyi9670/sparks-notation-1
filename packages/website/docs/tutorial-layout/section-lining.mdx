@@ -1,0 +1,823 @@
+---
+sidebar_position: 4
+description: 控制旋律片段的分行位置，并调整小节宽度和边距
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/renderprops'
+
+# 分行、小节宽度与边距 {#section-lining}
+
+默认情况下，Sparks NMN 总是采取四小节一行且每个小节等宽的排版方式，有时候，我们可能需要调整这些规则；当小节中连音线和三连音记号等内容过多时，它们可能与上方标记的文本（主要是小节线属性）出现重叠，通过添加上边距可以修复这一问题。
+
+本节将介绍这些与精细控制乐谱排版有关的内容。为了更加具体一些，我们修改这份糟糕的《Frozen Heart》乐谱，使其变得可读且优雅。
+
+<C.RealtimeScore children={
+`Dp: 电影《冰雪奇缘》曲集 - 01
+Dt: Frozen Heart
+Dv: Version 20220229
+P: 1=%C 2/4 qpm=78 有多个拍号拍速
+Rp: grayout=true left_separator=false \\
+    font_lyrics=Roman,CommonSerif/600/0.96 font_annotation1=华文行楷/400/1.1
+====
+N: /{2/4} (6d.(7d))(12) | (34)(32) | (3#5)(63) | 3 3~ | 3 (03) |
+A: r"坚定而从容地"
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+N: (#42)(31) | (27d)(1(6d5d)) | (6d5d)((6d^5d^3d^5d^)) | 6d 6d~ | 6d (06d) |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning. So
+---
+N: (3(3#5)) 3 | (2.(3)) (20) | (3(3^#5^)) (37d) | (2(2^3^)) (20) |
+Lw: cut through the heart, cold and clear, strike for% love and strike for% fear.
+---
+N: (16d)(7d5d) | (6d4d)(3d0) | (3#5)(63) | 3. (1) | (27d) (6d5d) ||["B"]
+Lw: See the beau-ty sharp and shear, split the ice a-part, and break the fro-zen
+---
+N: /{qpm=97, 4/4} 6d 0 X (0(XX)) | X (0(XX)) X 0 | X 0 X (0(XX)) | X (0(XX)) X 0 |
+A: r"坚定而有力地"
+Lw: heart. Ha! Watch your step! let it go! Hup! Ha! Watch your step! Let it go!
+---
+N: ((XXX0)) ((XXX0)) (XX) X | (X(7d7d)) ((7d7d)1) (7d7d) 7d |
+Lw: Beau-ti-ful, po-wer-ful, dang'-rous, cold, ice has the ma-gic can't be con-trolled.
+---
+N: ((XX)X) (X0) ((XX)X) (X0) | ((XXXX)) (XX) (X[brk]0) X[brk] | (3.(#4)) (#56) (71e) 2e ||["C"]
+Lw: stron-ger than one, stron-ger than ten, stron-ger than a hun-dred men! Ha!
+---
+N: (6d.(7d))(12)(34)(32) | (3#5)(63)3 (33) |
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+N: (#42)(31)(27d)(1(66)) | (66)((6^5^3^5^))6 6 |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning.
+---
+N: (3(3#5)) 3 (2.(3)) (20) | (3(3^#5^))(37d) (2(2^3^)) (2(0.(2))) |
+Lw: Cut through the heart, cold and clear, strike for% love and strike for% fear. There's
+---
+N: (16d)(7d#5d)(6d4d)3d | (3#5)(63) 3. (1) |
+Lw: beau-ty and there's dan-ger here. Split the ice a-part. Be-
+---
+N: /{qpm=87, "渐慢"} 2 7d 6d 5d |{qpm=78} 6d[ext] - - - |||
+Lw: ware the fro-zen heart_{0}
+`
+} />
+
+## 控制分行 {#lining}
+
+显然，上面的乐谱后半部分歌词出现了严重的重叠，这是因为小节宽度太小，自动布局也无能为力了。增大小节宽度的一个方法就是减少每行的小节数。
+
+### 每行小节数 {#n}
+
+通过渲染属性 `n` 可以指定此文档或此章节中的每行小节数。
+
+<Cr.RenderPropsReference filters={['n']} />
+
+例如，对上面的乐谱设置 `n=3`，
+
+<C.RealtimeScore inverse children={
+`// preserve-start
+Dp: 电影《冰雪奇缘》曲集 - 01
+Dt: Frozen Heart
+Dv: Version 20220229
+P: 1=%C 2/4 qpm=78 有多个拍号拍速
+// highlight-next-line
+Rp: n=3 grayout=true left_separator=false \\
+    font_lyrics=Roman,CommonSerif/600/0.96 font_annotation1=华文行楷/400/1.1
+====
+N: /{2/4} (6d.(7d))(12) | (34)(32) | (3#5)(63) | 3 3~ | 3 (03) |
+A: r"坚定而从容地"
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+// preserve-end
+---
+N: (#42)(31) | (27d)(1(6d5d)) | (6d5d)((6d^5d^3d^5d^)) | 6d 6d~ | 6d (06d) |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning. So
+---
+N: (3(3#5)) 3 | (2.(3)) (20) | (3(3^#5^)) (37d) | (2(2^3^)) (20) |
+Lw: cut through the heart, cold and clear, strike for% love and strike for% fear.
+---
+N: (16d)(7d5d) | (6d4d)(3d0) | (3#5)(63) | 3. (1) | (27d) (6d5d) ||["B"]
+Lw: See the beau-ty sharp and shear, split the ice a-part, and break the fro-zen
+---
+N: /{qpm=97, 4/4} 6d 0 X (0(XX)) | X (0(XX)) X 0 | X 0 X (0(XX)) | X (0(XX)) X 0 |
+A: r"坚定而有力地"
+Lw: heart. Ha! Watch your step! let it go! Hup! Ha! Watch your step! Let it go!
+---
+N: ((XXX0)) ((XXX0)) (XX) X | (X(7d7d)) ((7d7d)1) (7d7d) 7d |
+Lw: Beau-ti-ful, po-wer-ful, dang'-rous, cold, ice has the ma-gic can't be con-trolled.
+---
+N: ((XX)X) (X0) ((XX)X) (X0) | ((XXXX)) (XX) (X[brk]0) X[brk] | (3.(#4)) (#56) (71e) 2e ||["C"]
+Lw: stron-ger than one, stron-ger than ten, stron-ger than a hun-dred men! Ha!
+---
+N: (6d.(7d))(12)(34)(32) | (3#5)(63)3 (33) |
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+N: (#42)(31)(27d)(1(66)) | (66)((6^5^3^5^))6 6 |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning.
+---
+N: (3(3#5)) 3 (2.(3)) (20) | (3(3^#5^))(37d) (2(2^3^)) (2(0.(2))) |
+Lw: Cut through the heart, cold and clear, strike for% love and strike for% fear. There's
+---
+N: (16d)(7d#5d)(6d4d)3d | (3#5)(63) 3. (1) |
+Lw: beau-ty and there's dan-ger here. Split the ice a-part. Be-
+---
+N: /{qpm=87, "渐慢"} 2 7d 6d 5d |{qpm=78} 6d[ext] - - - |||
+Lw: ware the fro-zen heart_{0}
+`
+} />
+
+然而这并没有很好地解决问题。现在，此乐谱的前一半变得过于空旷，而后一半仍然存在歌词重叠的问题。我们需要更加准确地为每一行指定小节数。
+
+### 控制某一行的小节数 {#local-n}
+
+在碎片开头添加一行 `Frp: n=<小节数>`（`Frp` 是 `FragmentRenderProps` 的缩写），即可指定碎片的每行小节数。显示时，一行的小节数取决于此行第一小节所在的碎片。
+
+这样，就可以精细地调控上述乐谱，获得较好的显示效果。
+
+<C.RealtimeScore inverse children={
+`Dp: 电影《冰雪奇缘》曲集 - 01
+Dt: Frozen Heart
+Dv: Version 20220229
+P: 1=%C 2/4 qpm=78 有多个拍号拍速
+// highlight-next-line
+Rp: n=4 grayout=true left_separator=false \\
+    font_lyrics=Roman,CommonSerif/600/0.96 font_annotation1=华文行楷/400/1.1
+====
+// highlight-next-line
+Frp: n=5
+N: /{2/4} (6d.(7d))(12) | (34)(32) | (3#5)(63) | 3 3~ | 3 (03) |
+A: r"坚定而从容地"
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+// highlight-next-line
+Frp: n=5
+N: (#42)(31) | (27d)(1(6d5d)) | (6d5d)((6d^5d^3d^5d^)) | 6d 6d~ | 6d (06d) |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning. So
+---
+N: (3(3#5)) 3 | (2.(3)) (20) | (3(3^#5^)) (37d) | (2(2^3^)) (20) |
+Lw: cut through the heart, cold and clear, strike for% love and strike for% fear.
+---
+// highlight-next-line
+Frp: n=5
+N: (16d)(7d5d) | (6d4d)(3d0) | (3#5)(63) | 3. (1) | (27d) (6d5d) ||["B"]
+Lw: See the beau-ty sharp and shear, split the ice a-part, and break the fro-zen
+---
+N: /{qpm=97, 4/4} 6d 0 X (0(XX)) | X (0(XX)) X 0 | X 0 X (0(XX)) | X (0(XX)) X 0 |
+A: r"坚定而有力地"
+Lw: heart. Ha! Watch your step! let it go! Hup! Ha! Watch your step! Let it go!
+---
+// highlight-next-line
+Frp: n=2
+N: ((XXX0)) ((XXX0)) (XX) X | (X(7d7d)) ((7d7d)1) (7d7d) 7d |
+Lw: Beau-ti-ful, po-wer-ful, dang'-rous, cold, ice has the ma-gic can't be con-trolled.
+---
+// highlight-next-line
+Frp: n=3
+N: ((XX)X) (X0) ((XX)X) (X0) | ((XXXX)) (XX) (X[brk]0) X[brk] | (3.(#4)) (#56) (71e) 2e ||["C"]
+Lw: stron-ger than one, stron-ger than ten, stron-ger than a hun-dred men! Ha!
+---
+// highlight-next-line
+Frp: n=3
+N: (6d.(7d))(12)(34)(32) | (3#5)(63)3 (33) |
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+// highlight-next-line
+Frp: n=2
+N: (#42)(31)(27d)(1(66)) | (66)((6^5^3^5^))6 6 |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning.
+---
+// highlight-next-line
+Frp: n=2
+N: (3(3#5)) 3 (2.(3)) (20) | (3(3^#5^))(37d) (2(2^3^)) (2(0.(2))) |
+Lw: Cut through the heart, cold and clear, strike for% love and strike for% fear. There's
+---
+// highlight-next-line
+Frp: n=3
+N: (16d)(7d#5d)(6d4d)3d | (3#5)(63) 3. (1) |
+Lw: beau-ty and there's dan-ger here. Split the ice a-part. Be-
+---
+N: /{qpm=87, "渐慢"} 2 7d 6d 5d |{qpm=78} 6d[ext] - - - |||
+Lw: ware the fro-zen heart_{0}
+`
+} />
+
+目前情况已经好多了。尽管还是有少数小节内出现了歌词重叠的情况，但是重叠都非常轻微。这时就不应该继续调小该行的小节数了，而是应该调节某一个小节的宽度（权重）。我们稍后将进行这一操作。
+
+:::caution 常见错误
+
+`Frp:` 开头的行形式上是碎片的渲染属性，但是实际上只有 `n` 一个属性是有效的。目前这是有意的。
+
+:::
+
+:::tip 提示
+
+在保证可读性的情况下，也可以通过调节歌词字体大小来解决歌词重叠问题。详见[自定义字体](/docs/tutorial-layout/custom-fonts)。
+
+:::
+
+### 乐句对齐原则 {#lrcline-aligning}
+
+观察上面调整之后的乐谱。其前四行都是 $\frac{2}{4}$ 拍号，音符密度也相差无几，为什么一、二、四两行是 5 个小节，而第三行是 4 个小节呢？这并不是随便乱调的，而是为了使乐谱具有更好的空间感。
+
+- 首先，前两行其实是歌曲的前两句。它们（和后面 $\frac{4}{4}$ 拍的部分相比）都多出了一个两拍的小节，故设置为每行 5 小节。
+- 第三行是第三乐句，只有 4 小节。
+- 第四乐句有三个分句，同样是 5 小节，并且随后紧跟分段线，因此这一行也是 5 小节。
+
+对于乐句相对规整的旋律或歌曲，在不导致布局变得突兀的情况下，应当尽可能让每个乐句的第一个强拍位于各自行中的相同位置。这就是乐句对齐原则。
+
+## 调整小节尺寸 {#adjust}
+
+剩下的任务，是调节个别小节的宽度，解决歌词重叠的问题。
+
+### 宽度权重 {#width-weight}
+
+默认情况下，Sparks NMN 分配小节宽度时使用均分原则。因此，你并不能直接调整每个小节的宽度。相反，你调节的是每个小节的**宽度权重**——权重高的小节分得的宽度大，权重低的小节分得的宽度小，小节宽度的比例等于权重的比例。小节的默认宽度权重是 1。
+
+调节小节宽度，需要在小节前的小节线上添加**后置属性**，写作 `w=<权重>`。这个属性除调节宽度外没有其他显示效果。
+
+对于上面的乐谱，可以做这些调整：
+
+- 第 8 小节宽度略微调大。
+- 第 20 小节宽度略微调大。
+- 第 28 小节宽度减小，使得 26、27 的宽度增大。
+- 第 31 小节宽度略微增大。
+
+:::info 提示
+
+再次提醒，如果你觉得在代码中定位某个小节很困难，请尝试在预览中用鼠标点击该小节中的音符。
+
+:::
+
+<C.RealtimeScore inverse children={
+`Dp: 电影《冰雪奇缘》曲集 - 01
+Dt: Frozen Heart
+Dv: Version 20220229
+P: 1=%C 2/4 qpm=78 有多个拍号拍速
+Rp: n=4 grayout=true left_separator=false \\
+    font_lyrics=Roman,CommonSerif/600/0.96 font_annotation1=华文行楷/400/1.1
+====
+Frp: n=5
+N: /{2/4} (6d.(7d))(12) | (34)(32) | (3#5)(63) | 3 3~ | 3 (03) |
+A: r"坚定而从容地"
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+Frp: n=5
+// highlight-next-line
+N: (#42)(31) |{w=1.1} (27d)(1(6d5d)) |{w=1.3} (6d5d)((6d^5d^3d^5d^)) | 6d 6d~ | 6d (06d) |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning. So
+---
+N: (3(3#5)) 3 | (2.(3)) (20) | (3(3^#5^)) (37d) | (2(2^3^)) (20) |
+Lw: cut through the heart, cold and clear, strike for% love and strike for% fear.
+---
+Frp: n=5
+N: (16d)(7d5d) | (6d4d)(3d0) | (3#5)(63) | 3. (1) | (27d) (6d5d) ||["B"]
+Lw: See the beau-ty sharp and shear, split the ice a-part, and break the fro-zen
+---
+// highlight-next-line
+N: /{qpm=97, 4/4, w=1.1} 6d 0 X (0(XX)) | X (0(XX)) X 0 | X 0 X (0(XX)) | X (0(XX)) X 0 |
+A: r"坚定而有力地"
+Lw: heart. Ha! Watch your step! let it go! Hup! Ha! Watch your step! Let it go!
+---
+Frp: n=2
+N: ((XXX0)) ((XXX0)) (XX) X | (X(7d7d)) ((7d7d)1) (7d7d) 7d |
+Lw: Beau-ti-ful, po-wer-ful, dang'-rous, cold, ice has the ma-gic can't be con-trolled.
+---
+Frp: n=3
+// highlight-next-line
+N: /{w=1.2} ((XX)X) (X0) ((XX)X) (X0) | ((XXXX)) (XX) (X[brk]0) X[brk] |{w=0.7} (3.(#4)) (#56) (71e) 2e ||["C"]
+Lw: stron-ger than one, stron-ger than ten, stron-ger than a hun-dred men! Ha!
+---
+Frp: n=3
+N: (6d.(7d))(12)(34)(32) | (3#5)(63)3 (33) |
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+Frp: n=2
+// highlight-next-line
+N: /{w=1.1} (#42)(31)(27d)(1(66)) | (66)((6^5^3^5^))6 6 |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning.
+---
+Frp: n=2
+N: (3(3#5)) 3 (2.(3)) (20) | (3(3^#5^))(37d) (2(2^3^)) (2(0.(2))) |
+Lw: Cut through the heart, cold and clear, strike for% love and strike for% fear. There's
+---
+Frp: n=3
+N: (16d)(7d#5d)(6d4d)3d | (3#5)(63) 3. (1) |
+Lw: beau-ty and there's dan-ger here. Split the ice a-part. Be-
+---
+N: /{qpm=87, "渐慢"} 2 7d 6d 5d |{qpm=78} 6d[ext] - - - |||
+Lw: ware the fro-zen heart_{0}
+`
+} />
+
+多声部乐谱中，要调整某一小节的宽度，只须在其中一个声部中调节即可。若多个声部的同一小节都指定了宽度权重，将选择最大的那个。
+
+### 上边距 {#top-margin}
+
+现在还有一个小问题——最后一小节的变速记号与自由延长符号或许太近了，稍微增加一点间距会更好。这样的调节可以通过指定小节上边距实现。
+
+上边距的调节方式与宽度权重类似，写法为 `t=<上边距>`，上边距以 `em` 为单位，表示页面总宽度的 $\frac{1}{122}$。
+
+<C.RealtimeScore efRange={36} children={
+`Dp: 电影《冰雪奇缘》曲集 - 01
+Dt: Frozen Heart
+Dv: Version 20220229
+P: 1=%C 2/4 qpm=78 有多个拍号拍速
+Rp: n=4 grayout=true left_separator=false \\
+    font_lyrics=Roman,CommonSerif/600/0.96 font_annotation1=华文行楷/400/1.1
+====
+Frp: n=5
+N: /{2/4} (6d.(7d))(12) | (34)(32) | (3#5)(63) | 3 3~ | 3 (03) |
+A: r"坚定而从容地"
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+Frp: n=5
+// highlight-next-line
+N: (#42)(31) |{w=1.1} (27d)(1(6d5d)) |{w=1.3} (6d5d)((6d^5d^3d^5d^)) | 6d 6d~ | 6d (06d) |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning. So
+---
+N: (3(3#5)) 3 | (2.(3)) (20) | (3(3^#5^)) (37d) | (2(2^3^)) (20) |
+Lw: cut through the heart, cold and clear, strike for% love and strike for% fear.
+---
+Frp: n=5
+N: (16d)(7d5d) | (6d4d)(3d0) | (3#5)(63) | 3. (1) | (27d) (6d5d) ||["B"]
+Lw: See the beau-ty sharp and shear, split the ice a-part, and break the fro-zen
+---
+// highlight-next-line
+N: /{qpm=97, 4/4, w=1.1} 6d 0 X (0(XX)) | X (0(XX)) X 0 | X 0 X (0(XX)) | X (0(XX)) X 0 |
+A: r"坚定而有力地"
+Lw: heart. Ha! Watch your step! let it go! Hup! Ha! Watch your step! Let it go!
+---
+Frp: n=2
+N: ((XXX0)) ((XXX0)) (XX) X | (X(7d7d)) ((7d7d)1) (7d7d) 7d |
+Lw: Beau-ti-ful, po-wer-ful, dang'-rous, cold, ice has the ma-gic can't be con-trolled.
+---
+Frp: n=3
+// highlight-next-line
+N: /{w=1.2} ((XX)X) (X0) ((XX)X) (X0) | ((XXXX)) (XX) (X[brk]0) X[brk] |{w=0.7} (3.(#4)) (#56) (71e) 2e ||["C"]
+Lw: stron-ger than one, stron-ger than ten, stron-ger than a hun-dred men! Ha!
+---
+Frp: n=3
+N: (6d.(7d))(12)(34)(32) | (3#5)(63)3 (33) |
+Lw: Born of cold and win-ter air and moun-tain rain com-bi-ning, this
+---
+Frp: n=2
+// highlight-next-line
+N: /{w=1.1} (#42)(31)(27d)(1(66)) | (66)((6^5^3^5^))6 6 |
+Lw: i-cy force both foul and fair has a fro-zen heart% worth% mi-ning.
+---
+Frp: n=2
+N: (3(3#5)) 3 (2.(3)) (20) | (3(3^#5^))(37d) (2(2^3^)) (2(0.(2))) |
+Lw: Cut through the heart, cold and clear, strike for% love and strike for% fear. There's
+---
+Frp: n=3
+N: (16d)(7d#5d)(6d4d)3d | (3#5)(63) 3. (1) |
+Lw: beau-ty and there's dan-ger here. Split the ice a-part. Be-
+// preserve-start
+---
+// highlight-next-line
+N: /{qpm=87, "渐慢"} 2 7d 6d 5d |{qpm=78, t=0.5} 6d[ext] - - - |||
+Lw: ware the fro-zen heart_{0}
+// preserve-end
+`
+} />
+
+另一个需要增加上边距的情况是使用了三连音记号，像这样：
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=C4 4/4
+====
+// highlight-next-line
+N: 5 4 T4 3 2 | T3 1 2 3 2 |{1=G3} T6 7 1e 2e 1e | T6 6 5 6 0 |||
+`
+} />
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=C4 4/4
+====
+// highlight-next-line
+N: 5 4 T4 3 2 | T3 1 2 3 2 |{1=G3, t=0.5} T6 7 1e 2e 1e | T6 6 5 6 0 |||
+`
+} />
+
+### 根据时值自动设置小节宽度 {#time-lining}
+
+上面提到，Sparks NMN 默认对小节宽度采用均分原则。一般情况下这种匀称整齐的划分方式是美观的，但是，当拍号频繁变化，或者使用散板时，这样的宽度划分就不能正确体现各小节长度之间的关系。
+
+<C.RealtimeScore efRange={['musicLine-拍号变化-1', '']} children={
+`Pi: 1=C 4/4
+====
+S: 拍号变化
+Sp: 1=C 5/8
+// highlight-next-line
+Srp: n=5
+---
+// highlight-next-line
+N: /{4/8} (1e1e)(76) |{5/8} (77)(71e7) | (66)(671e) |{3/8} (66#5) |{3/4} 6 6 - |||
+====
+S: 散板
+Sp: 1=D 0/4
+---
+// highlight-next-line
+N: 1 (12)(34)(32) 5 6 | 3 2 | 2 4 (56) 3 | 2 4 - |||
+`
+} />
+
+通过手动调整宽度权重调节宽度是可行的，但是操作起来十分麻烦。因此，Sparks NMN 提供了“基于时值的小节宽度”功能，能够根据小节的总时值来自动调节宽度权重。只须在渲染属性中加上 `time_lining=true` 即可。
+
+<C.RealtimeScore efRange={['musicLine-拍号变化-1', '']} children={
+`Pi: 1=C 4/4
+// Rp: time_lining=true  // 加在这里也行
+====
+S: 拍号变化
+Sp: 1=C 5/8
+// highlight-next-line
+Srp: n=5 time_lining=true
+---
+N: /{4/8} (1e1e)(76) |{5/8} (77)(71e7) | (66)(671e) |{3/8} (66#5) |{3/4} 6 6 - |||
+====
+S: 散板
+Sp: 1=D 0/4
+// highlight-next-line
+Srp: time_lining=true
+---
+N: 1 (12)(34)(32) 5 6 | 3 2 | 2 4 (56) 3 | 2 4 - |||
+`
+} />
+
+:::caution 常见错误
+
+目前，`time_lining` 属性在 `Frp:` 开头的行中也是无效的，千万注意。
+
+:::
+
+根据时值调整权重的具体原理就是将当前小节的总时值（以四分音符为单位）直接当作权重使用，例如拍号 $\frac{3}{4}$ 的小节获得 $3$ 的权重，拍号 $\frac{5}{8}$ 的小节获得 $2.5$ 的权重。此外，如果小节开头或末尾标注了拍号，则每个拍号会额外增加 $0.25$ 的权重。
+
+此外，开启此特性后，部分布局行为变得与原来不同，需要注意：
+
+- 通过 `w=<权重>` 语法手动指定的布局权重将会与自动生成的权重相乘，而不是覆盖。
+- 空白小节（以及类似空白小节的特殊小节）获得的权重取决于此处拍号规定的每小节时值。散板设置下，它们始终获得 $0.5$ 的权重。
+
+## 其他特性 {#other-features}
+
+还有一些不太常用（一般情况下也不需要使用）的特性。
+
+### 强制换行 {#force-break}
+
+在碎片开头添加一行 `B:`（没有内容，但是冒号不能省略）可以在该碎片前强制换行。强制换行前的一行并不会自动充满它所在的空间。
+
+<C.RealtimeScore efRange={[1,4]} children={
+`P: 1=C 4/4
+====
+N: 3 - (54)(34) | (4.(3~))(32) 6d - | 4 - (43)(24) |
+---
+// highlight-next-line
+B:
+N: 3 - - - | 3 - (43)(23) | 4. (4) 4 - | omit
+N: 1 - - - | 1 - (21)(7d1) | 6d. (6d) 1 - | omit
+`
+} />
+
+要使强制换行前的一行填满页面宽度，仍然需要为其指定每行小节数。
+
+<C.ScoreExample efRange={[1,4]} children={
+`P: 1=C 4/4
+====
+// highlight-next-line
+Frp: n=3
+N: 3 - (54)(34) | (4.(3~))(32) 6d - | 4 - (43)(24) |
+---
+B:  // 其实这一行现在已经没用了
+N: 3 - - - | 3 - (43)(23) | 4. (4) 4 - | omit
+N: 1 - - - | 1 - (21)(7d1) | 6d. (6d) 1 - | omit
+`
+} />
+
+### 小节边距 {#section-padding}
+
+通过后置属性 `p=<额外边距>` 可以增大小节内音符与小节线之间的边距。这一特性很少用到，故不举例说明。
+
+### 新版自动布局算法 {#new-auto-layout}
+
+<C.MinVersion min='Sparks NMN 1.14.20' />
+
+Sparks NMN 默认使用实验性的新自动布局方法，这种布局方法对多声部乐谱更加友好。若出现自动布局问题，可尝试禁用新算法，将渲染属性 `legacy_positioning` 设为 `true` 即可。
+
+<C.RenderPropsDemo efRange={1} values={['false', 'true']} children={
+`P: 1=? 4/4
+// highlight-next-line
+Rp: legacy_positioning=###
+====
+N: T(543) T(432) T(321) T(232) | T(543) T(432) T(321) T(232) | T(345) T(432) T(321) T(232) | T1 (2) T(16d7d) 1 - |
+N: (15d)(27d)(15d)(7d5d) | (15d)(27d)(15d)(7d5d) | (15d)(27d)(15d)(7d5d) | (5d5d)(5d5d) 5d - |
+`
+} />
+
+## 挑战 {#challenges}
+
+<C.Challenges>
+
+<C.Challenge title="调整乐谱布局">
+
+这是一份未调整的布局的乐谱，请为其调整布局，保证其可读且相对美观。
+
+注意这个挑战可能很耗时！
+
+<C.ScoreExample canLoad children={
+`Dp: 电影《冰雪奇缘》曲集 - 03
+Dt: For the First Time in Forever
+Dv: Version 20220229
+P: 1=F3 4/4 qpm=102 可变拍速(+5,-10)
+Rp: n=3 grayout=true left_separator=false explicitmarkers=false \\
+    font_lyrics=Roman,CommonSerif/600/0.93
+====
+N["A."]: - - - (0.(5)) | ((5555~))((5)3(4~))((4)1e(1e~)) (1e 0) | 
+Lw: The win-dow was o-pen so's that door,
+---
+N["A."]: ((3e3e3e3e))(2e1e)(52e) (2e.(3e)) |
+Lw: I didn't know they did that a-ny-more, who
+---
+N["A."]: (3e(2e3e~))((3e)4e(5e~))((5e)1e(5~))(52e~) |{"略微减慢"} (2e2e~) 2e - (0.(5)) |
+Lw: knew we owned eight thou-sand sa-lad plates. For
+---
+N["A."]: /{"恢复速度", "每小节结尾略微减慢"} (5(55~))((5)3(4~))((4)1e(1e~)) (1e0) | ((3e3e3e2e~))(2e1e)(51e)(2e0) |
+Lw: years I roamed these emp-ty halls, why have a ball-room with no balls.
+---
+N["A."]: (3e(1e2e~))((2e)1e(3e~))((3e1e1e2e~))((2e)1e(3e~)) |{"恢复正常节奏"} 3e - - (0(71e)) |
+Lw: Fi-nal-ly they'll o-pe-ning up the gates. There'll be
+---
+N["A."]: (2e2e)(1e7)(75) 0 | T(2e2e2e) T(2e1e7) 5 (0.(3e)) | (4e2e)(3e2e)(4e2e)(3e2e) {"末尾略微减慢"}|
+Lw: ac-tual real life peo-ple, it will be to-tal-ly strange, but wow am I so rea-dy for this
+---
+N["A."]: /{1=F4} 2 - (03)(34) ||["B"] 
+Lw: change. 'Cause for the
+---
+N["A."]: 5 1 1 (23~) | (36d~) 6d 0 (6d5d) | (5d) 2 (2~) 2 (33~) | 3 - 0(34) |
+Lw: first time in for-e-ver, there'll be  mu-sic, there'll be light. For the
+---
+N["A."]: 5 1 1 (23~) | (35~) 5 0 (23) | 4 (32~) 2 (12~) |
+Lw: first time in for-e-ver, I'll be dan-cing through the night
+---
+N["A."]: 2 - - (0.(2)) | ((2111))((1112~))(23)((01)1) | (12)(36)6 - |{2/4} (03)(34) |
+Lw: Don't know if I'm e-la-ted or gas-sy, but I'm some-where in that zone. 'Cause for the
+---
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 - - | 0 0 (43)(2.(1)) |{qpm=126} 1 - - - |
+Lw: first time in for-e-ver, I won't be a-lone.
+La: 0 | 0 | 0 | 0 0 "I can't wait"
+---
+N["A."]: 0 0 0 0 | 0 0 0 0 |{2/4, 1=#F3} 0 (05) ||["C"]
+Lw: To-
+La: "to meet everyone!" 0 0 "Oh!" | (0) "What if I meet," (0) 0 "the one?" |
+\
+\
+\
+\
+---
+N["A."]: /{4/4} (55)((55)3)(41e) (1e 0) |
+Lw: night i-ma-gine me gown and all,
+---
+N["A."]: ((3e3e)3e)(2e(1e1e))(52e) (2e.(3e)) |
+Lw: Fet-ching-ly dra-ped a-gainst the wall, the
+---
+N["A."]: (3e(2e3e~))(3e4e)(5e1e)(52e~) | (2e2e~) 2e - (0.(5)) |
+Lw: pic-ture of so-phis-ti-ca-ted grace. I
+---
+N["A."]: ((5555~))((5)3(4~))(41e) (1e.(3e)) | ((3e3e3e2e~))(2e1e)(51e)(2e(03e)) |
+Lw: sud-den-ly see him stan-ding there, a bea-ti-ful stran-ger tall an fair, I
+---
+N["A."]: (3e(1e2e~))((2e)1e(3e~))((3e)1e(2e~))((2e)1e(3e~)) | 3e - - ((0771e)) |
+Lw: wan-na stuff some choc'-late in my face. but then we
+---
+N["A."]: (2e2e)(1e7)(75) ((07)1e) | (2e(2e1e~))((1e)7(5~)) 5 0 |{qpm=108} (4e2e)(3e2e)(4e2e)(3e2e~) {"末尾略微减慢"}|
+Lw: laugh and talk all ev'-ning, which is to-tal-ly biz-zare. No-thing like the life I've led so
+---
+N["A."]: /{1=#F4, qpm=102} (22~) 2 0 (34) ||["D"]
+Lw: far. For the
+---
+N["A."]: 5[str] 1 1 (23~) | (36d~) 6d 0 (6d5d) | (5d) 2 (2~) 2 (33~) | 3 - 0(34) |
+Lw: first time in for-e-ver, there'll be ma-gic, there'll be fun. For the
+---
+N["A."]: 5 1 1 (23~) | (35~) 5 (02)(23) | (4)3 2 1 (2~) |
+Lw: first time in for-e-ver, I could be no-ticed by some-one.
+---
+N["A."]: 2 - 0 (33) | ((21)1)((11)(1.(2~)))(21)(0.(1)) | (12)(36)6~ - |{2/4} (63)(34) |
+Lw: and I know it is to-tal-ly cra-zy to dream I find ro-mance. But for the
+---
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 - - | 0 (0.(5d)) (43)(21) |{qpm=112} 1. (0) 0 0 |
+Lw: first time in for-e-ver, at least I got a chance.
+\
+\
+\
+\
+---
+B:
+N["E."]: 0 0 0 0 {"末尾略慢"}|{qpm=104} 0 0 0 0 ||["E"]{1=bE4, "(5为原调中3)"} (05d)(5d1) 1 0 | (05d)(5d2) 2 0 |
+Lw: Don't let them in. Don't let them see.
+---
+N["E."]: 0 (2.(1)) (22~)((2123)) | (4(31~)) 1 0 0 | 0 (05d) 1 0 |{5/4} (05d) 2 0 (01)(23) |
+Lw: Be the good girl you al-ways have to be. Con-ceal, don't feel, put on a
+---
+N["E."]: /{qpm=101, 3/4} 4 0 (04) |{4/4, qpm=104} (43)(16d)(43)(1b6d~) | (b6d5d~) 5d 0 0 ||["F"]
+Lw: show. Make one wrong move and ev'-ry-one will know.
+---
+B:
+N["A."]: /{qpm=101,1=#F4} 0 0 (0.(1))((15d13)) | 3 0 (0.(2))((26d23)) |
+Lw: It's on-ly for to-day. It's a-go-ny to
+N["E."]: /{qpm=101, 1=#F4, "(3为原调下5)"} (0(3d3d))((3d2d3d5d)) 5d 0 | (0.(5d))((5d2d3d5d)) 6d 0 |
+Lw: But it's on-ly for to-day. It's a-go-ny to wait.
+---
+N["A."]: /{1=G4, "(4为原调下#4)"} 4 0 0 0 |{7/8} 0 0 0 (0) |{4/4} 0 0 0 3 | 4 - 0 (34) ||["G"]
+Lw: wait. The gate. For the
+N["E."]: /{1=G4} 0 0 (5d7d) (23) |{7/8} (43)(20) 0 (1) |{4/4} 2 - - - | 0 0 0 0 ||
+Lw: Tell the guards to o-pen up the gate.
+---
+N["A."]: 5[str] 1 1 (23~) | (36d~) 6d (06d)(6d5d) | (5d)2 2 3 (3~) | 3 - 0 (01) |
+Lw: first time in for-e-ver, I'm get-ting what I'm drea-ming of. A
+N["E."]: 0 0 0 0 | (05d)(5d1)(15d)(5d2~) | (22~) 2 0 0 | (0(11))((1)1(5d))((1)2(4~))(43~) |
+Lw: Don't let them in, don't let them see. Be the good girl you al-ways have to
+---
+N["A."]: 1 (2)3 6 (5~) | (5) 7d (1~) 1 (03) | 4 (3)2 1 (2~) | 2 - - (0.(1)) |
+Lw: chance to change my on-ly world, a chance to find true love. I
+N["E."]: (33~) 3 0 0 | 0 0 (01) 3 | 0 0 0 0 | (05d)(5d1)(11)(2(b3^2^)) |
+Lw: be. Con-ceal. Con-ceal don't feel don't let them%
+---
+N["A."]: ((21)1)(1(12~))(2)3 ((11)) | (12)(36) 6 - |{2/4} (03)(34) |
+Lw: know it all ends to-mor-row, so it has to be to-day. 'Cause for the
+N["E."]: ((2^1~^)1) 0 0 0 |
+Lw: know.%
+---
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 0 (34) | 5 1 1 (65~) | (51~) 1 - - |
+Lw: first time in for-e-ver, for the first time in for-e-ver.
+---
+N["A."]: 0 0 ((43~)3) (21~) | (15~) 5 - - |||
+Lw: No-thing's in my way_{0}
+`
+} />
+
+<C.HintSolution>
+<C.Hint>
+
+你可能需要修改每行小节数、小节的宽度以及上边距。
+
+</C.Hint>
+<C.Solution>
+
+<C.RealtimeScore inverse children={
+`Dp: 电影《冰雪奇缘》曲集 - 03
+Dt: For the First Time in Forever
+Dv: Version 20220229
+P: 1=F3 4/4 qpm=102 可变拍速(+5,-10)
+Rp: n=3 grayout=true left_separator=false explicitmarkers=false \\
+    font_lyrics=Roman,CommonSerif/600/0.93
+====
+N["A."]: - - - (0.(5)) |{w=2.5} ((5555~))((5)3(4~))((4)1e(1e~)) (1e 0) | 
+Lw: The win-dow was o-pen so's that door,
+---
+N["A."]: /{w=2.5} ((3e3e3e3e))(2e1e)(52e) (2e.(3e)) |
+Lw: I didn't know they did that a-ny-more, who
+---
+Frp: n=3
+N["A."]: (3e(2e3e~))((3e)4e(5e~))((5e)1e(5~))(52e~) |{"略微减慢", w=0.48} (2e2e~) 2e - (0.(5)) |
+Lw: knew we owned eight thou-sand sa-lad plates. For
+---
+Frp: n=3
+N["A."]: /{"恢复速度", "每小节结尾略微减慢"} (5(55~))((5)3(4~))((4)1e(1e~)) (1e0) | ((3e3e3e2e~))(2e1e)(51e)(2e0) |
+Lw: years I roamed these emp-ty halls, why have a ball-room with no balls.
+---
+N["A."]: (3e(1e2e~))((2e)1e(3e~))((3e1e1e2e~))((2e)1e(3e~)) |{"恢复正常节奏", w=0.5} 3e - - (0(71e)) |
+Lw: Fi-nal-ly they'll o-pe-ning up the gates. There'll be
+---
+N["A."]: (2e2e)(1e7)(75) 0 | T(2e2e2e) T(2e1e7) 5 (0.(3e)) | (4e2e)(3e2e)(4e2e)(3e2e) {"末尾略微减慢"}|
+Lw: ac-tual real life peo-ple, it will be to-tal-ly strange, but wow am I so rea-dy for this
+---
+Frp: n=4
+N["A."]: /{1=F4} 2 - (03)(34) ||["B"] 
+Lw: change. 'Cause for the
+---
+Frp: n=4
+N["A."]: 5 1 1 (23~) | (36d~) 6d 0 (6d5d) | (5d) 2 (2~) 2 (33~) | 3 - 0(34) |
+Lw: first time in for-e-ver, there'll be  mu-sic, there'll be light. For the
+---
+N["A."]: 5 1 1 (23~) | (35~) 5 0 (23) |{w=1.1} 4 (32~) 2 (12~) |
+Lw: first time in for-e-ver, I'll be dan-cing through the night
+---
+Frp: n=4
+N["A."]: /{w=0.5} 2 - - (0.(2)) |{w=1.35} ((2111))((1112~))(23)((01)1) |{w=0.8} (12)(36)6 - |{2/4, w=0.6} (03)(34) |
+Lw: Don't know if I'm e-la-ted or gas-sy, but I'm some-where in that zone. 'Cause for the
+---
+Frp: n=4
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 - - | 0 0 (43)(2.(1)) |{qpm=126} 1 - - - |
+Lw: first time in for-e-ver, I won't be a-lone.
+La: 0 | 0 | 0 | 0 0 "I can't wait"
+---
+N["A."]: 0 0 0 0 | 0 0 0 0 |{2/4, 1=#F3, w=0.6} 0 (05) ||["C"]
+Lw: To-
+La: "to meet everyone!" 0 0 "Oh!" | (0) "What if I meet," (0) 0 "the one?" |
+\ 
+\ 
+\ 
+\ 
+---
+Frp: n=2
+N["A."]: /{4/4, w=2.5} (55)((55)3)(41e) (1e 0) |
+Lw: night i-ma-gine me gown and all,
+---
+N["A."]: /{w=2.5} ((3e3e)3e)(2e(1e1e))(52e) (2e.(3e)) |
+Lw: Fet-ching-ly dra-ped a-gainst the wall, the
+---
+Frp: n=3
+N["A."]: (3e(2e3e~))(3e4e)(5e1e)(52e~) |{w=0.48} (2e2e~) 2e - (0.(5)) |
+Lw: pic-ture of so-phis-ti-ca-ted grace. I
+---
+Frp: n=3
+N["A."]: ((5555~))((5)3(4~))(41e) (1e.(3e)) | ((3e3e3e2e~))(2e1e)(51e)(2e(03e)) |
+Lw: sud-den-ly see him stan-ding there, a bea-ti-ful stran-ger tall an fair, I
+---
+N["A."]: /{w=1.25} (3e(1e2e~))((2e)1e(3e~))((3e)1e(2e~))((2e)1e(3e~)) |{w=0.7} 3e - - ((0771e)) |
+Lw: wan-na stuff some choc'-late in my face. but then we
+---
+N["A."]: /{w=1.1} (2e2e)(1e7)(75) ((07)1e) | (2e(2e1e~))((1e)7(5~)) 5 0 |{qpm=108} (4e2e)(3e2e)(4e2e)(3e2e~) {"末尾略微减慢"}|
+Lw: laugh and talk all ev'-ning, which is to-tal-ly biz-zare. No-thing like the life I've led so
+---
+Frp: n=4
+N["A."]: /{1=#F4, qpm=102} (22~) 2 0 (34) ||["D"]
+Lw: far. For the
+---
+Frp: n=4
+N["A."]: 5[str] 1 1 (23~) | (36d~) 6d 0 (6d5d) | (5d) 2 (2~) 2 (33~) | 3 - 0(34) |
+Lw: first time in for-e-ver, there'll be ma-gic, there'll be fun. For the
+---
+N["A."]: 5 1 1 (23~) | (35~) 5 (02)(23) |{w=1.1} (4)3 2 1 (2~) |
+Lw: first time in for-e-ver, I could be no-ticed by some-one.
+---
+Frp: n=4
+N["A."]: /{w=0.6} 2 - 0 (33) |{w=1.35} ((21)1)((11)(1.(2~)))(21)(0.(1)) |{w=0.8} (12)(36)6~ - |{2/4, w=0.7} (63)(34) |
+Lw: and I know it is to-tal-ly cra-zy to dream I find ro-mance. But for the
+---
+Frp: n=4
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 - - | 0 (0.(5d)) (43)(21) |{qpm=112} 1. (0) 0 0 |
+Lw: first time in for-e-ver, at least I got a chance.
+\ 
+\ 
+\ 
+\ 
+---
+Frp: n=4
+B:
+N["E."]: 0 0 0 0 {"末尾略慢"}|{qpm=104} 0 0 0 0 ||["E"]{1=bE4, "(5为原调中3)"} (05d)(5d1) 1 0 | (05d)(5d2) 2 0 |
+Lw: Don't let them in. Don't let them see.
+---
+Frp: n=4
+N["E."]: /{w=1.4} 0 (2.(1)) (22~)((2123)) | (4(31~)) 1 0 0 | 0 (05d) 1 0 |{5/4, w=1.4} (05d) 2 0 (01)(23) |
+Lw: Be the good girl you al-ways have to be. Con-ceal, don't feel, put on a
+---
+Frp: n=3
+N["E."]: /{qpm=101, 3/4, w=0.7} 4 0 (04) |{4/4, qpm=104, w=1.5} (43)(16d)(43)(1b6d~) | (b6d5d~) 5d 0 0 ||["F"]
+Lw: show. Make one wrong move and ev'-ry-one will know.
+---
+B:
+Frp: n=2
+N["A."]: /{qpm=101,1=#F4} 0 0 (0.(1))((15d13)) | 3 0 (0.(2))((26d23)) |
+Lw: It's on-ly for to-day. It's a-go-ny to
+N["E."]: /{qpm=101, 1=#F4, "(3为原调下5)"} (0(3d3d))((3d2d3d5d)) 5d 0 | (0.(5d))((5d2d3d5d)) 6d 0 |
+Lw: But it's on-ly for to-day. It's a-go-ny to wait.
+---
+Frp: n=4
+N["A."]: /{1=G4, "(4为原调下#4)"} 4 0 0 0 |{7/8} 0 0 0 (0) |{4/4} 0 0 0 3 | 4 - 0 (34) ||["G"]
+Lw: wait. The gate. For the
+N["E."]: /{1=G4} 0 0 (5d7d) (23) |{7/8} (43)(20) 0 (1) |{4/4} 2 - - - | 0 0 0 0 ||
+Lw: Tell the guards to o-pen up the gate.
+---
+Frp: n=3
+N["A."]: 5[str] 1 1 (23~) | (36d~) 6d (06d)(6d5d) | (5d)2 2 3 (3~) | 3 - 0 (01) |
+Lw: first time in for-e-ver, I'm get-ting what I'm drea-ming of. A
+N["E."]: /{w=0.8} 0 0 0 0 | (05d)(5d1)(15d)(5d2~) | (22~) 2 0 0 |{w=1.5} (0(11))((1)1(5d))((1)2(4~))(43~) |
+Lw: Don't let them in, don't let them see. Be the good girl you al-ways have to
+---
+Frp: n=3
+N["A."]: 1 (2)3 6 (5~) | (5) 7d (1~) 1 (03) | 4 (3)2 1 (2~) | 2 - - (0.(1)) |
+Lw: chance to change my on-ly world, a chance to find true love. I
+N["E."]: (33~) 3 0 0 | 0 0 (01) 3 | 0 0 0 0 |{w=1.4} (05d)(5d1)(11)(2(b3^2^)) |
+Lw: be. Con-ceal. Con-ceal don't feel don't let them%
+---
+Frp: n=4
+N["A."]: /{w=1.5} ((21)1)(1(12~))(2)3 ((11)) | (12)(36) 6 - |{w=0.8, 2/4} (03)(34) |
+Lw: know it all ends to-mor-row, so it has to be to-day. 'Cause for the
+N["E."]: ((2^1~^)1) 0 0 0 |
+Lw: know.%
+---
+Frp: n=4
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 0 (34) | 5 1 1 (65~) | (51~) 1 - - |
+Lw: first time in for-e-ver, for the first time in for-e-ver.
+---
+Frp: n=4
+N["A."]: /{w=1.2} 0 0 ((43~)3) (21~) | (15~) 5 - - |||
+Lw: No-thing's in my way_{0}
+`
+} />
+
+</C.Solution>
+</C.HintSolution>
+
+</C.Challenge>
+
+</C.Challenges>
+
+## 接下来... {#next}
+
+你可能觉得 Sparks NMN 的默认排版有些“浪费纸”。终于，我们要介绍控制行距与段落间距的方式了。

@@ -1,0 +1,65 @@
+---
+sidebar_position: 1.1
+description: 字符串中表示一些特殊字符的方法
+---
+import C from '@site/src/mdx'
+
+# 转义字符 {#escape-sequences}
+
+转义字符是许多基于文本的语言共有的特性，用来在字符串中表示一些无法直接表示的特殊字符。
+
+## 使用转义字符的位置 {#escape-positions}
+
+在 Sparks NMN 中，有两种地方可以使用转义字符：
+
+- 在内容类型为“文本”或“空格分割”的指令行中（例如 `P` `Rp` `Dt` `T` 等）。<C.MinVersion min='Sparks NMN 1.14.16' inline />
+- 在任何双引号引起的字符串中。
+
+例如，这段代码可以显示含有网址的尾注，
+
+<C.ScoreExample canLoad children={
+`Dt: 标题
+P: 1=? 4/4
+Rp: font_footnote=Roman,CommonSerif
+====
+N: ____ | ____ | ____ | ____ |
+ 
+// highlight-next-line
+Df: 文档由 Sparks NMN 渲染。前往 <https:/\\/notation.sparkslab.art/> 了解更多。
+`
+} />
+
+又例如，这样可以在标记符号中添加含有双引号的字符串。
+
+<C.ScoreExample canLoad children={
+`Dt: 标题
+P: 1=? 4/4
+====
+N: ____ | ____ | ____ | ____ |
+// highlight-next-line
+A: "\\"ce\\" as in \\"once\\""
+`
+} />
+
+## 转义字符列表 {#escape-list}
+
+下面是 Sparks NMN 支持的所有转义字符：
+
+| 代码写法 | 显示结果 | 备注 |
+| - | - | - |
+| `\"` | `"` | 双引号 |
+| `\'` | `'` | 单引号 |
+| `\n` | 换行符 | 此换行符是 LF，即 Linux 的换行符 |
+| `\r` | 行首符 | 在 Sparks NMN 中没有任何效果 |
+| `\t` | 制表符 | 宽度等于 8 个空格，不建议使用 |
+| `\/` | `/` | 正斜杠<br /><C.MinVersion min='Sparks NMN 1.14.16' inline /> |
+| `\x3C` | `<` | `\x` 后跟两位十六进制，表示 ASCII 代码对应的字符。不区分大小写。<br />由于一些问题，目前无法正常工作。 |
+| `\u951F` | `锟` | `\u` 后跟四位十六进制，表示 UTF-16 LE 代码对应的字符。不区分大小写。 |
+| `\*` | | 空白，不输出任何内容<br /><C.MinVersion min='Sparks NMN 1.14.16' inline /> |
+| `\\` | `\` | 反斜杠 |
+
+:::caution 注意
+
+Sparks NMN 中许多地方都不支持多行文本，通过 `\n` 输入多行文本可能会导致排版问题。
+
+:::

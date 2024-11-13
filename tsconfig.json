@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "ESNext",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "lib": [ "ES2020", "DOM", "ES2015" ],
+    "paths": {}
+  },
+  "exclude": [
+    "node_modules/*",
+    "**/node_modules/*",
+    "dist/*",
+    "**/dist/*",
+    "**/out/*"
+  ]
+}

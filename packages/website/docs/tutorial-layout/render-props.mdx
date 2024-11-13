@@ -1,0 +1,67 @@
+---
+sidebar_position: 1
+description: 用于控制布局与字体的参数
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/renderprops'
+
+# 基本概念：渲染属性 {#render-props}
+
+## 渲染属性 {#render-props}
+
+尽管并没有特别地拿出来讲，在前面的章节中，我们已经多次用到了 `Rp:` 和 `Frp:` 开头的行。`Rp` 是 `RenderProps` 的缩写，即“渲染属性”。
+
+**渲染属性**是一些调整乐谱显示效果（包括字体、布局及样式等）的参数，是布局与字体这一章中的主角。通过使用精确的文本指令控制这些参数，就能实现对显示效果的精细调整。
+
+渲染属性指令行的内容形如 `Rp: key1=value1 key2=value2`，像下面这样：
+
+<C.ScoreExample children={
+`Rp: font_lyrics=Roman,CommonSerif/600/0.95 grayout=true margin_after_part=0 offset_lyrics_iter=0.8
+`
+} />
+
+渲染属性指令并**不能拆分**成多个指令行。如果一行内容过长，可以使用**软折行**方法进行处理——当一行末尾是 `\` 字符时，这个 `\` 字符会被忽略，并且下一行会被当成这一行的延续。
+
+<C.ScoreExample children={
+`Rp: font_lyrics=Roman,CommonSerif/600/0.95 grayout=true \\
+    margin_after_part=0 offset_lyrics_iter=0.8
+`
+} />
+
+:::success 计划
+
+将来可能会为编辑器添加“渲染属性调节器”窗口，其中会列出所有可用的渲染属性并允许你通过图形界面进行调节。不过，所有更改仍然会反映到文本代码上，而不是被存储在文本代码以外的其他地方。
+
+:::
+
+:::caution 常见错误
+
+与音乐属性类似，渲染属性行的内容是按照空格分割的，因此，单个属性内不能有空格。例如 `grayout=true` 不能写成 `grayout = true`。
+
+:::
+
+## 渲染属性的位置 {#render-props-position}
+
+渲染属性可以出现在三种位置上。
+
+- 与全局音乐属性 `P:` 相同的位置，以 `Rp:` 开头，表示作用于全局的渲染属性。`page` 属性只能在这里生效。
+- 与章节音乐属性 `Sp:` 相同的位置，以 `Srp:` 开头，表示作用于章节的渲染属性。与音乐属性不同，章节渲染属性可以应用于[文本章节](/docs/tutorial-basics/multiarticle#text-article)上。
+- 写在碎片开头，以 `Frp:` 开头，表示作用于碎片的渲染属性。
+
+:::caution 注意
+
+一般情况下 `Frp:` 中的属性是无效的，因此正常情况下不要使用。其唯一的用处会在后文提到。
+
+:::
+
+## 所有渲染属性 {#all-render-props}
+
+这里是一份所有渲染属性的完整列表。
+
+<Cr.RenderPropsReference />
+
+后文中我们将一一解释它们。不必担心记不住——只要在编辑器中打出一个字母，包含这个字母的所有渲染属性都会弹出来供你选择。
+
+## 接下来... {#then}
+
+接下来，我们将先介绍一些零碎的样式选项，它们是最容易理解的。

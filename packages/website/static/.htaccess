@@ -1,0 +1,17 @@
+DirectorySlash Off
+
+<Files "index.html">
+	Header set Cache-Control "no-cache"
+</Files>
+<Files "latest-version.json">
+	Header set Access-Control-Allow-Origin "*"
+</Files>
+
+Options -Indexes
+
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+\w)$ /$1/index.html
+RewriteRule ^(.+\w)\/+$ /$1 [R=302]

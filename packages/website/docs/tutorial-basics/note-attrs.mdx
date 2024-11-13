@@ -1,0 +1,323 @@
+---
+sidebar_position: 5
+description: 为音符添加装饰音和奏法记号
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/previewedref'
+
+# 装饰音符与音符奏法 {#note-attrs}
+
+装饰音符，即一般的音符“两肩”上出现的小音符，这是一种比较进阶的记谱方式；音符奏法，即音符上方或右边标记的奇怪符号，用于表示其奏唱时的某些变化或特征。在 Sparks NMN 中，它们归结于一样东西——音符属性，即加在音符上的修饰符。
+
+:::note 备注
+
+奏法记号不包含力度记号，例如 `p` `mf` 等。它们被设计为单独的标记行，详细内容将在[标记符号](/docs/tutorial-annotation/annotations)章节中介绍。
+
+:::
+
+## 音符奏法 {#note-features}
+
+添加音符奏法记号非常容易，只需要在音符后（必须在 `e` `d` 字符之后，但是与 `.` `~` `^` 字符的先后关系任意）添加一个中括号 `[]`，内部写上属性即可。可用的音符奏法有这些：
+
+<Cr.NoteAttrReference filter='feature' />
+
+例如，下面的例子里有两个顿音，就是通过在音符后添加 `[brk]` 来实现。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=C 4/4
+---
+// highlight-next-line
+N: (3e) 3e (3e) (3e6) (76) | 7 6 #5[brk] 0 | (6) 6 (6) (66) (66) | 6 3e 3e[brk] 0 |
+`
+} />
+
+部分属性可以叠加，此时多个属性应当用逗号 `,` 隔开。例如，下面的例子叠加了重音和保持记号。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=C 4/4
+---
+// highlight-next-line
+N: (17d) (6d7d) 1[str,hold] (7d6d) | (5d6d) (7d6d) 7d[str] - | (21) (7d1) 2[str,hold] 4 | (32) (42) 3[str] - |
+`
+} />
+
+音符上方的奏法记号叠加，会从下到上绘制。
+
+用多个方括号也是可以的，但是这样显得太过冗余了。
+
+<C.ScoreExample canLoad children={
+`P: 1=C 4/4
+---
+// highlight-next-line
+N: (17d) (6d7d) 1[str][hold] (7d6d) | (5d6d) (7d6d) 7d[str] - | (21) (7d1) 2[str][hold] 4 | (32) (42) 3[str] - |
+`
+} />
+
+### 辨析相似的奏法记号 {#differentiate-features}
+
+有些奏法记号的含义有些相近，但是并不相同。在此我们特别辨析一下。
+
+#### 表示强音 {#strong-notes}
+
+表示强音的常见记号有四种——力度记号 `f`、重音记号以及两种顿音记号。
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: (55) (05) (55) 4 | (52) (21) 2[str] - | (22) (02) (22) (1[tip]0) | (22) (21) 2[brk] 0 |
+A: 0 0 0 f |
+// preserve-end
+A: 0 0 0 "力度记号" | 0 0 "重音" 0 | 0 0 0 "跳音" | 0 0 "顿音"
+`
+} />
+
+- 力度记号 `f` 仅仅表示这个音很强，而没有其他含义。这个音从头到尾的**强度应当是均匀的**，并且时值是应当唱/弹满的。
+- 就像其形状一样，形似 `>` 的重音记号表示这个音**开头比结尾要强**，但是在开头并没有明显的“突强”，而只是从强到弱的**平滑变化**。这个音的时值也应该唱/弹满。
+- 跳音记号（五线谱上写作 `·`），表示强调音符和下一个音符之间断开。
+- 顿音记号表示一种**爆发性的突强**，并且非常短促，**在爆发后立即结束**（无论音符原本的时值是多少）。因此，有顿音记号的音符往往不会有延时线。
+
+#### 表示延长 {#extended-notes}
+
+表示延长有两种符号——保持与自由延长。
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: 3. (3) (3.(2~))(21[hold]) | (4.(3~))(32) 1 3 | 2[ext] - - - | 1 3 1e 0 |
+// preserve-end
+A: 0 0 0 (0"保持记号") | 0 | "自由延长记号"
+`
+} />
+
+- 保持记号强调音符的时值**必须唱/弹满**，不能因为要换气/抬手等原因而减少其时长（如果后面紧跟了另一个音符就表示不允许换气/抬手）。这个记号并**不会增加**音符的时值。
+- 自由延长记号告诉读者这个音符可以根据情感表达的需要自由地进行适当延长。不过不能[延长得这么放肆](https://www.bilibili.com/video/BV1fD4y1r7wP/)。
+
+#### 表示颤抖 {#trembling-notes}
+
+颤音、波音均能够表示一定程度的颤抖，不过有所不同。
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: 6. (3) 2 (34) | 5 (35) 3[tr] - | 4. (1) (7d(12~)) (26) | 5[wavd] - - - |
+// preserve-end
+A: 0 | 0 0 "颤音" 0 | 0 | "下波音"
+`
+} />
+
+- 颤音主要表示**音量上**出现抖动，伴随**微小的音高抖动**。
+- 波音表示**音高上**的抖动，并且以自然音为单位，其中波音表示在这个音和上面一个音之间抖动，下波音表示在这个音和下面一个音之间抖动；一般的波音只抖动一下，而长波音则可以一直抖动。
+
+上面例子中的下波音可以等价于：
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: 6. (3) 2 (34) | 5 (35) 3[tr] - | 4. (1) (7d(12~)) (26) |{t=0.5} T(5^45^~) 5 - - |
+// preserve-end
+A: 0 | 0 0 "颤音" 0 | 0 | "下波音的展开"
+`
+} />
+
+## 装饰音符 {#decor-notes}
+
+装饰音符也是一种音符的属性，和奏法写在一起。具体写法如下：
+
+<Cr.NoteAttrReference filter='decor' />
+
+这层括号是构成语法所必须的，同时又表示一条下划线。你还可以在里面嵌套更多括号表示更多减时线。例如：
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=D 4/4
+---
+// highlight-next-line
+N: (61)(54)(51) 3[p((5))] | (46d) (31) 2[((23))] 0[p((5d))] | (55d) (51) 2 0[p((7d))] | (16d) (16) 5 0 |
+`
+} />
+
+装饰音符（肩上的小音符）中，奏法记号、嵌套装饰音符以及减时线分组都不会起作用。
+
+装饰音符不能添加歌词。如果需要给装饰音符添加歌词，应当将其改写成非装饰音符的形式。如果你不知道怎么改，你可能还没有完全理解装饰音符的含义...
+
+### 装饰音符的含义 {#decor-notes-meaning}
+
+我们知道，装饰音符是一个音符（或休止符）前面或后面跟的一个短促的音符。但是，这个短促的音符到底放在哪？有多短？一条下划线和两条下划线有什么区别？这些问题的答案你或许还不清楚。因此，我们具体地解释一下装饰音符的含义。
+
+首先，装饰音符占据被装饰音符内的时值，而不是外面的时值。举个例子：
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: 1 1 1[p((2))] 1 | 1 1 (1.(2)) 1 | 5 3 4[((3))] 3 | 5 3 ((34~)4) 3 |
+// preserve-end
+A: 0 0 "后倚音" | 0 0 "等价展开" | 0 0 "前倚音" | 0 0 "等价展开" |
+`
+} />
+
+占据的比例取决于装饰音符在字面上的总时值与一个四分音符的比值。例如，若装饰音符是一个音符加两条下划线，则其时值为四分音符的 $\frac{1}{4}$，也就占据被装饰音符的 $\frac{1}{4}$ 时值；若装饰音符是两个音符加两条下划线，则总时值为四分音符的 $\frac{1}{2}$，也就总共占据被装饰音符的 $\frac{1}{2}$。
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: 6 3 2[((3))] 3 | 6 3 ((32~)2) 3 | 2 1 2[(7d)] 5[((23))] | 2 1 (7d2) ((23)5) |
+// preserve-end
+A: 0 0 "前倚音" | 0 0 "等价展开" | 0 0 "前倚音" | 0 0 "等价展开" |
+`
+} />
+
+值得注意，这个比例是按被装饰音符那个符号和它的减时线计算，而不考虑它的连音线、延时线、附点等情况。
+
+<C.RealtimeScore efRange={1} children={
+`// preserve-start
+P: 1=C 4/4
+---
+// highlight-next-line
+N: 5. (3[(5d)]~) 3 1 | 5. ((5d3~)) 3 1 | 4 - 2[((3))] - | 4 - ((32~)2~) 2 |
+// preserve-end
+A: 0. "前倚音" | 0. "等价展开" | 0 0 "前倚音" | 0 0 "等价展开" |
+`
+} />
+
+这就是装饰音符所表示的确切意义。它其实是一些微小节奏的简记方式。
+
+## 挑战 {#challenges}
+
+<C.Challenges>
+
+<C.Challenge title='添加音符属性'>
+
+这是来自歌曲[《Let It Go》](https://www.kuwo.cn/play_detail/3625972)的片段。
+
+<C.RealtimeScore noCode efRange={[1,17]} children={
+`P: 1=$C 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/1
+---
+N: 0 0 (06) (71e~) | 1e. (0) (05) (52e~) | 2e - 0 6 | (66) 6 (6) 7 (1e~) |
+A: 0 | 0 | 0 0 0 "A"
+Lw: Let it go, let it go, can't hold it back a-ny-more.
+---
+N: 1e - (06) (71e~) | 1e. (0) (05) (3e2e~) | 2e - (01e) (2e3e~) | (3e) 3e 4e^ (3e^) (2e^1e^) | 1e - 0 0 |
+A: 0 | 0 0 0 (0"B") | 0 | 0 | "C"
+Lw: Let it go, let it go, turn a-way and slam% the% door.
+---
+N: 5e. (3e~) 3e 2e~ | 2e 0 1e (1e1e) | (5e) 5e (3e~) 3e 1e~ |
+A: "D" | 0 | "D"
+Lw: I don't care what they are go-ing to say.
+---
+N: 1e - 0 (1e1e) | 7^ (5^5~) 5 5~ | 5 - 0 (01) |{w=1.2} 4 (43) (44) (34) | (31~) 1 (41) (43~) |
+A: 0 | 0 | 0 0 0 0 | "E"
+Lw: Let the storm% rage on. The cold ne-ver bo-thers me a-ny-way.
+`
+} />
+
+目前此片段缺少这些奏法记号和装饰音符：
+
+- 标有 `A` 的音符缺少一个前倚音 `1e`，展开后的时值为十六分音符。
+- 标有 `B` 的音符缺少一个前倚音 `3e`，展开后的时值为十六分音符。
+- 标有 `C` 的音符缺少一个前倚音 `2e`，展开后的时值为八分音符。
+- 标有 `D` 的两个音符缺少重音记号。
+- 标有 `E` 的音符缺少重音记号。
+
+尝试将它们补上。
+
+<C.ScoreExample canLoad children={
+`P: 1=$C 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/1
+---
+N: 0 0 (06) (71e~) | 1e. (0) (05) (52e~) | 2e - 0 6 | (66) 6 (6) 7 (1e~) |
+Lw: Let it go, let it go, can't hold it back a-ny-more.
+---
+N: 1e - (06) (71e~) | 1e. (0) (05) (3e2e~) | 2e - (01e) (2e3e~) | (3e) 3e 4e^ (3e^) (2e^1e^) | 1e - 0 0 |
+Lw: Let it go, let it go, turn a-way and slam% the% door.
+---
+N: 5e. (3e~) 3e 2e~ | 2e 0 1e (1e1e) | (5e) 5e (3e~) 3e 1e~ |
+Lw: I don't care what they are go-ing to say.
+---
+N: 1e - 0 (1e1e) | 7^ (5^5~) 5 5~ | 5 - 0 (01) |{w=1.2} 4 (43) (44) (34) | (31~) 1 (41) (43~) |
+Lw: Let the storm% rage on. The cold ne-ver bo-thers me a-ny-way.
+`
+} />
+
+<C.HintSolution>
+<C.Hint>
+
+如果你认为在代码中寻找某个音符是个苦差事，尝试在预览视图中单击一下这个音符，会有奇效。
+
+此外，请注意理解装饰音符的展开规则。
+
+</C.Hint>
+<C.Solution>
+
+<C.RealtimeScore efRange={[1,17]} children={
+`P: 1=$C 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/1
+---
+// highlight-next-line
+N: 0 0 (06) (71e~) | 1e. (0) (05) (52e~) | 2e - 0 6[((1e))] | (66) 6 (6) 7 (1e~) |
+Lw: Let it go, let it go, can't hold it back a-ny-more.
+---
+// highlight-next-line
+N: 1e - (06) (71e~) | 1e. (0) (05) (3e2e[(3e)]~) | 2e - (01e)(2e3e~) | (3e) 3e 4e^ (3e^) (2e^1e^) | 1e[(2e)] - 0 0 |
+Lw: Let it go, let it go, turn a-way and slam% the% door.
+---
+// highlight-next-line
+N: 5e[str]. (3e~) 3e 2e~ | 2e 0 1e (1e1e) | (5e[str]) 5e (3e~) 3e 1e~ |
+Lw: I don't care what they are go-ing to say.
+---
+// highlight-next-line
+N: 1e - 0 (1e1e) | 7^ (5^5~) 5 5~ | 5 - 0 (01) |{w=1.2} 4[str] (43) (44) (34) | (31~) 1 (41) (43~) |
+Lw: Let the storm% rage on. The cold ne-ver bo-thers me a-ny-way.
+`
+} />
+
+</C.Solution>
+</C.HintSolution>
+</C.Challenge>
+
+<C.Challenge title='展开装饰音符'>
+
+试将上文中提到的装饰音符例子改写成非装饰音符的形式，但不改变原来的旋律。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=D 4/4
+---
+// highlight-next-line
+N: (61)(54)(51) 3[p((5))] | (46d) (31) 2[((23))] 0[p((5d))] | (55d) (51) 2 0[p((7d))] | (16d) (16) 5 0 |
+`
+} />
+
+<C.HintSolution>
+<C.Hint>
+
+如果有困难，请再仔细阅读并理解一下装饰音符的展开规则。被装饰音符为休止符时，这些规则同样适用。
+
+</C.Hint>
+<C.Solution>
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=D 4/4
+---
+// highlight-next-line
+N: (61)(54)(51) (3.(5)) | (46d) (31) ((23)2) (0.(5d)) | (55d) (51) 2 (0.(7d)) | (16d) (16) 5 0 |
+`
+} />
+
+</C.Solution>
+</C.HintSolution>
+</C.Challenge>
+
+</C.Challenges>
+
+## 接下来... {#then}

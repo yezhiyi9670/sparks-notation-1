@@ -1,0 +1,21 @@
+{
+  "name": "sparks-notation",
+  "version": "0.0.0",
+  "description": "A natural text format for composing numbered music notation or guitar tabulate scores, formerly known as Sparks NMN.",
+  "repository": "https://github.com/yezhiyi9670/sparks-notation",
+  "author": "yezhiyi9670 <yezhiyi9670@sparks-lab.art>",
+  "license": "Apache-2.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "packageManager": "yarn@4.5.1",
+  "devDependencies": {
+    "@types/path-browserify": "^1.0.3",
+    "eslint": "^9.14.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10"
+  }
+}

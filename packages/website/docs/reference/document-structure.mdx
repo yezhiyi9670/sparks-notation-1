@@ -1,0 +1,151 @@
+---
+sidebar_position: 1
+description: 文档整体宏观结构的概述
+---
+import C from '@site/src/mdx'
+import * as Cd from '@site/src/mdx/reference/commands'
+
+# 文档整体结构 {#document-structure}
+
+本节概述了整个文档如何由一行一行一行的指令构成。
+
+## 行的结构 {#line-structure}
+
+### 指令、分割线与注释 {#comments}
+
+所有行在第一轮处理时全部被令牌化（Tokenize），因此下面所说的符号，双引号引起的字符串内都不算。
+
+- 除了空格外，仅由 `-` 或 `=` 中的一种字符构成的行，解析为分割线。
+  - `=` 构成的分割线为**章节分割线**。
+  - `-` 构成的分割线为**碎片分割线**。
+- 每行中第一个 `//` 以及其后的所有文本都会被作为注释并被忽略掉。
+- 指令行规则如下：
+  - 由一个单词开头，含有至少一个 `:`，就是指令行。第一个冒号作为头部和内容的分界线。
+  - 如果头部满足 `<单词>[<任意内容>]:` 的格式，方括号内会被作为属性。
+
+### 软折行 {#soft-wrap}
+
+在一行的末尾添加反斜杠 `\`（反斜杠后不能再有空格），下一行会被认为是这一行内容的延续，像这样：
+
+<C.ScoreExample canLoad>{
+`P: 1=C 4/4
+N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |\\
+   5 5 4 4 | 3 3 2 - | 5 5 4 4 | 3 3 2 - |\\
+   1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |
+`
+}</C.ScoreExample>
+
+:::info 谨慎使用
+
+大多数情况下，这个特性只应该用于渲染属性行上。如果你需要在音符或歌词行上用到，请考虑一下碎片是否写得太长了，如果是这样，应当进行拆分。
+
+:::
+
+## 文档的结构 {#document-structure}
+
+### 第零层：文档 {#st-document}
+
+<C.ScoreExample>{
+`<文档头>
+[可选的分割线: ====]
+<章节1>
+====
+<章节2>
+====
+<...>`
+}</C.ScoreExample>
+
+文档头包含这些指令：
+
+<Cd.CommandReference level={0} />
+
+- 文档头中所有指令的属性均直接作为文本处理。
+- 目前，尾注文本 `Df` 会显示在整个乐谱的末尾（这一行为未来可能改变），因此也可以添加在整个文档最后，而不必在开头。<C.MinVersion min='Sparks NMN 1.14.16' inline />
+
+:::info 提示
+
+如果你不明白这里在说什么，请确保你看过[教程部分的第一节](/docs/tutorial-basics/simplest-melody)。
+
+:::
+
+### 第一层：章节 {#st-article}
+
+#### 文本章节 {#st-article-text}
+
+<C.ScoreExample>{
+`<若干指令>`
+}</C.ScoreExample>
+
+包含这些指令：
+
+<Cd.CommandReference level={1} special />
+
+#### 音乐章节 {#st-article-music}
+
+<C.ScoreExample>{
+`<章节头>
+[可选的分割线: ---]
+<碎片1>
+---
+<碎片2>
+---
+<...>`
+}</C.ScoreExample>
+
+章节头包含这些指令：
+
+<Cd.CommandReference level={1} />
+
+### 第二层：碎片 {#st-fragment}
+
+<C.ScoreExample>{
+`<碎片头>
+<声部1>
+<声部2>
+<...>`
+}</C.ScoreExample>
+
+碎片头包含这些指令：
+
+<Cd.CommandReference level={2} />
+
+:::caution 注意
+
+渲染属性 `Frp` 中只有 `n` 是有效的，其他属性会被忽略。
+
+:::
+
+### 第三层：声部 {#st-part}
+
+<C.ScoreExample>{
+`<声部头>
+<歌词行1>
+<歌词行2>
+<...>`
+}</C.ScoreExample>
+
+声部头包含这些指令：
+
+<Cd.CommandReference level={3} />
+
+:::caution 注意
+
+声部头中，`N` 或 `Na` 应该写在最前面。然而，每个碎片第一个声部的标记符号行 `A` 也可以写在 `N` 或 `Na`，有时这种写法是比较直观的。
+
+:::
+
+### 第四层：歌词行 {#st-lyrics}
+
+<C.ScoreExample>{
+`<歌词行>`
+}</C.ScoreExample>
+
+歌词行包含这些指令：
+
+<Cd.CommandReference level={4} />
+
+:::caution 注意
+
+歌词行中，`L` `Lc` 或 `Lw` 应该写在最前面。
+
+:::

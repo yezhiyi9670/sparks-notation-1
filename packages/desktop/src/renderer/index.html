@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self';" />
+	<link rel="stylesheet" href="/style/normalize.css" />
+	<style>
+		html {
+			height: calc(100vh);
+			overflow: hidden;
+		}
+		body {
+			height: calc(100vh);
+			overflow: hidden;
+			text-rendering: optimizeSpeed;
+		}
+	</style>
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="root" style="height:100%">
+		<div class="root-loading" style="padding: 12px 24px">
+			<p>Loading required resources, add some patience...</p>
+			<p style="display: flex; flex-direction: row; width: 100%; max-width: 400px">
+				<span style="background: #0002; flex: auto; position: relative;">
+					<span class="root-bar-in" style="position: absolute; display: block; height: 100%; width: 0%; background: #000;"></span>
+				</span>
+				<span style="margin-left:8px; flex: 0; min-width: 2.5em;">
+					<span class="root-progress">N</span>/<span class="root-total">A</span>
+				</span>
+			</p>
+		</div>
+	</div>
+	<script src="./index.tsx" type="module"></script>
+</body>
+
+</html>

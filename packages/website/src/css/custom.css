@@ -1,0 +1,103 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #9575cd;
+  --ifm-color-primary-dark: #835dc4;
+  --ifm-color-primary-darker: #7a52c0;
+  --ifm-color-primary-darkest: #623ca5;
+  --ifm-color-primary-light: #a78dd6;
+  --ifm-color-primary-lighter: #b098da;
+  --ifm-color-primary-lightest: #cbbce7;
+}
+:root {
+  --docusaurus-highlighted-code-line-bg: #e4def5;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+@media(max-width: 440px) {
+  html {
+    font-size: 0.92em;
+  }
+}
+
+
+/* Challenge tabs */
+.tabs.challenge-tabs>li {
+  padding: 0.50rem var(--ifm-tabs-padding-horizontal);
+  border-bottom: 4px solid;
+  border-bottom-color: var(--ifm-color-secondary);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.tabs.challenge-tabs>li:hover {
+  background-color: transparent;
+}
+.tabs.challenge-tabs>li:not(:first-child) {
+  margin-left: 1rem;
+}
+.tabs.challenge-tabs>li.tabs__item--active {
+  border-bottom-color: var(--ifm-color-info);
+}
+.challenges-group>div {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  --ifm-link-color: var(--ifm-color-primary-dark);
+  --ifm-link-hover-color: var(--ifm-color-primary-dark);
+  --ifm-link-decoration: none;
+  /* padding-top: 0.67rem; */
+}
+.challenges-group>div>div:first-child {
+  /* display: none; */
+}
+
+/* Alert links */
+.alert a {
+  text-decoration-thickness: 2px;
+}
+.challenges-group>div a {
+  text-decoration-color: var(--ifm-link-color);
+}
+.challenges-group>div a:hover {
+  text-decoration-thickness: unset;
+}
+
+/* Code block stripped */
+.code-block-strip,
+.score-example-preserved .token-line:not(.code-block-preserve) {
+  visibility: hidden;
+}
+.code-block-strip>*,
+.score-example-preserved .token-line:not(.code-block-preserve)>* {
+  display: none !important;
+}
+
+/* Full page layout support, for guide page */
+.mainWrapper_node_modules-\@docusaurus-theme-classic-lib-theme-Layout-styles-module.docsWrapper_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-styles-module {
+  flex-direction: row;
+}
+.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
+  position: relative;
+}
+
+/* Realtime Score */
+.codeBlockContainer_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Container-styles-module.theme-code-block {
+  
+}
+.img_node_modules-\@docusaurus-theme-classic-lib-theme-MDXComponents-Img-styles-module {
+  
+}

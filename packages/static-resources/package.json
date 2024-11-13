@@ -1,0 +1,21 @@
+{
+  "name": "@sparks-notation/static-resources",
+  "version": "1.15.1",
+  "description": "A natural text format for composing numbered music notation or guitar tabulate scores, formerly known as Sparks NMN.",
+  "main": "index.js",
+  "author": "yezhiyi9670 <yezhiyi9670@sparks-lab.art>",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build-wrapper": "vite build ./printing-wrapper && tsx printing-wrapper/wrapper-builder.ts"
+  },
+  "devDependencies": {
+    "@sparks-notation/core": "workspace:^",
+    "@types/jquery": "^3.5.32",
+    "@types/node": "^22.9.0",
+    "jquery": "^3.7.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@sparks-notation/react-editor",
+  "version": "1.15.1",
+  "description": "A natural text format for composing numbered music notation or guitar tabulate scores, formerly known as Sparks NMN.",
+  "main": "index.js",
+  "author": "yezhiyi9670 <yezhiyi9670@sparks-lab.art>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-slider": "^1.2.1",
+    "@sparks-notation/core": "workspace:^",
+    "@sparks-notation/util": "workspace:^",
+    "@types/jquery": "^3.5.32",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/web": "^0.0.178",
+    "ace-builds": "^1.36.4",
+    "jquery": "^3.7.1",
+    "promise-worker": "^2.0.1",
+    "react": "^18.3.1",
+    "react-ace": "^13.0.0",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-jss": "^10.10.0",
+    "tone": "15.0.4",
+    "vorbis-encoder-js": "^1.0.2"
+  }
+}

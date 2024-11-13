@@ -1,0 +1,54 @@
+---
+sidebar_position: 3
+description: 调节显示方式、布局和字体
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/renderprops'
+
+# 渲染属性 {#render-props}
+
+渲染属性是调整布局和渲染的参数，以若干 `<键>=<值>` 的格式写在 `Rp:` 或 `Srp:` 开头的行中。这是一个例子：
+
+<C.ScoreExample>{
+`Rp: n=3 debug=false font_lyrics=Roman,CommonSerif/600/0.95`
+}</C.ScoreExample>
+
+:::caution 常见错误
+
+渲染属性行是按空格分割的，因此单个属性内部不能有空格。例如不能将 `n=3` 写成 `n = 3`。
+
+:::
+
+:::tip 提示
+
+当渲染属性行变得过长难以编辑的时候，可以使用[软折行](/docs/reference/document-structure#soft-wrap)将其分行。
+
+:::
+
+## 所有渲染属性 {#all-render-props}
+
+<Cr.RenderPropsReference />
+
+- `page` 类型指定页面高度与宽度之比，设置后将启用页面精排模式和页脚。这一属性只在 `Rp:` 开头的行中有效。
+  - 可以设置为数字，例如 `1.4142`。
+  - 可以设置为 `A2` `A3` `A4` `A5` `A6` 或 `B3` `B4` `B5`。
+  - 可以描述页面的高度与宽度，例如 `29.7/21.0`，Sparks NMN 将自动计算比值。
+  - 设置为 `0`，将禁用页面精排。
+- `boolean` 类值应当为 `true` 或 `false`。
+- 边距与间距选项的单位是 `em`，表示页面宽度的 $\frac{1}{122}$。
+- `font` 类的写法应当是 `<字体名>/<字重>/<大小>`。
+  - 字重和大小可以省略。
+  - 字重参考值：`400` - 普通，`700` - 加粗。
+  - 大小指的是相对默认大小的倍数。
+  - 字体名中的空格用下划线 `_` 代替，名称中原来的下划线用两个连续的下划线 `__` 代替。
+  - 字体名称可以是多个字体，使用逗号 `,` 隔开，例如 `Roman,CommonSerif`。**注意逗号后不能有空格**。
+
+## 关于字体的信息 {#font-info}
+
+import FontInfo from '../_common/font-info.mdx'
+
+<FontInfo />
+
+## 那 Frp 呢？
+
+你可能看到**碎片**也能拥有渲染属性，写在 `Frp:` 开头的行中。事实是，在 `Frp:` 开头的行中，只有 `n` 属性是有效的，其他都会被忽略。

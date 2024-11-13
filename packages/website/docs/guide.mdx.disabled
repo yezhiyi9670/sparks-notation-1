@@ -1,0 +1,14 @@
+---
+sidebar_position: 1.5
+hide_title: true
+title: 导读
+pagination_prev: null
+pagination_next: null
+---
+import C from '@site/src/mdx'
+
+<C.FullContainer>
+
+<C.GuideScreen />
+
+</C.FullContainer>

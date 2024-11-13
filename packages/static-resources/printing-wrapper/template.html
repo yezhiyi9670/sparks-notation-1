@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+		/*{script:content:flags}*/
+	</script>
+	<style>
+		/*{style:core:equifield/equifield.css}*/
+	</style>
+	<script type="text/javascript">
+		/*{script:built:wrapperjs.js}*/
+	</script>
+	<style>
+		/*{style:dynamic:fonts.css}*/
+	</style>
+	<script type="text/javascript">
+		/*{script:content:data}*/
+	</script>
+	<style>
+		html {
+			margin: 0;
+			padding: 0;
+			background-color: #FFF;
+		}
+		body {
+			margin: 0;
+			padding: 0 8px;
+		}
+		.preview-container {
+			width: 100%;
+			max-width: 1000px;
+			padding: 16px 0;
+			margin: 0 auto;
+		}
+		@page{
+			margin-left: 0cm;
+			margin-right: 0cm;
+			margin-top: 8.0vw;
+			margin-bottom: 8.0vw;
+		}
+		@media print {
+			html, body {
+				padding: 0;
+				margin: 0;
+			}
+			.preview-container {
+				width: unset;
+				max-width: unset;
+				padding: 0;
+				margin: 0;
+			}
+			.wcl-equifield-field[data-label=pageSeparator] {
+				display: none
+			}
+		}
+		.preview-equifield {
+			/* background-color: #f0f4; */
+		}
+		.SparksNMN-validation {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="preview-container">
+		<div class="preview-equifield">
+			<p>Loading preview...</p>
+		</div>
+	</div>
+	<script>
+		const renderDocument = () => {
+			const ef = new Equifield($('.preview-equifield')[0]);
+			if(!('efData' in window)) {
+				// Say something about what this is if somebody try to open the template in browser
+				ef.render([
+					{
+						element: $('<span style="font-size:3em;font-weight:700;color:#000">SparksNMN Preview Template</span>')[0],
+						height: 6
+					},
+					{
+						element: $('<span style="font-size:1.95em;color:#000;">This is the template file for generating HTML previews.</span>')[0],
+						height: 3
+					},
+					{
+						element: $('<span style="font-size:1.95em;color:#000;">You should not open it directly. Here\'s nothing useful.</span>')[0],
+						height: 3
+					}
+				])
+			} else {
+				ef.render(efData.map((section) => {
+					const { element, ...other } = section
+					return {
+						element: $(element)[0],
+						...other
+					}
+				}))
+			}
+			if(location.hash == '#print') {
+				setTimeout(() => window.print(), 1)
+			}
+		};
+	</script>
+	<script>
+		/*{style:dynamic:fonts-loader.js}*/
+	</script>
+	<script>
+		window.fontCdnRoot = 'https://fastly.jsdelivr.net/gh/yezhiyi9670/sparks-notation-1@latest/packages/static-resources/core-resources/font'
+		const fontDataProcessed = window.fontLoadData.map(item => {
+			const url = item.url
+			const urlList = []
+			if(window.localFontLocation) {
+				urlList.push(window.localFontLocation + '/' + url)
+			}
+			urlList.push(window.fontCdnRoot + '/' + url)
+			return {
+				...item,
+				url: urlList
+			}
+		})
+		FontLoader.loadFonts(fontDataProcessed, renderDocument)
+	</script>
+</body>
+</html>

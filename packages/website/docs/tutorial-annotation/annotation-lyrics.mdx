@@ -1,0 +1,80 @@
+---
+sidebar_position: 3
+description: 在没有音符的位置标记歌词文本
+---
+import C from '@site/src/mdx'
+
+# 标记型歌词 {#annotaion-lyrics}
+
+标记型歌词是一种类似标记符号的语法，用于在没有音符的位置插入歌词。这样的歌词在音乐剧乐谱等场景中较为常见，一般用来表示没有固定节奏的台词或念白。
+
+## 标记型歌词语法 {#syntax}
+
+标记型歌词行是依附于一般歌词行的结构，与标记符号行格式是相同的，但是以 `La:` 开头，添加在歌词行对应的 `L` `Lc` 或 `Lw` 下方。
+
+<C.RealtimeScore efRange={[25,29]} children={
+`Dp: 电影《冰雪奇缘》曲集 - 03
+Dt: For the First Time in Forever
+Dv: Version 20220229
+P: 1=F3 4/4 qpm=102 可变拍速(+5,-10)
+Rp: n=3 grayout=true left_separator=false explicitmarkers=false \
+    font_lyrics=Roman,CommonSerif/600/0.93
+====
+N["A."]: - - - (0.(5)) |{w=2.5} ((5555~))((5)3(4~))((4)1e(1e~)) (1e 0) | 
+Lw: The win-dow was o-pen so's that door,
+---
+N["A."]: /{w=2.5} ((3e3e3e3e))(2e1e)(52e) (2e.(3e)) |
+Lw: I didn't know they did that a-ny-more, who
+---
+Frp: n=3
+N["A."]: (3e(2e3e~))((3e)4e(5e~))((5e)1e(5~))(52e~) |{"略微减慢", w=0.48} (2e2e~) 2e - (0.(5)) |
+Lw: knew we owned eight thou-sand sa-lad plates. For
+---
+Frp: n=3
+N["A."]: /{"恢复速度", "每小节结尾略微减慢"} (5(55~))((5)3(4~))((4)1e(1e~)) (1e0) | ((3e3e3e2e~))(2e1e)(51e)(2e0) |
+Lw: years I roamed these emp-ty halls, why have a ball-room with no balls.
+---
+N["A."]: (3e(1e2e~))((2e)1e(3e~))((3e1e1e2e~))((2e)1e(3e~)) |{"恢复正常节奏", w=0.5} 3e - - (0(71e)) |
+Lw: Fi-nal-ly they'll o-pe-ning up the gates. There'll be
+---
+N["A."]: (2e2e)(1e7)(75) 0 | T(2e2e2e) T(2e1e7) 5 (0.(3e)) | (4e2e)(3e2e)(4e2e)(3e2e) {"末尾略微减慢"}|
+Lw: ac-tual real life peo-ple, it will be to-tal-ly strange, but wow am I so rea-dy for this
+---
+Frp: n=4
+N["A."]: /{"  ", 1=F4} 2 - (03)(34) ||["B"] 
+Lw: change. 'Cause for the
+---
+Frp: n=4
+N["A."]: 5 1 1 (23~) | (36d~) 6d 0 (6d5d) | (5d) 2 (2~) 2 (33~) | 3 - 0(34) |
+Lw: first time in for-e-ver, there'll be  mu-sic, there'll be light. For the
+---
+N["A."]: 5 1 1 (23~) | (35~) 5 0 (23) |{w=1.1} 4 (32~) 2 (12~) |
+Lw: first time in for-e-ver, I'll be dan-cing through the night
+---
+Frp: n=4
+N["A."]: /{w=0.5} 2 - - (0.(2)) |{w=1.35} ((2111))((1112~))(23)((01)1) |{w=0.8} (12)(36)6 - |{2/4, w=0.6} (03)(34) |
+Lw: Don't know if I'm e-la-ted or gas-sy, but I'm some-where in that zone. 'Cause for the
+---
+// preserve-start
+Frp: n=4
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 - - | 0 0 (43)(2.(1)) |{qpm=126} 1 - - - |
+Lw: first time in for-e-ver, I won't be a-lone.
+// highlight-next-line
+La: 0 | 0 | 0 | 0 0 "I can't wait"
+---
+N["A."]: 0 0 0 0 | 0 0 0 0 |{2/4, 1=#F3, w=0.6} 0 (05) ||["C"]
+Lw: To-
+// highlight-next-line
+La: "to meet everyone!" 0 0 "Oh!" | (0) "What if I meet," (0) 0 "the one?" |
+// preserve-end
+---
+// 后略`
+} />
+
+在 28-30 三个小节中，“I can't wait to meet everyone! Oh! What if I meet, the one?”一段歌词属于念白内容，上方没有任何音符，表明这些念白的节奏并不重要。
+
+标记型歌词行的“音符”只能是文本标记，而不能是力度或和弦标记。
+
+## 接下来... {#next}
+
+Sparks NMN 的教程部分到这里就结束了。后面的[记号速查表](/docs/category/记号速查表)只是一个速查表，你现在不需要阅读。不过，如果你未来忘了某个记号的写法，这个速查表可能就有用了。

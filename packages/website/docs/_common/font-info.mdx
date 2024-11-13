@@ -1,0 +1,29 @@
+import C from '@site/src/mdx'
+
+为了确保默认显示效果的一致性，Sparks NMN 内置了八个字体，如下：
+
+- `SparksNMN-EOPNumber`，这是曲谱音符数字、节奏记号、特殊音符 `-` 以及附点所使用的字体。
+- `SparksNMN-mscore-20`，这是来自 [MuseScore](https://musescore.org/zh-hans) 的字体，包含力度记号和部分音乐符号。
+- `SparksNMN-Bravura`，包含部分音乐符号和小节线。
+- `Roman`，这是类似 Times New Roman 的有英文衬线字体，**仅包含英文字符**，往往和 CommonSerif 配合使用。
+- `RomanItalic`，这是类似 Times New Roman 斜体的英文字体，**仅包含英文字符**，用于一些特殊的记号。
+- `CommonSerif`，代表**经过修改**的类宋体字体 AR PL UMing，类似于 Windows 系统的中易宋体。
+- `CommonBlack`，**不包含粗体**，为文泉驿微米黑，其加粗形式也用于显示音符 `_`，类似于 Windows 系统的微软雅黑。
+- `CommonLight`，其“常规”对应 Noto Sans SC 的细体，“粗体”对应 Noto Sans SC 的常规体，用于取代（但并不像）Windows 系统的方正等线。
+
+只使用这些字体，可以保证乐谱在不同设备上显示效果的一致性（在打印时也会应用）。其他字体将会从系统中加载。
+
+<C.SpoilerAlert variant='tip' title='提示' desc='字体一般不能自由地使用，否则会面临侵犯著作权的风险，因此 Sparks NMN 选择内置了可以免费商用的字体。下面是关于这些字体的授权信息。'>
+
+- `SparksNMN-EOPNumber`（简谱数字），授权信息不明确，但坊间多有使用。
+- `SparksNMN-mscore-20`（Emmentaler），通过 GPLv3 授权，允许免费商用。特别地，GPLv3 不会传染使用此字体的文档。
+- `SparksNMN-Bravura`（Bravura），通过 Open Font License 授权，允许免费商用。
+- `Roman`（Nimbus Roman No9 L，已修改），Times 系列字体，通过 GPL 授权，允许免费商用。特别地，GPL 不会传染使用此字体的文档。
+- `RomanItalic`（Nimbus Roman No9 L Italic，已修改），Times 系列字体，通过 GPL 授权，允许免费商用。特别地，GPL 不会传染使用此字体的文档。
+- `CommonSerif`（AR PL UMing，已修改），通过 AR PL 1999 授权，允许免费商用。
+- `CommonBlack`（文泉驿微米黑），通过 Apache License 2.0 授权，允许免费商用。
+- `CommonLight`（Noto Sans SC），通过 Open Font License 授权，允许免费商用。
+
+字体的授权文件包含在此项目 Github 仓库的 `src/nmn/font/` 目录下。
+
+</C.SpoilerAlert>

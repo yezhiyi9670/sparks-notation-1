@@ -1,0 +1,66 @@
+---
+sidebar_position: 5
+description: 控制各种行前后的间距
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/renderprops'
+
+# 控制行间距 {#adjust-margin}
+
+默认情况下，为了保证良好的可读性并且容纳各类记号，Sparks NMN 的排版是多少有些“浪费纸”的。因此，你可以通过一些选项来调整行间距，使得乐谱变得更加紧凑。
+
+## 所有间距选项 {#all-options}
+
+<Cr.RenderPropsReference filters={['margin']} />
+
+- 所有间距及负间距的单位均为 `em`，表示页面宽度的 $\frac{1}{122}$。
+
+## 自己试一试 {#demo-document}
+
+我们以这份文档演示所有能调节间距的位置，以方便你进行尝试。
+
+<C.ScoreExample canLoad children={
+`Rp: offset_lyrics_iter=0.5 font_lyrics=Roman,CommonSerif/600/0.9 \\
+// highlight-next-line
+    margin_after_props=2
+///////////////////////
+Dp: 示例文档
+Dv: Sparks NMN 1.8.1
+Dt: 行间距属性示例文档
+Ds: 副标题
+Da[编辑]: yezhiyi9670
+P: 1=C 4/4
+Df: 此文档展示了各种调节行间距的位置。请勿尝试演唱此片段，后果自负！
+====
+S: 文本章节
+T: Hello, world!
+T: Hello, world!
+T: Hello, world!
+====
+S: 音乐章节
+---
+N["P1"]: 1 - - - | 2 - - - | 3 - - - | 4 - - - ||["B"]
+Lw[1.]: Do Re Mi Fa
+Lw[2.]: La Ti Do Re
+N["P2"]: 0 0 0 0 | 0 0 0 0 | 1 - - - | 2 - - - ||["B"]
+Lw[1.]: Do Re
+Lw[2.]: La Ti
+---
+N["P1"]: 5 - - - | 6 - - - | 7 - - - | 1e - - - |
+Lw[1.]: Sol La Ti Do
+Lw[2.]: Mi Fa Sol La
+N["P2"]: 3 - - - | 4 - - - | 5 - - - | 6 - - - |
+Lw[1.]: Mi Fa Sol La
+Lw[2.]: Do Re Mi Fa
+---
+N["P2"]: 7 - - - | 1e - - - | 5[hold]* - - - | 1^ - - 0 |||
+Lw[1.]: Ti Do Ah_{1}
+Lw[2.]: Sol La Oh_{1}
+`
+} />
+
+## 接下来... {#next}
+
+<!--接下来我们抽象地介绍一下 Sparks NMN 是如何调整音符和歌词的位置以防止它们重叠的。当然，这部分是可以跳过的。-->
+
+下一章，反复与区分，将会介绍如何在 Sparks NMN 中使用与反复相关的记号，以避免记谱者和读谱者的重复劳动，达到事半功倍的效果。

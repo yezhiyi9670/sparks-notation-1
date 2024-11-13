@@ -1,0 +1,162 @@
+---
+sidebar_position: 2
+description: 调整标记符号的字体与布局
+---
+import C from '@site/src/mdx'
+import * as Cr from '@site/src/mdx/reference/renderprops'
+
+# 标记符号的字体与布局 {#annotation-layouts}
+
+本节将介绍标记符号字体和布局的相关机制，并简单举例，介绍标记符号的各种用法。
+
+## 标记符号的字体 {#annotation-font}
+
+标记符号的字体由这些属性控制：
+
+<Cr.RenderPropsReference filters={[
+	'font_force',
+	'font_chord',
+	'font_annotation0',
+	'font_annotation1',
+	'font_annotation2',
+	'font_annotation3',
+	'font_annotation4',
+	'font_annotation5',
+	'font_annotation6',
+]} />
+
+其中，力度标记中的文本（形如 `r"cresc."`）由 `font_force` 控制，和弦标记（形如 `c"1d7"`）由 `font_chord` 控制。这两个字体不推荐修改。
+
+自定义文本标记的字体由 `font_annotation` 系列属性决定，具体选择的字体取决于标记行在声部中的次序，从 $1$ 开始编号。若编号超过 $6$，将使用 `font_annotation0`。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+====
+// highlight-start
+Srp: font_annotation0=CommonSerif/600/1.2 \\
+     font_annotation1=CommonSerif/600/1.0 \\
+     font_annotation2=CommonSerif/600/0.9 \\
+     font_annotation3=CommonSerif/600/0.8 \\
+     font_annotation4=CommonSerif/600/0.7 \\
+     font_annotation5=CommonSerif/600/0.6 \\
+     font_annotation6=CommonSerif/600/0.5
+// highlight-end
+---
+N: ____ | ____ | ____ | ____ |
+A: c"1maj" "1" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "2" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "3" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "4" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "5" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "6" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "7" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+`
+} />
+
+在 `A` 后添加带方括号的数字，可以直接指定使用哪个字体。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+====
+Srp: font_annotation0=CommonSerif/600/1.2 \\
+     font_annotation1=CommonSerif/600/1.0 \\
+     font_annotation2=CommonSerif/600/0.9 \\
+     font_annotation3=CommonSerif/600/0.8 \\
+     font_annotation4=CommonSerif/600/0.7 \\
+     font_annotation5=CommonSerif/600/0.6 \\
+     font_annotation6=CommonSerif/600/0.5
+---
+// preserve-start
+N: ____ | ____ | ____ | ____ |
+A: c"1maj" "1" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+// highlight-next-line
+A[6]: c"1maj" "6" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "3" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "4" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+// highlight-next-line
+A[0]: c"1maj" "0" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+// highlight-next-line
+A[2]: c"1maj" "2" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+A: c"1maj" "7" r"rit." mf | "The quick brown fox jumps over a lazy dog." |
+// preserve-end
+`
+} />
+
+对于不同碎片中的标记行，当且仅当它们在声部中的次序（不能通过方括号修改）以及它们的字体序号（可以通过方括号修改）都相同时，它们才被认为是同一个标记行。
+
+## 标记符号的布局 {#annotation-layout}
+
+标记符号的布局主要包含两部分——横向偏移（避免与同一行内容重叠）以及纵向空间调节（要求或避免与属性、跳房子记号重叠）。
+
+### 横向偏移 {#offset}
+
+有的情况下，标记符号会与同一行的内容发生重叠，这时在标记符号“音符”前添加字符 `+`，就可以将标记符号向右移动 $0.5\rm em$。调节字符可以叠加多个。
+
+<C.RealtimeScore efRange={17} children={
+`P: 1=? 4/4
+---
+N: empty / empty / empty / omit(13) |
+---
+// preserve-start
+N: 4 (46)(5(67~))((76#56)) | (#57)(2e(1e1e~)) 1e (0(67)) | 1e.((2e3e))(4e3e)(3e4e) | 5e - 0 (0(1e7)) |
+// highlight-next-line
+A: +++mf
+// preserve-end
+`
+} />
+
+### 与属性、跳房子记号的重叠 {#overlaps}
+
+当标记符号和小节线的前/后置属性出现在同一小节时，标记符号行会自动抬升以避让小节线属性。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=C4 12/8
+====
+N: (3)3 (345)5(5)(562) | (3)3 (31e7) 1e. 6. | 7(6)#5(#4)3(3)(3#45) |{1=A3} 1e. 1e(1e) 1e. 0. |
+// highlight-next-line
+A: < - - - - - | - - - - - - | f > - - - - | 0. 0. ff |
+`
+} />
+
+有时这可能是不需要的。在相应小节线属性中添加 `*`，即可禁用此机制。此时可以通过其他方法调节来避免重叠。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=C4 12/8
+====
+// highlight-next-line
+N: (3)3 (345)5(5)(562) | (3)3 (31e7) 1e. 6. | 7(6)#5(#4)3(3)(3#45) |{1=A3, *} 1e. 1e(1e) 1e. 0. |
+A: ++< - - - - - | - - - - - - | f > - - - - | 0. 0. ff |
+`
+} />
+
+当跳房子记号下有标记符号时，跳房子记号会抬升以避让。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+---
+N: (1e)7 1e (2e)(3e2e~) | 2e - (05)(53e) |
+---
+J: 1.
+N: 3e. (1e)(2e3e)(5e2e~) | 2e - (1e7)(71e~) !|
+// highlight-next-line
+A: 0 "P1独唱" | 0 0 "P2独唱"
+`
+} />
+
+这可以通过在标记符号行的任意一小节处添加前置或后置属性 `*` 来禁用。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+---
+N: (1e)7 1e (2e)(3e2e~) | 2e - (05)(53e) |
+---
+J: 1.
+N: 3e. (1e)(2e3e)(5e2e~) | 2e - (1e7)(71e~) !|
+// highlight-next-line
+A: /{*} 0 "P1独唱" | 0 0 "P2独唱"
+`
+} />
+
+## 接下来... {#next}
+
+最后，我们介绍如何利用标记符号的语法在没有音符的地方插入歌词。这样的歌词在音乐剧乐谱等场景中较为常见，一般用来表示没有固定节奏的台词或念白。

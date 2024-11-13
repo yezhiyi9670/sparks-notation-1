@@ -1,0 +1,784 @@
+---
+sidebar_position: 4
+description: 向乐谱中添加中文和英文歌词
+---
+import C from '@site/src/mdx'
+
+# 添加歌词 {#adding-lyrics}
+
+本节中，我们将向写好的旋律中添加歌词。Sparks NMN 支持自动划分中文或英文歌词，并自动识别标点，因此，这应该不是太困难的事情。不过，如果这些都不能解决问题，你还可以选择极其麻烦的手动分割。
+
+本节中仅涉及添加单行歌词的情况。多行歌词、歌词编号以及它们与反复记号之间的关系，请见[反复与区分](/docs/category/第三章-反复与区分)章节。
+
+## tl;dr {#tldr}
+
+- 歌词行放置在 `N:` 开头的曲谱行下方。
+- 字基歌词行以 `Lc:` 开头，词基歌词以 `Lw:` 开头，后面跟歌词文本即可自动分割和匹配。
+- 词基歌词需要手动用 `-` 来划分音节。
+- 歌词中，用 `%` 表示占位符，用形如 `%{15}` 的形式缩写多个占位符。
+- `_` 是特殊的占位符，表示下划线延长记号，并且 `_{0}` 也是有意义的。
+- 将歌词中多个字用小括号 `()` 括起，将为它们添加一条下划线，并匹配至同一个音符。
+- Sparks NMN 能够正确处理常见的标点。
+- 角色标记放在双中括号 `[[]]` 中。
+- `Lc:` 开头的行中若要夹杂词基歌词，可以将词基歌词（整体，而非每个音节）用中括号括起 `[]`，即可正确识别。
+- 特殊含义的括号 `()` `[[]]` `[]` 和 `{}` 若要用作标点，可用双引号 `"` 引起。
+
+## 添加歌词文本 {#adding-lyric-text}
+
+添加歌词文本几乎就是复制粘贴的事情。定义歌词的行添加在以 `N:` 开头的曲谱行下方，可以由 `L:` `Lc:` 或 `Lw:` 开头。
+
+### 字基歌词 {#lyric-char}
+
+字基歌词指的是“一个萝卜一个坑”，每个字符恰好占据一个音节的歌词。很明显，中文歌词就属于这一类。
+
+添加字基歌词，只需要在 `N:` 开头的行下方添加 `Lc:`（`LyricChar:` 的缩写）开头的行，并将**该碎片对应的**歌词文本直接写到里面，Sparks NMN 会负责歌词和音符的配对。比如经典儿歌《小星星》：
+
+<C.RealtimeScore efRange={[1,9]} children={
+`P: 1=C 4/4
+---
+N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |
+// highlight-next-line
+Lc: 一闪一闪亮晶晶 满天都是小星星
+---
+N: 5 5 4 4 | 3 3 2 - | 5 5 4 4 | 3 3 2 - |
+// highlight-next-line
+Lc: 挂在天上放光明 好像许多小眼睛
+---
+N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |||
+// highlight-next-line
+Lc: 一闪一闪亮晶晶 满天都是小星星
+`
+} />
+
+歌词中的空格仅仅用来增加代码的可读性，对解析没有任何影响。
+
+:::info 问题
+
+注意到上面音符的配对自动地跳过了延时线。那么，到底哪些音符会被跳过？
+
+- 延时线 `-`。
+- 休止符 `0`。
+- 作为延长连音线右侧音符，而被弱化的音符（见[更复杂的节奏](/docs/tutorial-basics/complicated-beats#connector)章节）。
+
+:::
+
+<C.SpoilerAlert variant='caution' title='常见错误' desc='你可能会发现，一个碎片中多余的歌词会溢出到下一个碎片。但是请不要这么做，因为这破坏了碎片的相对独立性，使得你在复制粘贴时遇到不必要的麻烦。这还会降低可读性。'>
+
+举个例子，上面的《小星星》这样写也是能够正确显示的。
+
+<C.ScoreExample canLoad children={
+`P: 1=C 4/4
+---
+N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |
+// highlight-next-line
+Lc: 一闪一闪亮晶晶 满天都是小星星 挂在天上放光明 好像许多小眼睛 一闪一闪亮晶晶 满天都是小星星
+---
+N: 5 5 4 4 | 3 3 2 - | 5 5 4 4 | 3 3 2 - |
+---
+N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |||
+`
+} />
+
+</C.SpoilerAlert>
+
+### 词基歌词 {#lyric-word}
+
+词基歌词是指基于单词的歌词，其中一个单词可能会有多个音节。英文歌词就是这样的例子。
+
+以英文为例，在乐谱中书写英文歌词时，应当将歌词按音节完全拆开，然后用横线 `-` 连接属于同一个单词的音节，例如：
+
+- every → ev'-ry
+- cascade → cas-cade
+- forever → for-e-ver
+- anyway → a-ny-way
+- needle → nee-dle
+- little → lit-tle
+- deferred → de-fer-red
+- cooperate → co-o-pe-rate | coo-pe-rate
+
+这一步需要你自己来做，因为作为一门自然语言，英语中不规则的词汇实在太多，远非简单的程序规则能够概括。你需要注意的无非这些地方：
+
+- 无论是否重读的元音都算作音节，但是取决于具体唱法，有的轻音节可能被省略，例如 every 常常唱成 ev'-ry 而非 e-ve-ry。
+- 没有元音，即使有元音字母也不算音节。例如 cascade 末尾的 de 不单独作为音节。
+- 元音字母组合总是要组合在一起，例如 forever 会划分成 for-e-ver 而不是 fo-re-ver。
+- 作为元音的主辅音的字母或字母组合，应当和元音分进同一个音节，例如 anyway 划分成 a-ny-way 而不是 an-y-way。
+- 由于发音规则双写的辅音字母总是倾向于分开，例如 little 划分成 lit-tle，deferred 划分为 de-fer-red。
+- 双元音可以划分为一个或两个音节，取决于具体唱法，例如 cooperate。
+
+做好音节划分后，剩下的事情无非就是输入了。词基歌词行以 `Lw:`（`LyricWord:` 的缩写）开头，比如来自《音乐之声》音乐启蒙歌曲《Do Re Mi》：
+
+<C.RealtimeScore efRange={[1,13]} children={
+`Dt: Do Re Mi
+Ds: (原版，不含前情部分)
+Dv: Version 2023-05-22
+P: 1=bB 4/4 qpm=120
+Rp: font_lyrics=Roman,CommonSerif/600
+====
+T: 使用支持移调的键盘按简谱演奏时，请将移调调节为 -2Key。
+====
+// preserve-start
+N: 1. (2)3. (1) | 3 1 3 0 | 2. (3)(44)(32) | 4 - - 0 |
+// highlight-next-line
+Lw: Do, a deer, a fe-male deer. Re, a drop of gol-den sun.
+---
+N: 3. (4)5. (3) | 5 3 5 0 | 4. (5)(66)(54) | 6 - - 0 |
+// highlight-next-line
+Lw: Mi, a name I call my-self. Fa, a long long way to run.
+---
+N: 5. (1)(23)(45) | 6 - - 0 | 6. (2)(3#4)(56) | 7 - - 0 |
+// highlight-next-line
+Lw: Sol, a nee-dle pul-ling thread. La, a note to fol-low sol.
+---
+N: /{w=1.1} 7. (3)(#4#5)(67) |{w=0.9} 1e - 0 (7b7) |
+// highlight-next-line
+Lw: Ti, a drink with jam and bread, that will
+---
+J: 1.
+N: 6 4 7 5 | 1e 5 3 2 {"下一遍加速到", qpm=126}:||
+// highlight-next-line
+Lw: lead us back to Do oh oh oh
+// preserve-end
+---
+J: 2.
+N: 6 4 7 5 {"下一遍加速到", qpm=132}:||
+Lw: lead us back to
+---
+J: 3., "结束句"
+N: 6 4 7 5 |{w=0.85} 1e - - 0 |{w=1.15} (01)(23)(45)(67) | 1e[str] 5[str] 1e[str] 0 |||
+Lw: lead us back to Do. Do Re Mi Fa Sol La Ti Do Sol Do!
+`
+} />
+
+注意到 Sparks NMN 会自动调节音符之间的间距，使得单词不发生粘连或重叠，这在第 13 小节尤为明显。词基歌词的单词之间会至少留有一个字母 `a` 的间距。不过，如果小节的宽度实在不允许... 我们等到[布局](/docs/tutorial-layout/section-lining)章节再介绍吧。
+
+:::caution 注意
+
+同一个碎片，同一个声部中的同一个歌词行只能选择字基歌词或词基歌词中的一种。稍后将会介绍如何处理两种语言的歌词相互夹杂的情况。
+
+:::
+
+### 占位符 {#placeholder}
+
+有的时候我们会刻意地让歌词跳过某个音符。最常见的情况大概是联合连音线了吧。看看我们之前的例子《鲁冰花》副歌：
+
+<C.RealtimeScore noCode efRange={[1,5]} children={
+`P: 1=A 4/4
+---
+N: 2e (2e2e) 6 2e | (7^6^) (5^7^) 6 - | (4) 4 (5) 6 1e | 2e. (7) 6 - |
+// highlight-next-line
+Lc: 天上的星星不%说%话，地上的娃娃想妈妈。
+---
+N: 2e (2e2e) 4e 2e | 1e. (6) 1e (1e^6^) | 5. (6) 5 5 | (3^2^) (1^3^) 2 - |
+// highlight-next-line
+Lc: 天上的眼睛眨呀眨，妈%妈的心呀鲁%冰%花。
+`
+} />
+
+如果直接输入歌词，就会变成这样：
+
+<C.RealtimeScore efRange={[1,7]} children={
+`P: 1=A 4/4
+---
+N: 2e (2e2e) 6 2e | (7^6^) (5^7^) 6 - | (4) 4 (5) 6 1e | 2e. (7) 6 - |
+// highlight-next-line
+Lc: 天上的星星不说话，地上的娃娃想妈妈。
+---
+N: 2e (2e2e) 4e 2e | 1e. (6) 1e (1e^6^) | 5. (6) 5 5 | (3^2^) (1^3^) 2 - |
+// highlight-next-line
+Lc: 天上的眼睛眨呀眨，妈妈的心呀鲁冰花。
+`
+} />
+
+我们希望让歌词跳过联合连音线右端的音符。解决方法是在相应位置输入占位符 `%`。这个符号会占据一个位置，但不会显示任何东西。
+
+<C.ScoreExample canLoad children={
+`P: 1=A 4/4
+---
+N: 2e (2e2e) 6 2e | (7^6^) (5^7^) 6 - | (4) 4 (5) 6 1e | 2e. (7) 6 - |
+// highlight-next-line
+Lc: 天上的星星不%说%话，地上的娃娃想妈妈。
+---
+N: 2e (2e2e) 4e 2e | 1e. (6) 1e (1e^6^) | 5. (6) 5 5 | (3^2^) (1^3^) 2 - |
+// highlight-next-line
+Lc: 天上的眼睛眨呀眨，妈%妈的心呀鲁%冰%花。
+`
+} />
+
+不过，记住，延长连音线右端的音符会自动被弱化从而被跳过，不需要进行占位。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=bB 4/4
+---
+N: (04) (43) (41e~) 1e | (0) 7 (7) 7 6 | 6. (5~) 5 - | 0 0 0 0 |
+// highlight-next-line
+Lc: 才发现世上一切都会变卦。
+`
+} />
+
+这么一来，我们就可以说，字符 `%` 其实不仅仅是表示占位，还表示转音。如果一个字中间出现了转音，那么后面就需要添加占位符，并且转音几次就添加几个。
+
+<C.SpoilerAlert variant='info' title='设计思想' desc={<>
+	为什么占位符是 <code>%</code> 而不是 <code>@</code>？
+</>}>
+
+这也是文本的**相似性**的一部分。
+
+字符 `@` 在我们日常交往中有着明确的意思，表示提及其后面的用户名/人名。如果将其用作占位符，阅读代码的人看到这个字符后跟了一些汉字或单词，则首先会条件反射地联想到这个含义，仔细思考后又发现不是，从而产生一种生疏、别扭的感觉。
+
+相反，字符 `%` 只有在前面是数字的时候才表示“百分之”，而放在一般的文本中则没有很常见很自然的含义。阅读代码的人看到这个字符前后都不是数字，很快就会意识到这个字符不代表“百分之”，并且脑中一片空白，不知道它应该代表什么。此时再告诉他/她这玩意表示“占位符”，则令人感觉容易接受得多。
+
+</C.SpoilerAlert>
+
+当需要连续多个占位符时，可以用形如 `%{13}` 的方式缩写。
+
+### 下划线延长记号 {#underscore}
+
+歌曲中的句末音节有时会拖得特别长，我们可以在音节的后面添加一条长长的下划线以示强调（这是可选特性，并非记谱规范）。这对音乐初学者一般比较有帮助。
+
+添加延长下划线就像添加占位符那样，只不过是使用字符 `_`（也可以使用形如 `_{4}` 的缩写语法）。如果音节只是单纯拖得很长而没有转音，可以添加一个 `_{0}` 缩写，这样会给前一个音节后面添加延长下划线，但不会占据额外位置。
+
+<C.RealtimeScore efRange={[101,105]} children={
+`Dp: 电影《冰雪奇缘》曲集 - 05
+Dt: Let It Go
+Dv: Version 20220203
+P: 1=$C4 4/4 qpm=68 有多个拍速 
+Rp: n=4 grayout=true left_separator=false \
+    font_lyrics=Roman,CommonSerif/600/0.95 font_annotation2=楷体/400/1
+===
+Frp: n=1
+N: omit(100) // 前略
+---
+// preserve-start
+N: 5e[str]. (3e~) 3e 2e~ | 2e 0 1e 1e | 5e[str]. (3e~) 3e (4e^3e) | (3e2e) 1e^~ - - |
+A[2]: "我站在这里，站在新一天的阳光中" | 0 | 0 | 0 |
+// highlight-next-line
+Lw: Here I stand, in the light of day_{4}
+---
+N: 1e - 0 (1e1e) | 7. (1e~) 1e 5e[str]~ | 5e~ - - - | 5e - - (01) |{w=1.3} 4 (43) (44) (34) | (31~) 1 0 0 |||
+A: 0 0 0 f | 0 0 0 ff | < - - - | - - 0 (0 mf) |
+A[2]: 0 0 0 "任那寒风怒号" | 0 | 0 | 0 | "反正寒冷再也无法侵扰我" |
+// highlight-next-line
+Lw: Let the storm rage on_{0} The cold ne-ver bo-thers me a-ny-way.
+// preserve-end`
+} />
+
+为了避免视觉上的混乱感，歌词中的下划线延长是明显比其他线更细的。
+
+:::caution 注意
+
+目前版本中，单个音符的延长下划线只能绘制到一行的末尾，不会自动跨行。不过，这是无伤大雅的，对吧？
+
+:::
+
+### 一音多字 {#multichar}
+
+如果你认真阅读过你的音乐课本（三年级以上），你会知道有时候歌词中的两个音节会占据同一个音，并且书写时会用下划线连起来。这个下划线理解成减时线并不太妥当，因此 Sparks NMN 将其作为一种特殊的记号处理。只要将几个音节放入一个小括号中，即可实现组合并加下划线。
+
+儿化音是这里面最常见的例子。下面例子来自歌曲[《桃花笑》](https://www.kuwo.cn/play_detail/80457820)。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=#C 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/1
+---
+N: 3 (21) 6d 1 | (23) 6 5 0 | (32) (32) 1 2 | 5 3 2 0 |
+// highlight-next-line
+Lc: 月儿在手中开呀(怀儿)笑，云儿在那眼前睡得早。
+`
+} />
+
+不过并非所有儿化音都要被组合进前面的字中。如果“儿”与前面的字有明显的时刻分隔，则不应当组合。上面的例子中你应该也看到了。
+
+## 修饰符号 {#decorations}
+
+只有音节字符的歌词显得有些乏味，有时也有些混乱。因此，我们还有两类可以加到歌词中的符号。
+
+### 标点 {#adding-punctuation}
+
+标点可以直接加入到歌词文本中，Sparks NMN 将会自动识别并根据其类型将其放在合适的位置（可能是某个音节的前面或者后面，称为**前置**或**后置标点**，或者均匀地分布在前后两个音节之间，称为**连接标点**），并且不影响歌词和音符的对齐。下面的例子来自歌曲[《愿得一人心》](https://www.kuwo.cn/play_detail/1967618)。
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=? 4/4
+Rp: font_lyrics=Roman,CommonSerif/600
+---
+N: ~5 (05) (54e) (3e2e) | 3e. 3e (2e) (3e5e) | 5e (05e) (5e4e) (3e2e) | 1e (1e7) (1e7) (1e2e) |
+// highlight-next-line
+Lc: “只愿得一人心，白首不分离”，这简单的话语，需要巨大的勇
+---
+N: 3e (07) (71e) (75) | 6. (6) (6e5e) (5e4e~) | (4e3e~) 3e (01e) (2e3e) | (4e3e) (4e3e) (4e5e) (3e1e) |
+// highlight-next-line
+Lc: 气。没想过失去你，却是在骗自己。最后你深深藏在我的歌声`
+} />
+
+自动布局算法会为标点留出一定宽度。不过，大部分全角标点（例如中文的括号、逗号、句号、引号等）在测量宽度时会按照对应的半角标点处理，以避免它们占用过多的空间。但是若半角标点的宽度不及全角标点的一半，则会使用全角标点的一半。
+
+Sparks NMN 支持大部分常见的中英文标点符号。如果想知道 Sparks NMN 支持的所有标点，请阅读[记号速查表](/docs/reference/lyrics-auto#punctuation)章节。
+
+<C.SpoilerAlert variant='caution' title='常见错误' desc='不要在音节和属于它的标点之间添加占位符，否则那个标点会变成占位符的标点。'>
+
+此例子来自歌曲《Trouble Is a Friend》。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+Rp: font_lyrics=Roman,CommonSerif/600
+---
+N: 5d (5d5d) 7d (7d7d) | 2 2 4 4 | 3.^ (2) 3. (2) | (34) (32) 3^ &int; 3 |
+// highlight-next-line
+Lw: fine for a while but you'll start to lose con-trol%{8}. He's
+`
+} />
+
+这里八个占位符放在了 `trol` 和句点之间，导致句点变成了最后一个占位符的标点。修复方法是将句点移到占位符前面。
+
+</C.SpoilerAlert>
+
+如果要将有特殊含义的括号（例如刚才提到的半角小括号 `()`）用作标点，可以用半角双引号 `"` 将其**单独**引起变成**字符串**。比如下面《熊出没》主题曲中的例子：
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=? 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/0.95
+---
+N: 1 1 3 3 | (2) 1 (6d~)(6d) 5d (5d) | 1 1 (3) 3 (2~) | (2(04d))(4d.(4d))(4d.(5d))(3d.(2d)) |
+// highlight-next-line
+Lc: 冬眠假期刚刚结束，我还有点糊涂。"("啵啵啵啵啵啵啵")"
+---
+N: 1 (1.(1)) (3)3(3) | (2) 1 6d (5d) (6d.(1)) | (2.(1)) (2.(1)) (3) 3 (1~) | (1(04d))(4d.(4d))(4d.(5d))(3d.(2d)) |
+// highlight-next-line
+Lc: 鸟儿在头顶把森林叫醒，春天空气让我很舒服。"("啵啵啵啵啵啵啵")"
+`
+} />
+
+半角引号 `"` 和 `'` 并不能当作常规的引号使用。原因并不是无法表示（事实上可以借助字符串和[转义序列](/docs/reference/escape-sequences#escape-list)表示为 `"\""`），而是无法确定这样的引号是前置还是后置标点。如果有需要，应当使用全角的形式。
+
+- 半角双引号 `"` 始终会被当成一个音节处理。
+- 半角单引号 `'` 在词基歌词中是字母，在字基歌词中是后置标点。
+
+### 自定义标点 {#custom-punctuation}
+
+如果存在一些特殊需求，可以通过符号 `<` `>` 来自定义前置或后置标点。
+
+- `>` 用来连接自定义的前置标点。例如在 `Lc: "...">终究要失去` 中，`...` 会成为 `终` 的前置标点。
+- `<` 用来连接自定义的后置标点。例如在 `Lw: 100<"%"` 中，`%` 成为 `100` 的后置标点。
+- 若标点仅包含一个字符，且不是特殊字符，则双引号可以省略。
+
+### 角色标记 {#adding-role}
+
+有时候一首歌有多个人唱，但是属于“选择性齐唱”的范畴，不足以构成多声部。这种情况下，可以在歌词中添加角色标记。角色标记的语法是双中括号 `[[]]`。显示时，双中括号会自动转换为小括号。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/0.95
+---
+N: (5d3)(35d)(5d2)(20) | (11)(16d)(5d3)(30) | (6d4)(46d)(5d3)(30) | (21)(16d) 1 (05d) |
+// highlight-next-line
+Lc: [[1]]喜欢看你的嘴角，[[2]]喜欢看你的眉梢，[[12]]白云挂在那蓝天，[[23]]像你的微笑。
+`
+} />
+
+自动布局对角色标记的支持并不完善，因为角色标记目前被当作前置标点处理。你也可以看到，做出来效果有亿点难看。
+
+## 特殊的歌词 {#special-lyrics}
+
+有一些特殊的歌词，可能不能单一地用“字基歌词”或“词基歌词”来概括。对于这类歌词，我们仍然采用字基或词基的一种，但是对不符合规则的部分进行特殊处理。
+
+### 字基歌词中夹杂单词 {#mixing-with-words}
+
+字基歌词中夹杂单词是其中一类情况。说人话，就是中文歌词里面夹了点英文。很明显这是非常常见的。
+
+如果直接将这样的歌词以字基歌词的形式输入，那么单词就会被拆成一粒一粒的。下面例子来自歌曲[《爱很美》](https://www.kuwo.cn/play_detail/6446676)。
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+Lc: Oh Ba-by 愿愿愿意我什么都愿意，%抱紧我别错过爱的花期。%
+`
+} />
+
+只需要将词基歌词区间放在中括号内，Sparks NMN 就会正确处理。自动布局算法也会认为这一部分是词基歌词，从而在音节之间留出间距避免粘连。
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+Lc: [Oh Ba-by] 愿愿愿意我什么都愿意，%抱紧我别错过爱的花期。%
+`
+} />
+
+<C.SpoilerAlert variant='info' title='拓展' desc='字基歌词夹杂单词的情况还有其他解决方法，不过都不如中括号优雅。'>
+
+最粗暴的方法是直接改用词基歌词并用空格分开。这样同样保证了单词不会粘连，但是中文字之间也会被留出不必要的间距。并且，对于这种英文单词极少的情况，这样不够优雅。
+
+<C.ScoreExample canLoad children={
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+Lw: Oh Ba-by 愿 愿 愿 意 我 什 么 都 愿 意，%抱 紧 我 别 错 过 爱 的 花 期。%
+`
+} />
+
+也可以使用字基歌词，并将英文音节用双引号引起变成字符串。这么做的缺陷在于歌词被认为是字基歌词，自动布局不会保证单词不粘连。
+
+<C.ScoreExample canLoad children={
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+Lc: "Oh" "Ba"-"by" 愿愿愿意我什么都愿意，%抱紧我别错过爱的花期。%
+`
+} />
+
+如果上述情况中确实出现了粘连，可以在单词之间加一个用双引号引起的空格（作为连接标点）。
+
+<C.ScoreExample canLoad children={
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+Lc: "Oh" " " "Ba"-"by" 愿愿愿意我什么都愿意，%抱紧我别错过爱的花期。%
+`
+} />
+
+这些都是可行的。不过哪有加一个中括号来得直接呢？
+
+</C.SpoilerAlert>
+
+### 歌词中夹杂音标 {#mixing-with-phoenix}
+
+有时候音乐中对歌词的读音有些奇怪的处理，使得我们需要用音标来准确表示一些东西。在 Sparks NMN 中，你可以用中括号的方式将音标以词基歌词的形式写进去，然后再在两侧增加双引号引起的中括号（将有特殊含义的符号用作标点时需要用双引号引起），来告诉读者这是音标。下面的例子来自歌曲[《麦浪》](https://www.kuwo.cn/play_detail/214236980)。
+
+<C.RealtimeScore efRange={1} children={
+`P: 1=? 4/4
+---
+N: (05)(5^3^)(21)(23) | (15)(30)(53)(02~) | (25)(32)(53~) 3 | (5d5)(30)(53)(06~) |
+// highlight-next-line
+Lc: 风往%麦田吹来，在'"["[i-ai i-ai]"]"轻晃着我裙摆，待'"["[i-ai i-ai]"]"你
+`
+} />
+
+这大致相当于，
+
+<C.ScoreExample canLoad children={
+`P: 1=? 4/4
+---
+N: (05)(5^3^)(21)(23) | (15)(30)(53)(02~) | (25)(32)(53~) 3 | (5d5)(30)(53)(06~) |
+// highlight-next-line
+Lc: 风往%麦田吹来，在'"["i-"ai" i-"ai""]"轻晃着我裙摆，待'"["i-"ai" i-"ai""]"你
+`
+} />
+
+不过在布局上会略有不同。
+
+### 标记型歌词 {#annotation-like-lyrics}
+
+有时我们可能需要在没有音符的位置标记歌词，比如在歌曲《First Time in Forever》中，
+
+<C.RealtimeScore efRange={[25,29]} children={
+`Dp: 电影《冰雪奇缘》曲集 - 03
+Dt: For the First Time in Forever
+Dv: Version 20220229
+P: 1=F3 4/4 qpm=102 可变拍速(+5,-10)
+Rp: n=3 grayout=true left_separator=false explicitmarkers=false \
+    font_lyrics=Roman,CommonSerif/600/0.93
+====
+N["A."]: - - - (0.(5)) |{w=2.5} ((5555~))((5)3(4~))((4)1e(1e~)) (1e 0) | 
+Lw: The win-dow was o-pen so's that door,
+---
+N["A."]: /{w=2.5} ((3e3e3e3e))(2e1e)(52e) (2e.(3e)) |
+Lw: I didn't know they did that a-ny-more, who
+---
+Frp: n=3
+N["A."]: (3e(2e3e~))((3e)4e(5e~))((5e)1e(5~))(52e~) |{"略微减慢", w=0.48} (2e2e~) 2e - (0.(5)) |
+Lw: knew we owned eight thou-sand sa-lad plates. For
+---
+Frp: n=3
+N["A."]: /{"恢复速度", "每小节结尾略微减慢"} (5(55~))((5)3(4~))((4)1e(1e~)) (1e0) | ((3e3e3e2e~))(2e1e)(51e)(2e0) |
+Lw: years I roamed these emp-ty halls, why have a ball-room with no balls.
+---
+N["A."]: (3e(1e2e~))((2e)1e(3e~))((3e1e1e2e~))((2e)1e(3e~)) |{"恢复正常节奏", w=0.5} 3e - - (0(71e)) |
+Lw: Fi-nal-ly they'll o-pe-ning up the gates. There'll be
+---
+N["A."]: (2e2e)(1e7)(75) 0 | T(2e2e2e) T(2e1e7) 5 (0.(3e)) | (4e2e)(3e2e)(4e2e)(3e2e) {"末尾略微减慢"}|
+Lw: ac-tual real life peo-ple, it will be to-tal-ly strange, but wow am I so rea-dy for this
+---
+Frp: n=4
+N["A."]: /{"  ", 1=F4} 2 - (03)(34) ||["B"] 
+Lw: change. 'Cause for the
+---
+Frp: n=4
+N["A."]: 5 1 1 (23~) | (36d~) 6d 0 (6d5d) | (5d) 2 (2~) 2 (33~) | 3 - 0(34) |
+Lw: first time in for-e-ver, there'll be  mu-sic, there'll be light. For the
+---
+N["A."]: 5 1 1 (23~) | (35~) 5 0 (23) |{w=1.1} 4 (32~) 2 (12~) |
+Lw: first time in for-e-ver, I'll be dan-cing through the night
+---
+Frp: n=4
+N["A."]: /{w=0.5} 2 - - (0.(2)) |{w=1.35} ((2111))((1112~))(23)((01)1) |{w=0.8} (12)(36)6 - |{2/4, w=0.6} (03)(34) |
+Lw: Don't know if I'm e-la-ted or gas-sy, but I'm some-where in that zone. 'Cause for the
+---
+// preserve-start
+Frp: n=4
+N["A."]: /{4/4} 5 1 1 (23~) | (35~) 5 - - | 0 0 (43)(2.(1)) |{qpm=126} 1 - - - |
+Lw: first time in for-e-ver, I won't be a-lone.
+// highlight-next-line
+La: 0 | 0 | 0 | 0 0 "I can't wait"
+---
+N["A."]: 0 0 0 0 | 0 0 0 0 |{2/4, 1=#F3, w=0.6} 0 (05) ||["C"]
+Lw: To-
+// highlight-next-line
+La: "to meet everyone!" 0 0 "Oh!" | (0) "What if I meet," (0) 0 "the one?" |
+// preserve-end
+---
+// 后略`
+} />
+
+在 28-30 三个小节中，“I can't wait to meet everyone! Oh! What if I meet, the one?”一段歌词属于念白内容，上方没有任何音符，表明这些念白的节奏并不重要。
+
+这种歌词并不是常规意义上的歌词，不与某个音符配对，因此不适用自动分割歌词的语法，不能写在 `Lc:` 或 `Lw:` 开头的行中。Sparks NMN 借用了[标记](/docs/tutorial-annotation/annotations)的语法来表示这种歌词（标记行的开头为 `La:`），因此这种歌词也称**标记型歌词**。其具体语法将在[标记符号](/docs/category/第四章-标记符号)章节中详细介绍。
+
+## 手动分割歌词 {#manually-splitting}
+
+如果词基和字基模式都不能满足你的需要，你可以采用超级麻烦的手动分割方法。具体写法在教程部分不介绍，请见[记号速查表](/docs/reference/lyrics-manual)。
+
+<C.SpoilerAlert variant='caution' title='谨慎使用' desc={
+	'歌词手动划分真的非常，非常，非常的麻烦！决定使用手动划分之前，请再次考虑自动划分是否真的没有可能解决你的问题。'
+}>
+
+例如歌曲《爱很美》中的这一句歌词：
+
+<C.ScoreExample canLoad>{
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+Lc: [Oh Ba-by] 愿愿愿意我什么都愿意，%抱紧我别错过爱的花期。%
+`}</C.ScoreExample>
+
+如果你不知道可以加方括号能解决问题，也没有意识到可以用词基歌词，转而采用手动划分，那么需要折腾成这样才能精准地表达：
+
+<C.ScoreExample canLoad>{
+`P: 1=? 4/4
+---
+N: - - (05d) (12) | 3 3 (32) (21) | (22) (66^) 5^ 0 | 1 1 (17d)(7d6d) | (7d7d) (44^) 3^ (05d) | omit
+// highlight-next-line
+L: Oh/Ba/#-/by/愿/愿/愿/意/我/什/么/都/愿/"意""，"/ /抱/紧/我/别/错/过/爱/的/花/"期""。"/
+`}</C.ScoreExample>
+
+</C.SpoilerAlert>
+
+手动分割的歌词布局时按词基歌词处理，会有避免粘连的机制。
+
+## 挑战 {#challenges}
+
+<C.Challenges>
+
+<C.Challenge title='补充字基歌词'>
+
+下面的曲谱片段来自歌曲[《凉凉》](https://www.kuwo.cn/play_detail/15249349)，但是没有添加歌词。
+
+<C.RealtimeScore efRange={[1,13]} children={
+`P: 1=G 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/0.95
+---
+N: (6d3)(32)(35)(32) | (2^3^) 6d - 0 | (7d7d) (7d1) (7d.(3d~)) (3d5d) | (6d^5d^~) 5d - 0 |
+---
+N: (6d3)(32)(32)(35~) | (53~) 3 (02) (35) | 6 - 6. (5~) | (56~) 6 - 0 |
+---
+N: (6d3)(32)(35)(32) | (2^3^) 6d - 0 | (7d7d) (7d1) (7d.(3d~)) (3d5d) | (6d^5d^~) 5d - 0 |
+---
+N: (6d3)(32)(32)(35) | (1e7)(65) 3 5 | 6 3 (53) (56~) | 6 - - 0 |
+`
+} />
+
+从音乐平台复制的歌词如下：
+
+```plain
+凉凉夜色为你思念成河
+化作春泥呵护着我
+浅浅岁月拂满爱人袖
+片片芳菲入水流
+凉凉天意 潋滟一身花色
+落入凡尘 伤情着我
+生劫易渡 情劫难了
+折旧的心 还有几分前生的恨
+```
+
+听一听这个片段，然后试按本节中的方法将歌词添加到曲谱中（把标点也补上）。完成后注意检查歌词和音符的对应是否正确哦！
+
+<C.HintSolution>
+<C.Hint>
+
+如何添加“一个萝卜一个坑”类型的歌词？
+
+用什么样的占位符可以让萝卜跳过某个特定的坑？
+
+</C.Hint>
+<C.Solution>
+
+<C.RealtimeScore efRange={[1,13]} children={
+`P: 1=G 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/0.95
+---
+N: (6d3)(32)(35)(32) | (2^3^) 6d - 0 | (7d7d) (7d1) (7d.(3d~)) (3d5d) | (6d^5d^~) 5d - 0 |
+// highlight-next-line
+Lc: 凉凉夜色为你思念成%河，化作春泥呵护着我。%
+---
+N: (6d3)(32)(32)(35~) | (53~) 3 (02) (35) | 6 - 6. (5~) | (56~) 6 - 0 |
+// highlight-next-line
+Lc: 浅浅岁月拂满爱人袖，片片芳菲入水流。
+---
+N: (6d3)(32)(35)(32) | (2^3^) 6d - 0 | (7d7d) (7d1) (7d.(3d~)) (3d5d) | (6d^5d^~) 5d - 0 |
+// highlight-next-line
+Lc: 凉凉三生潋滟一身花%色，落入凡尘伤情着我。%
+---
+N: (6d3)(32)(32)(35) | (1e7)(65) 3 5 | 6 3 (53) (56~) | 6 - - 0 |
+// highlight-next-line
+Lc: 生劫易渡，情劫难了，折旧的心，还有几分前生的恨。
+`
+} />
+
+</C.Solution>
+</C.HintSolution>
+</C.Challenge>
+
+<C.Challenge title='补充词基歌词'>
+
+下面的曲谱片段来自歌曲[《Top of the World》](https://www.kuwo.cn/play_detail/23602892)，但是没有添加歌词。
+
+<C.RealtimeScore efRange={[1,17]} children={
+`P: 1=G 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/1
+---
+N: empty / empty / empty / 0 5d 1 2 |
+---
+N: 0 3 3 (34^~) | 4 3^ (21) 0 | 0 6 6 (6b7~) | b7 6 5 4 |
+---
+N: 3 5 5 (32~) | 2 (34~) 4 6~ | 6 5~ - - | 5 0 4 5 |
+---
+N: 6 - (6) 6 (0) | 7 - 6 7 |{w=1.1} 1e 1e (1e) 5 (6~) | 6 - 5 4 |
+---
+N: 3 3 4 3 | 2 - 1 (7d1~) | 1~ - - - | 1 - - - |
+`
+} />
+
+从音乐平台复制的歌词如下：
+
+```plain
+I'm on the top of the world lookin' down on creation
+And the only explanation I can find
+Is the love that I've found ever since you've been around
+Your love's put me at the top of the world
+```
+
+听一听这个片段，然后试按本节中的方法将歌词添加到曲谱中（把标点也补上）。
+
+<C.HintSolution>
+<C.Hint>
+
+如何实现基于单词的歌词自动分割？
+
+音节划分有哪些需要注意的地方？
+
+</C.Hint>
+<C.Solution>
+
+<C.RealtimeScore efRange={[1,17]} children={
+`P: 1=G 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/1
+---
+N: empty / empty / empty / 0 5d 1 2 |
+// highlight-next-line
+Lw: I'm on the
+---
+N: 0 3 3 (34^~) | 4 3^ (21) 0 | 0 6 6 (6b7~) | b7 6 5 4 |
+// highlight-next-line
+Lw: top of the world% loo-king down on cre-a-tion and the
+---
+N: 3 5 5 (32~) | 2 (34~) 4 6~ | 6 5~ - - | 5 0 4 5 |
+// highlight-next-line
+Lw: on-ly ex-pla-na-tion I can find, is the
+---
+N: 6 - (6) 6 (0) | 7 - 6 7 |{w=1.1} 1e 1e (1e) 5 (6~) | 6 - 5 4 |
+// highlight-next-line
+Lw: love that I've found e-ver since you've been a-round. Your love's
+---
+N: 3 3 4 3 | 2 - 1 (7d1~) | 1~ - - - | 1 - - - |
+// highlight-next-line
+Lw: put me at the top of the world_{0}
+`
+} />
+
+</C.Solution>
+</C.HintSolution>
+</C.Challenge>
+
+<C.Challenge title='补充混合歌词'>
+
+下面的曲谱片段来自歌曲[《挥着翅膀的女孩》](https://www.kuwo.cn/play_detail/45800867)，但是没有添加歌词。这是一个典型的中英文混合歌词的例子。
+
+<C.RealtimeScore efRange={[1,9]} children={
+`P: 1=bB 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/0.9
+---
+N: empty / empty / empty / 0 0 0 (1e7) |
+---
+N: 1e(02e)(3e2e)(1e7) | 1e(01e)(75)(51) | 6(06)(51)(13) | 2(0(34~))(45)(1e7) |
+---
+N: 1e(02e)(3e2e)(1e7) | 1e(01e)(75)(51) | 6(06)(55)(1e7) | 1e - 0 0 |
+`
+} />
+
+从音乐平台复制的歌词如下：
+
+```plain
+See me fly
+I'm proud to fly up high
+不能一直依赖
+别人给我拥戴
+Believe me I can fly
+I'm singing in the sky
+就算风雨覆盖
+我也不怕重来
+```
+
+听一听这个片段，然后试按本节中的方法将歌词添加到曲谱中（把标点也补上）。如果听不了，请自行找一个不需要付费的版本（歌手是哪个不重要，同一首歌就行）。
+
+<C.HintSolution>
+<C.Hint>
+
+同一个碎片，同一个声部中的同一个歌词行只能选择字基歌词或词基歌词中的一种，并且此例子中，调整碎片的分割也不能完全解决问题。不如采用中英文歌词混合书写的方式。
+
+</C.Hint>
+<C.Solution>
+
+最标准的做法是用字基歌词并在词基歌词的部分加上中括号。
+
+<C.RealtimeScore efRange={[1,9]} children={
+`P: 1=bB 4/4
+Rp: font_lyrics=Roman,CommonSerif/600/0.95
+---
+N: empty / empty / empty / 0 0 0 (1e7) |
+// highlight-next-line
+Lc: [I can]
+---
+N: 1e(02e)(3e2e)(1e7) | 1e(01e)(75)(51) | 6(06)(51)(13) | 2(0(34~))(45)(1e7) |
+// highlight-next-line
+Lc: [fly, I'm proud to fly up high.] 不能一直期待，别人给我拥戴。[Be-lieve me I can]
+---
+N: 1e(02e)(3e2e)(1e7) | 1e(01e)(75)(51) | 6(06)(55)(1e7) | 1e - 0 0 |
+// highlight-next-line
+Lc: [fly, I'm sin-ging in the sky.] 就算风雨覆盖，我也不怕重来。
+`
+} />
+
+</C.Solution>
+</C.HintSolution>
+</C.Challenge>
+
+</C.Challenges>
+
+## 接下来... {#then}
+
+最基本的事情已经讲完了。接下来，我们讲讲如何在一份文档中混排多个乐谱片段。这或许是一个不太常用的功能，但是如果你的文档标题是《基础节奏练习》，这显然是有用的。

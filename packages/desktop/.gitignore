@@ -1,0 +1,9 @@
+/.parcel-cache
+/node_modules
+/dist
+/yarn.lock
+/out
+/data
+
+# Presync contents
+/src/renderer/public/static/export-template.txt

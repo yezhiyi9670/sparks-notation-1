@@ -1,0 +1,12 @@
+# Legacy node modules
+/node_modules/
+/packages/*/node_modules/
+
+# Yarn stuff
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
+
+# VSCode config
+.vscode
