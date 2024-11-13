@@ -1,14 +1,14 @@
-<img src="src/logo.png" align="right" width="128" height="128"/>
+<img src="packages/desktop/logo/logo.png" align="right" width="128" height="128"/>
 
-# Sparks NMN (Dev)
+# Sparks NMN
 
 **简体中文** | [English](./README-en.md)
 
 使用文本高效地编写简谱！
 
-[官方网站](https://notation.sparkslab.art/) · [在线试玩](https://notation.sparkslab.art/playground/) · [桌面版](https://github.com/yezhiyi9670/sparks-nmn-desktop) · [赞助](https://notation.sparkslab.art/donate/)
+[官方网站](https://notation.sparkslab.art/) · [例子 & 在线试玩](https://notation.sparkslab.art/examples) · [赞助](https://notation.sparkslab.art/donate/)
 
-讨论中的设计方案：[广义 TAB 记谱法（吉他谱）](./proposal/version-2/tab-notation.md) · [新的排版方案](./proposal/version-2/bounding-box-layout.md)
+讨论中的设计方案：[广义 TAB 记谱法（吉他谱）](./_v2-designs/version-2/tab-notation.md) · [新的排版方案](./_v2-designs/version-2/bounding-box-layout.md)
 
 > 由于数字简谱在英语国家中似乎并不常用，此项目还没有将英语添加为显示语言的计划（但是有英文歌词的支持）。
 
@@ -34,10 +34,8 @@ Lc[2.]: 小孩小孩，快快上学校，别考个鸭蛋抱%回%家，别考个�
 
 Sparks NMN 的核心基于 Web 技术，可以在浏览器中运行，在线试用版本就是这么这样实现的。桌面应用版，自然就是用 Electron 技术实现的。毫无疑问，安装后你的电脑上将再多出一个 Chromium 内核。
 
-## Dev 仓库是指什么？
+此仓库包含内核、桌面应用和网站。
 
-此仓库是项目的开发仓库，其所包含的页面是在线试用版网页。
+## 构建与集成说明
 
-## 使用源代码构建
-
-此项目的源代码应当使用 `npm` 或 `yarn` 构建，具体构建命令请看 `package.json`。
+Coming soon™.

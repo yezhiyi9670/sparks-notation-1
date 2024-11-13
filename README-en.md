@@ -1,12 +1,12 @@
-<img src="src/logo.png" align="right" width="128" height="128"/>
+<img src="packages/desktop/logo/logo.png" align="right" width="128" height="128"/>
 
-# Sparks NMN (Dev)
+# Sparks NMN
 
 [简体中文](./README-en.md) | **English**
 
 Compose Number Music Notation in text format efficiently!
 
-[Website](https://notation.sparkslab.art/) · [Playground](https://notation.sparkslab.art/playground/) · [Desktop App](https://github.com/yezhiyi9670/sparks-nmn-desktop) · [Sponsor](https://notation.sparkslab.art/donate/)
+[Website](https://notation.sparkslab.art/) · [Examples & Playground](https://notation.sparkslab.art/examples) · [Sponsor](https://notation.sparkslab.art/donate/)
 
 > Since Numbered Music Notation is seemingly not commonly used in English regions, this project does not plan adding English as a display language right now.
 
@@ -34,10 +34,8 @@ Lw: lead us back to Do. Do Re Mi Fa Sol La Ti Do Sol Do!
 
 Sparks NMN's core is web-based and can run in the browser. This is how the online trial version works. Hence, the desktop app is built with Electron. Undoubtedly, your PC will get another Chromium kernel if you install it.
 
-## What is "Dev" for?
+This repository contains the core, the desktop application and the website together.
 
-This repo is the development repo, containing the Online Trial webpage.
+## Building & Integration Instructions
 
-## Building from source
-
-The source code should be built using `npm` or `yarn`. For more info about commands see `package.json`.
+Coming soon™.
