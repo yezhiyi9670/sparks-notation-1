@@ -75,7 +75,7 @@ export class SectionsRenderer {
 		]
 
 		const lower = Math.floor(tuneValue) % 12
-		const higher = Math.floor(tuneValue) % 12
+		const higher = Math.ceil(tuneValue) % 12
 		if(lower == higher) {
 			return `rgb(${colorSamples[lower][0]}, ${colorSamples[lower][1]}, ${colorSamples[lower][2]})`
 		}
