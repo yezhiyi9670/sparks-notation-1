@@ -47,7 +47,6 @@ function escapeXml(unsafe: string) {
 // 生成 style 字符串
 function translateStyles(styles: ExtraStyles) {
 	return escapeXml(iterateMap(styles, (value, key) => {
-		console.log(value, key)
 		return `${camelCase2Hyphen(key)}:${escapeXml(value.toString())};`
 	}).join(''))
 }
