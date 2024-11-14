@@ -22,7 +22,7 @@ yarn-error.log*
 yarn.lock
 
 # Presync playground
-/static/playground
+/static/playground/*
 !/static/playground/example
 !/static/playground/.htaccess
 /static/latest-version.json

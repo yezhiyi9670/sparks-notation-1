@@ -1,0 +1,133 @@
+Dp: Create Above and Beyond 陶冶情操系列
+Dt: Childhood
+Ds: 来源不明的历史遗留物
+P: 1=B3 4/4
+Rp: page=A4 margin_between_parts=0.6 margin_before_line=0.9
+====
+N: empty / empty / empty / 0 0 0 0 ||
+---
+N["P1"]: /{[引子]} (5d1)(5)3 (4)(56~) | 6 (2)1e 7 (5) | 6. (5~)5 (35~) | 5~ - (56~) 6 |
+N["P2"]: empty / empty / empty / (01)(1) 3 (6~) 6 |
+Na["L"]: X Y 0 Y | X Y 0 Y | X Y 0 Y | X Y 0 Y |
+Na["H"]: 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 (0) X X (0) |
+---
+N["P1"]: 0 (0)3 5 (6~) | 6 (2)1e 7 (5) | 6. (5~) 5 (35~) | (5(5d6d))(1(6d1))(2(12))(3(23)) ||
+N["P2"]: 3. (5)((3^535))((3535)) | ((3535~))(5^) 2 1 (7d) | (3)5 2 1 (7) | 7d - - - ||
+Na["L"]: X Y 0 Y | X Y 0 Y | X Y 0 Y | X Y 0 Y |
+Na["H"]: 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 (XX)(0X)(X0) |
+---
+N["P1"]: /{[A]} 7 - (35)(2e1e~) ||: 1e (7)6 7 (5~) | 5~ - - - | 5 - 0 0 |
+N["P2"]: 5e - - - ||: 0 0 0 0 | (0(5e6e))((5e6e5e6e))5e. (6~) | (61e) 1e - - |
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) |
+---
+N["P1"]: 7. (3)(35)(2e1e~) | 1e (7)6 7 (3e~) | 3e - - - | 0 0 0 0 ||
+N["P2"]: 5e - 0 0 | 0 0 0 0 | (0(5e6e))((5e6e5e6e))(5e1e)(1e6~) | 6 2e 1e 6 ||
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | (XY)(Y0) (XY) (X0) |
+---
+N["P1"]: /{[B]} 0 5 (3)5 (6~) | (63)3. (2)(12) | 3 (11~) 1~ - | 1 - 0 0 |
+N["P2"]: 7d - - - | 0 0 0 0 | 0 0 0 0 | (07)(7) 6 3 (0) |
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) |
+---
+N["P1"]: (05)(55)(3)5 (6~) | (63) 3. (2)(12) | 3 (53~) 3~ - | 3 - 0 0 ||
+L[2.]:
+Ns[2.]: 1: 0 5 (3)5(6~) !|
+N["P2"]: 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | (01e)(1e6)(1e6)(1e2e) ||
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XX) (X0) |
+---
+N["P1"]: /{[C]} 3 (66)(67)(1e7~) | (7) 5 (3~) 3 - | 6 6 (65)(45~) | (5) 3 4 (5~) 5 |
+L[2.]:
+Ns[2.]: 2: ~(7) 5 3 (5) 5 | 0 6 (65)(45~) !|
+N["P2"]: 3e 0 0 0 |
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (0X) (Y0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+N["P1"]: 0 (66)(67)(1e7~) | (7) 5 3 (5)(2e1e~) | 1e (6)1e 2e (3e~) | (3e2e) 2e - - ||
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+N["P1"]: ||:{3., [副歌]} 3e - (3e2e)(1e2e~) | (2e) 7 (5~) 5 - | 0 7 (6)7 (1e~) | (1e6) 6 - - |
+N["P3"]: 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 1ee 7e 5e |
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+N["P1"]: 0 (3e3e)(3e2e)(1e2e~) | (2e)5e (7~) 7 - | (07)(77)(76)(71e~) | (1e6~) 6 - - ||
+N["P3"]: 6e 0 0 0 | 0 0 0 0 | 3 0 0 0 | 0 0 0 0 ||
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+Frp: n=3
+J: 1.
+N["P1"_"1"]: /{[接头]} 0 6 (3e)2e (5e~) | (5e5e) 4e (3e2e)(1e7) | 1e - - - :||
+N["P1"]: 0 0 0 0 | 0 0 0 0 | 0 0 (35)(2e1e~) !|
+Na["H"]: X Y (XY) (X0) | (XX) Y X Y | X Y (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | 0 0 0 0 |
+---
+Frp: n=3
+J: 2., *
+N["P1"_"1"]: /{[接头]} 0 6 (3e)2e (5e~) | (5e5e) 4e (3e2e)(1e7) ||{[过渡段]} 1 - - - |
+N["P1"]: 0 0 0 0 | 0 0 0 0 || 0 0 (35)(2e1e~) |
+Na["H"]: X Y (XY) (X0) | (XX) Y X Y | X Y (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+Frp: n=3
+J: 2.
+N["P1"]: 1e (7)6 7 (5~) | 5 - - (36~) | 6 - - - |
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | (0X)(X0) (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+J: 2.
+N["P1"]: 1 - (12)(b32~) | (2) b7 5 (0) 0 | 0 0 0 0 | 0 0 0 0 |
+N["P2"]: 0 0 0 0 | 0 0 0 0 | 0 0 (4e)5e (3e~) | (3e1e) 1e - - |
+N["P3"]: 1~ - - (1b7) | b7 7 4 7 | 5 - - - | 1 - - - |
+Na["H"]: X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) | X Y (XY) (X0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+J: 2.
+N["P1"]: 1e - (1e2e)(b3e2e~) | (2e)b7 4 (7~) 7 | 5 1e (2e1e)(2e3e~) | 3e - - - ||
+Na["H"]: X Y (XY) (X0) | X Y (XY) (XY) | X Y (XY) (YX) | 0 0 0 0 |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | 0 0 0 0 | 0 0 0 0 |
+---
+J: 2.
+N["P1"]: /{[副歌]} 3e - (3e2e)(1e2e~) | (2e) 7 (5~) 5 - | 0 7 (6)7 (1e~) | (1e6) 6 - - |
+N["P3"]: (36)(1e)3e (6)(1e3e) | (25)(7)2e (7)(52) | 0 (57)(03)(61e) | (23)(62) (0)3 (7) |
+---
+J: 2.
+N["P1"]: 0 (3e3e)(3e2e)(1e2e~) | (2e)5e (7~) 7 - | (07)(77)(76)(71e~) | (1e6~) 6 - - ||
+N["P3"]: 6 (3)6 (0)(57) | (7d2)(5)7 (3)(23) | 0 (55)(05)(50) | 3 - 0 0 ||
+Na["H"]: 0 0 0 0 | 0 0 0 0 | 0 0 0 (0X) | (0X) X 0 0 |
+---
+J: 2.
+N["P1"]: (77)(77)(77)(77) {d1=2th}:||
+Na["H"]: (0X)(XX)(XX)(XX) |
+---
+N["P1"]: /{[接头]} 0 6 (3e)2e (5e~) | (5e5e)4e (3e2e)(1e2e) | 0 6 (3e)2e (5e~) |
+Na["H"]: X X (XY)(Y0) | X X (XY)(Y0) | X X (XY)(Y0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+Frp: n=3
+N["P1"]: (5e5e) 4e (3e2e)(1e2e) | 0 6 (3e)2e (6e~) | (6e6e) 3e (2e1e)(72e) ||
+Na["H"]: X X (XY)(Y0) | X X (XY)(Y0) | X X (XY)(Y0) |
+Na["B"]: (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) | (XY)(XY)(XY)(XY) |
+---
+N["P1"]: /{[A]} 5 - (35) (2e1e~) | 1e (7)6 7 (5~) | 5~ - - - | 5 - 0 0 |
+N["P2"]: 1e - - - | 0 0 0 0 | (0(5e6e))((5e6e5e6e))5e. (6~) | (61e) 1e - - |
+Na["H"]: X X (XY)(Y0) | X X (XY)(Y0) | X X (XY)(YX) | (0X)X (XY)(Y0) |
+---
+N["P1"]: 7. (3)(35)(2e1e~) | 1e (7)6 7 (3e~) | 3e~ - (3e)7 (1e~) | 1e - - - |
+N["P2"]: 5e - 0 0 | 0 0 0 0 | (0(5e6e))((5e6e5e6e))5e 0 | 6 - - - |
+Na["H"]: X X (XY)(Y0) | X X (XY)(Y0) | X X (XY)(YX) | X 0 0 0 |
+---
+N["P1"]: 1ee - - - |||
+N["P2"]: 5 - - - |||
+
+// [SparksNMN.MIDIPlay.MixingConfig] #保存的混音配置文件
+//   {"id":"beatMachine","c":{"m":true,"s":false,"p":0,"v":100,"nx":"beat2","bm":1}}
+//   {"id":"N_index_0","c":{"m":false,"s":false,"p":0,"v":100,"nx":"drum","nn":"piano","o":0}}
+//   {"id":"N_text_P1","c":{"m":false,"s":false,"p":0,"v":100,"nx":"drum","nn":"chip","o":0}}
+//   {"id":"N_text_P2","c":{"m":false,"s":false,"p":0,"v":80,"nx":"drum","nn":"flute","o":0}}
+//   {"id":"Na_text_L","c":{"m":false,"s":false,"p":0,"v":70,"nx":"drum","nn":"piano","o":0}}
+//   {"id":"Na_text_H","c":{"m":false,"s":false,"p":0,"v":70,"nx":"drum","nn":"piano","o":0}}
+//   {"id":"Na_text_B","c":{"m":false,"s":false,"p":0,"v":70,"nx":"beat2","nn":"piano","o":0}}
+//   {"id":"N_text_P3","c":{"m":false,"s":false,"p":0,"v":100,"nx":"drum","nn":"piano","o":0}}
+//   {"id":"N_sub_P1_1","c":{"m":false,"s":false,"p":0,"v":100,"nx":"drum","nn":"chip","o":0}}
+// [/SparksNMN.MIDIPlay.MixingConfig]
