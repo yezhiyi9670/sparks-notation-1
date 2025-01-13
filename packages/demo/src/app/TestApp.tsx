@@ -6,6 +6,21 @@ import $ from 'jquery'
 import { IntegratedEditor, IntegratedEditorApi, IntegratedEditorPrefs } from "@sparks-notation/react-editor/IntegratedEditor"
 import { useI18n } from "./i18n/i18n"
 import { NMNI18n } from "@sparks-notation/core"
+import corePackageJson from '@sparks-notation/core/package.json'
+
+const defaultSrcText = `Dt: 新文档
+Ds: 副标题
+Dv: Version ${corePackageJson.version}
+Da[作词]: ???
+Da[作曲]: ???
+P: 1=C 4/4
+Rp: page=A4 font_lyrics=Roman,CommonSerif/600/0.95
+===
+N: (13)(24)(35)(46) | (57)(61e)(72e)(1e6) | (75)(64)(53)(42) | (31)(27d) 1 - |||
+===
+T: 这是一份默认的乐谱代码。
+T: 你可以自行尝试修改它以探索功能，或者在网站上打开“示例乐谱”页面查看更多例子。
+`
 
 const useStyles = createUseStyles({
 	outer: {
@@ -104,12 +119,12 @@ export function TestApp() {
 			}
 		} else {
 			// load localStorage data
-			const storedData = localStorage.getItem('sparks-nmn-demo-src')
-			if(storedData) {
-				callRef(editorRef, api => {
-					api.triggerOpen({path: '', content: storedData})
-				})
-			}
+			
+			callRef(editorRef, api => {
+				const storedData = localStorage.getItem('sparks-nmn-demo-src')
+				const data = storedData != null ? storedData : defaultSrcText
+				api.triggerOpen({path: '', content: data})
+			})
 		}
 	})
 
