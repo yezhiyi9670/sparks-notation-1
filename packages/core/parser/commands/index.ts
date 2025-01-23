@@ -143,7 +143,7 @@ export const commandDefs: CommandDef[] = [
 		head: 'Df',
 		headFull: 'DocFootnote',
 		contentType: 'text',
-		hasProps: 'none',
+		hasProps: 'optional',
 		propsType: 'text',
 		levels: [LineLevels.document],
 		allowTail: true
