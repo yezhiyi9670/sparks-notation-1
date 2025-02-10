@@ -361,6 +361,7 @@ export module AttrMatcher {
 			musicalProps: scoreContextDefault.musical,
 			type: 'section',
 			totalQuarters: {x: 0, y: 0},
+			upbeatQuarters: {x: 0, y: 0},
 			beatsValidation: 'pass',
 			structureValidation: 'pass',
 			notes: [],
