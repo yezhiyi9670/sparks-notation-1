@@ -188,7 +188,8 @@ export function TestApp() {
 		inspectorOpen: false,
 		logTimeStat: true,
 		instrumentSourceUrl: './core-resources/audio/',
-		onAudioExport: handleExportFinish
+		onAudioExport: handleExportFinish,
+		previewRefresh: 'delay1000'
 	}), [LNG, handleExportFinish])
 
 	return <PageHeader text="Sparks NMN Dev Demo" onKeyDown={handleKeyDown}>

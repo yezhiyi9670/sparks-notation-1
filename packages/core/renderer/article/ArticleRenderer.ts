@@ -7,6 +7,7 @@ import { FontMetric } from '../FontMetric'
 import { MusicPaint } from '../paint/MusicPaint'
 import { PaintTextToken } from '../paint/PaintTextToken'
 import { RenderContext } from '../renderer'
+import { AlignedTextEntry, AlignedTextRenderer } from '../text/AlignedTextRenderer'
 import { LineRenderer } from './line/LineRenderer'
 
 type NMNArticle = NMNResult['result']['articles'][0]
@@ -56,19 +57,12 @@ class ArticleRendererClass {
 		}
 
 		const textMetric = new FontMetric(context.render.font_text!, 2.16)
-		const textSize = textMetric.fontSize * textMetric.fontScale * scale
-		article.text.forEach((textLine) => {
-			let text = textLine.text
-			if(text == '') {
-				text = ' '
-			}
-			const textToken = new PaintTextToken(text, textMetric, scale, {
-				width: `${100 / textSize}em`,
-				whiteSpace: 'pre-wrap',
-			})
-			currY += textToken.draw(root, 0, currY, 'left', 'top')[1] * 1.2
-		})
-		currY += 0
+		const entries: AlignedTextEntry[] = article.text.map(item => ({
+			text1: item.text1,
+			text2: item.text2
+		}))
+
+		currY += AlignedTextRenderer.renderEntries(entries, textMetric, root, context, currY)
 
 		sections.push({
 			element: root.getElement(),

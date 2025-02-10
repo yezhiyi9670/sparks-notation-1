@@ -325,8 +325,13 @@ export class SectionsRenderer {
 				// 画减时线
 				section.decoration.forEach((decor) => {
 					if(decor.char == '_') {
-						const startX = this.columns.fracPosition(sectionIndex, Frac.add(section.startPos, decor.startPos)) - noteMeasure[0] / 2
-						const endX = this.columns.fracPosition(sectionIndex, Frac.add(section.startPos, decor.endPos)) + noteMeasure[0] / 2
+						let [ startPos, endPos ] = [ decor.startPos, decor.endPos ]
+						startPos = Frac.max(startPos, section.upbeatQuarters)  // 将减时线缩短到弱起前区间之后
+						if(Frac.compare(startPos, endPos) > 0) {
+							return
+						}
+						const startX = this.columns.fracPosition(sectionIndex, Frac.add(section.startPos, startPos)) - noteMeasure[0] / 2
+						const endX = this.columns.fracPosition(sectionIndex, Frac.add(section.startPos, endPos)) + noteMeasure[0] / 2
 						const redY = currY + noteMeasure[1] / 2 - noteMeasure[1] * 0.03 + (decor.level - 1) * reductionHeight
 						root.drawLine(startX, redY, endX, redY, 0.15, 0, scale)
 					}

@@ -224,14 +224,30 @@ export class Destructor {
 	}
 	destructText(line: SparseLine & {head: 'T'}, issues: LinedIssue[]): DestructedLine {
 		let text = line.content
+		
+		// 对于 `|` 开头的文本，截除 `|`，对所得文本不再进行裁剪
+		let hasPrefixPipe = false
 		if(text[0] == '|') {
 			text = text.substring(1)
+			hasPrefixPipe = true
 		}
+
+		// 对于原本以 `|` 开头的文本按第一处 `>` 分割。`>` 代表对齐点。
+		let text1: string = ''
+		let text2: string | null = null
+		let splitIndex = text.indexOf('>')
+		if(!hasPrefixPipe || splitIndex == -1) {
+			text1 = text
+		} else {
+			text1 = text.substring(0, splitIndex)
+			text2 = text.substring(splitIndex + 1)
+		}
+
 		return {
 			lineNumber: line.lineNumber,
 			type: 'text',
 			head: line.head,
-			text: text
+			text1, text2
 		}
 	}
 	destructCopyMeta(line: SparseLine & {head: 'Da'}, issues: LinedIssue[]): DestructedLine {

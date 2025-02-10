@@ -398,13 +398,13 @@ export function sectionSeparatorInset(sep: SectionSeparators, isFirstSection: bo
  *
  * delta 的标记方法：
  * - 未标记 `` = NaN
- * - 还原 `$` = 0
+ * - 还原 `=` = 0
  * - 降 `b` = -1
  * - 重降 `bb` = -2
  * - 升 `#` = 1
  * - 重升 `##` = 2
- * - 微分升 `^$` = 0.5
- * - 微分降 `%$` = -0.5
+ * - 微分升 `$` = 0.5
+ * - 微分降 `%` = -0.5
  */
 export type NoteCharMusic = {
 	type: 'music'
@@ -704,6 +704,10 @@ export type MusicSection<NoteChar> = {
 	 */
 	totalQuarters: Fraction
 	/**
+	 * 弱起前的四分音符数量
+	 */
+	upbeatQuarters: Fraction
+	/**
 	 * 拍数校验状态
 	 *
 	 * 若拍号中的小节拍数为 0，且该小节不是整数拍，判定为 less
@@ -753,7 +757,8 @@ export type DestructedLine = {
 } | {
 	type: 'text' // 文本标记
 	head: 'T'
-	text: string
+	text1: string         // 对齐点之前的文字
+	text2: string | null  // 对齐点之后的文字
 } | {
 	type: 'props' // 音乐属性
 	head: 'P' | 'Pi' | 'Sp'

@@ -133,7 +133,7 @@ export class NoteEater {
 	 * @param issues 问题列表
 	 * @return 写入的四分音符数量，以及最后一列的位置
 	 */
-	parse<TypeSampler>(section: SampledSectionBase<TypeSampler>, ratio: Fraction, startPos: Fraction, issues: LinedIssue[], typeSampler: TypeSampler): [Fraction, Fraction] {
+	parse<TypeSampler>(section: SampledSectionBase<TypeSampler>, ratio: Fraction, startPos: Fraction, issues: LinedIssue[], typeSampler: TypeSampler): [Fraction, Fraction, Fraction] {
 		let position = Frac.create(0)
 		let insertOrdinal = 0
 		let lastColumn = Frac.copy(startPos)
@@ -234,8 +234,8 @@ export class NoteEater {
 						length: Frac.mul(ratio, Frac.create(1)),
 						attrs: [],
 						suffix: [],
-						// 延音线在小节开头隐藏（此规则忽略 grayout），可用作弱起小节的 Spacer
-						voided: !extendingNote
+						// 在本函数结束处，小节开头的延音线将被添加 voided 标记，作用见相应位置的注释
+						voided: false
 					})
 					// 更新最后一列
 					lastColumn = Frac.copy(
@@ -482,7 +482,21 @@ export class NoteEater {
 			lastColumn = swingPos(lastColumn)
 		}
 
-		return [Frac.mul(ratio, position), lastColumn]
+		// 统计弱起前的拍数，同时为小节开头的延音线添加 voided 标记，作用为：
+		// - 对于曲谱小节，隐藏这些延音线和相关的减时线，这样就可以用延音线作为弱起占位符；
+		// - 对于标记符号小节中的渐强渐弱符号，被标记 voided 的延音线可以继续延长上一小节末尾的音符。
+		const totalQuarters = Frac.mul(ratio, position)
+		let upbeatQuarters = totalQuarters  // 如果找不到非延音线音符，那么整个小节都是弱起前区间
+		for(let note of section.notes) {
+			if(note.type != 'extend') {
+				upbeatQuarters = note.startPos  // 弱起前区间截止于第一个非延音线音符
+				break
+			}
+			note.voided = true
+			section
+		}
+
+		return [totalQuarters, lastColumn, upbeatQuarters]
 	}
 
 	/**

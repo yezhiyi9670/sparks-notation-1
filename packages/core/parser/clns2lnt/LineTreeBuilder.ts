@@ -168,10 +168,14 @@ export class LineTreeBuilder {
 					}
 				}
 				if(wrongSpeciality) {
+					let delimiter = lineDelimiters[level]
+					if(delimiter == undefined) {
+						delimiter = ''
+					}
 					addIssue(issues,
-						currentTree.lineNumber, 0, 'error', 'wrong_speciality',
-						'The ${0} contains inconsistent commmands.',
-						currentTree.levelName
+						currentTree.lineNumber, 0, 'error', 'mixed_article',
+						'A ${0} cannot contain both music and text. Please separate them into two ${0}s using `${2}`.',
+						currentTree.levelName, delimiter.repeat(3)
 					)
 					return true
 				}

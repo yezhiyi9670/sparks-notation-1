@@ -28,7 +28,7 @@ export default {
 
 		'empty_document': '文档似乎是空的',
 		'empty_tree': '此${0}被丢弃，因为其不包含任何内容',
-		'wrong_speciality': '此${0}包含了不相容的指令',
+		'mixed_article': '${0}不能同时包含音乐和文本。请用分割线 `${2}` 将它们分成两个${0}。',
 		'special_children': '此${0}不应当包含${1}',
 		'lack_required': '此${0}中必须包含一个 ${1}(${2})，但是没有找到。',
 		'unknown_command': '未知的指令 ${0}',

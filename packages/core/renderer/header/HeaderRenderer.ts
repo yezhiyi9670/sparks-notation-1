@@ -6,6 +6,7 @@ import { I18n } from "../../i18n"
 import { MusicPaint } from "../paint/MusicPaint"
 import { PaintTextToken } from "../paint/PaintTextToken"
 import { EquifieldSection } from "../../equifield/equifield"
+import { AlignedTextEntry, AlignedTextRenderer } from "../text/AlignedTextRenderer"
 
 class HeaderRendererClass {
 	renderTop(score: NMNResult['result'], sections: EquifieldSection[], context: RenderContext) {
@@ -116,21 +117,21 @@ class HeaderRendererClass {
 		let currY = 0
 
 		const textMetric = new FontMetric(context.render.font_footnote!, 2.0)
-		const textSize = textMetric.fontSize * textMetric.fontScale * scale
-		score.scoreProps.footnotes.forEach((footnote) => {
-			let text = footnote.text
-			if(footnote.tag) {
-				text = `[${footnote.tag}] ${footnote.text}`
+		const entries: AlignedTextEntry[] = score.scoreProps.footnotes.map(item => {
+			if(item.tag) {
+				return {
+					text1: '[' + item.tag + '] ',
+					text2: item.text
+				}
+			} else {
+				return {
+					text1: item.text,
+					text2: null
+				}
 			}
-			if(text == '') {
-				text = ' '
-			}
-			const textToken = new PaintTextToken(text, textMetric, scale, {
-				width: `${100 / textSize}em`,
-				whiteSpace: 'pre-wrap',
-			})
-			currY += textToken.draw(root, 0, currY, 'left', 'top')[1] * 1.2
 		})
+
+		currY += AlignedTextRenderer.renderEntries(entries, textMetric, root, context, currY)
 
 		if(score.scoreProps.footnotes.length > 0) {
 			sections.push({

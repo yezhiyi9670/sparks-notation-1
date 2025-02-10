@@ -1,13 +1,11 @@
 import { inCheck, pushIfNonNull } from "@sparks-notation/util/array";
-import { Frac, Fraction } from "@sparks-notation/util/frac";
-import { MusicTheory } from "@sparks-notation/util/music";
-import { randomToken } from "@sparks-notation/util/random";
+import { Frac } from "@sparks-notation/util/frac";
 import { BracketPair } from "../../lnt2sparse/SparseBuilder";
 import { addIssue, LinedIssue } from "../../parser";
 import { BracketPairFilters, BracketToken, BracketTokenList, TokenFilter, Tokens } from "../../tokenizer/tokens";
 import { AttrMatcher } from "../AttrMatcher";
 import { ScoreContext, handleMusicShift } from "../context";
-import { AttrShift, MusicProps, MusicSection, NoteCharAny, NoteCharMusic, SectionSeparator, SectionSeparatorChar, sectionSeparatorCharMap, SectionSeparators, SeparatorAttr, SeparatorAttrBase, separatorAttrPosition } from "../types";
+import { MusicProps, MusicSection, NoteCharAny, SectionSeparatorChar, sectionSeparatorCharMap, SectionSeparators, SeparatorAttr, SeparatorAttrBase, separatorAttrPosition } from "../types";
 import { NoteEater } from "./NoteEater";
 
 type RangedSectionSeparators = SectionSeparators & {
@@ -391,9 +389,15 @@ class SectionsParserClass {
 			idCard: idCard
 		}
 		// empty
-		if(new BracketPairFilters(
-			new TokenFilter('word', 'empty')
-		).test(tokens)) {
+		if((
+			new BracketPairFilters(
+				new TokenFilter('word', 'empty')
+			).test(tokens)
+		) || (
+			new BracketPairFilters(
+				new TokenFilter('word', 'e')
+			).test(tokens)
+		)) {
 			return Object.assign({}, base, {
 				type: 'empty' as 'empty',
 				structureValidation: 'pass' as 'pass',
@@ -435,6 +439,7 @@ class SectionsParserClass {
 		const ret: SampledSection<TypeSampler> = Object.assign({}, base, {
 			type: 'section' as 'section',
 			totalQuarters: { x: 0, y: 1 },
+			upbeatQuarters: { x: 0, y: 1 },
 			beatsValidation: 'pass' as 'pass',
 			structureValidation: 'pass' as 'pass',
 			notes: [],
@@ -443,8 +448,9 @@ class SectionsParserClass {
 			leftSplitVoid: false,
 			rightSplit: false
 		})
-		const [ writtenQuarters ] = new NoteEater(tokens, lineNumber, context).parse<TypeSampler>(ret, Frac.create(1), Frac.create(0), issues, typeSampler)
+		const [ writtenQuarters, _lastColumn, upbeatQuarters ] = new NoteEater(tokens, lineNumber, context).parse<TypeSampler>(ret, Frac.create(1), Frac.create(0), issues, typeSampler)
 		ret.totalQuarters = writtenQuarters
+		ret.upbeatQuarters = upbeatQuarters
 
 		// 分配音符编号
 		let noteOrdinal = 0
