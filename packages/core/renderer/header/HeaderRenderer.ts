@@ -87,7 +87,7 @@ class HeaderRendererClass {
 
 			currY += propsThreshold / 2
 
-			// 音乐属性
+			// 乐理属性
 			;((musicalProps) => {
 				msp.drawMusicalProps(context, true, 0, currY, musicalProps, 1, scale)
 			})(score.musicalProps.props)

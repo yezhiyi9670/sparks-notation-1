@@ -14,7 +14,7 @@ Srp: font_lyrics=Roman,CommonSerif/600/0.95 explicitmarkers=true
 
 ---
 
-N["T"]: empty / empty / empty /{1=C3} 0 0 0 (66) |
+N["T"]: e / e / e /{1=C3} 0 0 0 (66) |
 Lc: 八音
 N["Ac"_"1"]: /{1=C4} (67)(1e6) 7 #5 | (67)(1e6)(41)#5 | (67)(1e6) 7 #5 | (67)(1e#5) 6 - |
 ---

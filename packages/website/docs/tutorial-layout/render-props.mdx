@@ -5,9 +5,9 @@ description: 用于控制布局与字体的参数
 import C from '@site/src/mdx'
 import * as Cr from '@site/src/mdx/reference/renderprops'
 
-# 基本概念：渲染属性 {#render-props}
+# 渲染属性* {#render-props}
 
-## 渲染属性 {#render-props}
+## 渲染属性简介 {#render-props}
 
 尽管并没有特别地拿出来讲，在前面的章节中，我们已经多次用到了 `Rp:` 和 `Frp:` 开头的行。`Rp` 是 `RenderProps` 的缩写，即“渲染属性”。
 
@@ -36,7 +36,7 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 
 :::caution 常见错误
 
-与音乐属性类似，渲染属性行的内容是按照空格分割的，因此，单个属性内不能有空格。例如 `grayout=true` 不能写成 `grayout = true`。
+与乐理属性类似，渲染属性行的内容是按照空格分割的，因此，单个属性内不能有空格。例如 `grayout=true` 不能写成 `grayout = true`。
 
 :::
 
@@ -44,8 +44,8 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 
 渲染属性可以出现在三种位置上。
 
-- 与全局音乐属性 `P:` 相同的位置，以 `Rp:` 开头，表示作用于全局的渲染属性。`page` 属性只能在这里生效。
-- 与章节音乐属性 `Sp:` 相同的位置，以 `Srp:` 开头，表示作用于章节的渲染属性。与音乐属性不同，章节渲染属性可以应用于[文本章节](/docs/tutorial-basics/multiarticle#text-article)上。
+- 与全局乐理属性 `P:` 相同的位置，以 `Rp:` 开头，表示作用于全局的渲染属性。`page` 属性只能在这里生效。
+- 与章节乐理属性 `Sp:` 相同的位置，以 `Srp:` 开头，表示作用于章节的渲染属性。与乐理属性不同，章节渲染属性可以应用于[文本章节](/docs/tutorial-basics/multiarticle#text-article)上。
 - 写在碎片开头，以 `Frp:` 开头，表示作用于碎片的渲染属性。
 
 :::caution 注意

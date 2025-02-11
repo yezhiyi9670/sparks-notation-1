@@ -53,6 +53,10 @@ export type LinkedArticleBase<LrcType> = TextArticle | {
 	 */
 	nMap: number[]
 	/**
+	 * 根据渲染属性，每个位置开始的渲染行是否按时值分配宽度
+	 */
+	timeLiningMap: boolean[]
+	/**
 	 * 根据 Fragment 标记需要强制换行的位置
 	 */
 	breakMap: boolean[]
@@ -188,6 +192,10 @@ export type LinedLine = {
 	 * 根据渲染属性，应当具有的小节数量
 	 */
 	sectionCountShould: number
+	/**
+	 * 根据渲染属性，是否按时值分配宽度
+	 */
+	timeLining: boolean
 	/**
 	 * 实际小节数量
 	 */

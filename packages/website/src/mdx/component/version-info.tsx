@@ -5,7 +5,7 @@ export function MinVersion(props: {
 	max?: string
 	inline?: boolean
 	bland?: boolean
-	children: ReactNode
+	children?: ReactNode
 }) {
 	const type = (() => {
 		if(props.min !== undefined && props.max !== undefined) {

@@ -105,6 +105,7 @@ export class Destructor {
 	}
 	parseFragment(fragment: LineTree<SparseLine>, context: ScoreContext, issues: LinedIssue[]): DestructedFragment {
 		const renderProps = this.destruct(fragment.uniqueLines['Frp'], issues, context) as RenderPropsLine
+		this.validateFragmentRenderProps(renderProps, context, issues)
 		const newContext = addRenderProp(context, renderProps?.props)
 		const prevContext = copyContext(newContext)
 		const retData = {
@@ -113,7 +114,7 @@ export class Destructor {
 			jumper: this.destruct(fragment.uniqueLines['J'], issues, newContext) as any,
 			renderProps: renderProps as any,
 			parts: fragment.children.map((part) => {
-				newContext.musical = Object.assign({}, prevContext.musical)
+				newContext.musical = { ...prevContext.musical }
 				return this.parsePart(part, newContext, issues)
 			})
 		}
@@ -136,10 +137,23 @@ export class Destructor {
 
 		return retData
 	}
+	validateFragmentRenderProps(frp: RenderPropsLine, context: ScoreContext, issues: LinedIssue[]) {
+		if(frp == undefined) {
+			return
+		}
+		for(const key in frp.props) {
+			if(key != 'n' && key != 'time_lining') {
+				addIssue(issues,
+					frp.lineNumber, 0, 'error', 'frp_unsupported_key',
+					'Fragment render props can only contain `n` and `time_lining`.'
+				)
+			}
+		}
+	}
 	parsePart(part: LineTree<SparseLine>, context: ScoreContext, issues: LinedIssue[]): DestructedPart {
 		const eatenNotes = this.destructNotes(part.uniqueLines['N'] as any, issues, context, true) as (DestructedLine & {head: 'N' | 'Na' | 'Nc'})
 
-		// 此部分提取旋律中经过处理的音乐属性，确保正确的音乐属性应用到替代旋律中
+		// 此部分提取旋律中经过处理的乐理属性，确保正确的乐理属性应用到替代旋律中
 		const musicalPropsOverride = eatenNotes.sections.map(section => {
 			return section.musicalProps
 		})

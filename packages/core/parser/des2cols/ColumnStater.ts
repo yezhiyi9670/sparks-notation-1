@@ -46,6 +46,7 @@ export class ColumnStater {
 
 	flattenArticle = (article: DestructedArticle, context: ScoreContext, issues: LinedIssue[]): LinkedArticle => {
 		const nMap: number[] = []
+		const timeLiningMap: boolean[] = []
 		const breakMap: boolean[] = []
 		if(article.type == 'text') {
 			return {
@@ -117,6 +118,7 @@ export class ColumnStater {
 				})
 			}
 			fillArray(nMap, sectionIndex, maxSectionCount, fragContext.render.n!, () => -1)
+			fillArray(timeLiningMap, sectionIndex, maxSectionCount, fragContext.render.time_lining!, () => false)
 			if(fragment.break !== undefined) {
 				fillArray(breakMap, sectionIndex, 1, true, () => false)
 			}
@@ -159,6 +161,7 @@ export class ColumnStater {
 			columns: [],
 			parts: parts,
 			nMap: nMap,
+			timeLiningMap: timeLiningMap,
 			breakMap: breakMap,
 			sectionFields: []
 		}
@@ -416,6 +419,7 @@ export class ColumnStater {
 		let sectionPtr = 0
 		while(sectionPtr < article.sectionCount) {
 			const sectionCountShould = article.nMap[sectionPtr]
+			const timeLining = article.timeLiningMap[sectionPtr]
 			let sectionCount = Math.min(article.sectionCount - sectionPtr, sectionCountShould)
 			for(let i = sectionPtr + 1; i < sectionPtr + sectionCount; i++) {
 				if(i < article.sectionCount && article.breakMap[i]) {
@@ -566,6 +570,7 @@ export class ColumnStater {
 				startOrdinal: startOrd,
 				startSection: sectionPtr,
 				sectionCountShould: sectionCountShould,
+				timeLining: timeLining,
 				sectionCount: sectionCount,
 				partSignatures: sigs,
 				parts: parts,

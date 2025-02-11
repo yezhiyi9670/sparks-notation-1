@@ -690,7 +690,7 @@ export type MusicSection<NoteChar> = {
 	 */
 	separator: SectionSeparators
 	/**
-	 * 音乐属性
+	 * 乐理属性
 	 */
 	musicalProps: MusicProps
 	/**
@@ -760,7 +760,7 @@ export type DestructedLine = {
 	text1: string         // 对齐点之前的文字
 	text2: string | null  // 对齐点之后的文字
 } | {
-	type: 'props' // 音乐属性
+	type: 'props' // 乐理属性
 	head: 'P' | 'Pi' | 'Sp'
 	props: MusicProps
 } | {
@@ -830,7 +830,7 @@ export type DestructedScore = {
 	 */
 	scoreProps: ScoreProps
 	/**
-	 * 音乐属性
+	 * 乐理属性
 	 */
 	musicalProps?: DestructedLine & {head: 'P'}
 	/**
@@ -855,7 +855,7 @@ export type DestructedArticle = {
 } & ({
 	type: 'music'
 	/**
-	 * 音乐属性
+	 * 乐理属性
 	 */
 	musicalProps?: DestructedLine & {head: 'Sp'}
 	/**

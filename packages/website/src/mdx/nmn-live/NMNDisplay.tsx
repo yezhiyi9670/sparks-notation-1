@@ -31,7 +31,7 @@ export function NMNDisplay(props: {
 	doPagination?: boolean
 }) {
 	const playgroundUrl = usePlaygroundUrl()
-	const fontStaticPath = playgroundUrl + 'core-resources/font/'
+	const fontStaticPath = playgroundUrl + 'core-resources/font'
 	const ref = createRef<HTMLDivElement>()
 	
 	const result = useMemo(() => {

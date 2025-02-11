@@ -5,7 +5,7 @@ description: 一些零碎的样式选项
 import C from '@site/src/mdx'
 import * as Cr from '@site/src/mdx/reference/renderprops'
 
-# 文档缩放与样式选项 {#style-options}
+# 文档缩放、样式选项 {#style-options}
 
 除了字体、间距等系统性的渲染属性外，Sparks NMN 中还存在一些零碎的选项，它们主要控制一些细节样式，因而被称为**样式选项**。
 
@@ -17,6 +17,25 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 - 所有间距、边距、宽度选项的单位均为 `em`，表示文档页面宽度的 $\frac{1}{122}$。
 
 ## 样式选项介绍 {#style-options-intro}
+
+### 文档整体缩放 `scale` {#scale}
+
+<Cr.RenderPropType name='scale' />
+
+控制文档的整体缩放，以适应特殊宽度的纸张。
+
+如果你的目的是在一般电脑屏幕上显示，或者在 A4 纸上打印，你可能不需要用到这个选项。
+
+<C.RenderPropsDemo efRange={[1,5]} values={['1','0.8','1.2']} children={
+`P: 1=C 4/4
+// highlight-next-line
+Rp: scale=###
+====
+N: 1. ((12)) 3. ((23)) | (2(32~))(21) 2. ((17d)) | 1. ((17d)) (1(23~))(35) | 5 - - 0 |
+---
+N: 6d. ((6d3)) (2(23~))(34) | (5.(3~))(37d) 1 - | 4. ((32)) (2(17d~))(7d2) | 1 - - 0 |||
+`
+} />
 
 ### 调试模式 `debug` {#debug}
 
@@ -43,25 +62,6 @@ N: 1 1 1 (1) | 1 1 2 11 | 1 1 3 /|| 1 2 1 - |||
 `P: 1=C 4/4
 // highlight-next-line
 Rp: sectionorder=###
-====
-N: 1. ((12)) 3. ((23)) | (2(32~))(21) 2. ((17d)) | 1. ((17d)) (1(23~))(35) | 5 - - 0 |
----
-N: 6d. ((6d3)) (2(23~))(34) | (5.(3~))(37d) 1 - | 4. ((32)) (2(17d~))(7d2) | 1 - - 0 |||
-`
-} />
-
-### 文档整体缩放 `scale` {#scale}
-
-<Cr.RenderPropType name='scale' />
-
-控制文档的整体缩放，以适应特殊宽度的纸张。
-
-如果你的目的是在一般电脑屏幕上显示，或者在 A4 纸上打印，你可能不需要用到这个选项。
-
-<C.RenderPropsDemo efRange={[1,5]} values={['1','0.8','1.2']} children={
-`P: 1=C 4/4
-// highlight-next-line
-Rp: scale=###
 ====
 N: 1. ((12)) 3. ((23)) | (2(32~))(21) 2. ((17d)) | 1. ((17d)) (1(23~))(35) | 5 - - 0 |
 ---

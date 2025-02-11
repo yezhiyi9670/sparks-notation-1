@@ -193,7 +193,7 @@ export class PositionDispatcher {
 
 		let currentStart = leftBoundary
 
-		if(this.context.render.time_lining!) {
+		if(this.line.timeLining) {
 			weights = weights.map((weight, index) => {
 				let maxBeatCount = 0
 				this.line.parts.forEach((part) => {

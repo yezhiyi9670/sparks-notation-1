@@ -5,7 +5,7 @@ description: 声部、歌词行和替代旋律的指令写法
 import C from '@site/src/mdx'
 import * as Cd from '@site/src/mdx/reference/commands'
 
-# 词曲指令及其属性 {#musical-commands}
+# 曲谱行、歌词行、标记符号行 {#musical-commands}
 
 所谓词曲指令，就是表示曲谱或歌词实质内容的指令，包括声部头中的这些：
 
@@ -39,7 +39,7 @@ N["P2"]: - - (11) | 4 - (44) | 1 - 4 | (34)(32)(12) | 3 - (43) | 2 - (32) | 1 - 
 
 添加名称后，名称而非序号将成为声部的唯一标识符。若同一个碎片中有两个名称完全一样的声部，后者会覆盖前者。
 
-鼓点声部 `Na` 和其他类型的声部即使名称相同也会被认为是不同的声部。
+鼓点行 `Na` 和其他类型的声部即使名称相同也会被认为是不同的声部。
 
 &#xFEFF;<C.MinVersion min='1.14.22' inline>将普通声部的 `N` 改成 `Nc`，将成为紧凑型声部。</C.MinVersion>
 
@@ -113,4 +113,4 @@ N: 0 (66)(67)(1e7~) | (7) 5 3 (5) (2e1e~) | 1e (6) 1e 2e (3e~) | (3e2e) 2e - 0 |
 
 歌词序列 `Lc` `Lw` 后面跟的是[歌词文本](/docs/reference/lyrics-auto)，支持自动划分，因此文本的样子会和歌词原文相差无几。
 
-歌词序列 `L` 后面跟的是[手动划分的歌词](/docs/reference/lyrics-manual)，其语法规范相当复杂，非极其特殊的情况不建议使用。
+歌词序列 `L` 后面跟的是[手动歌词](/docs/reference/lyrics-manual)，其语法规范相当复杂，非极其特殊的情况不建议使用。

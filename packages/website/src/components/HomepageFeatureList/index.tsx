@@ -140,9 +140,9 @@ const featureGroups: FeatureGroup[] = [
         state: 'yes',
       },
       {
-        label: '鼓点声部',
+        label: '鼓点行',
         state: 'yes',
-        extra: '鼓点声部显示效果非常紧凑'
+        extra: '鼓点行显示效果非常紧凑'
       },
       {
         label: '临时伴奏/临时多声部',

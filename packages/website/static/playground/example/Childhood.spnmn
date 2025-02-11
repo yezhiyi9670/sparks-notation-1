@@ -4,10 +4,10 @@ Ds: 来源不明的历史遗留物
 P: 1=B3 4/4
 Rp: page=A4 margin_between_parts=0.6 margin_before_line=0.9
 ====
-N: empty / empty / empty / 0 0 0 0 ||
+N: e / e / e / 0 0 0 0 ||
 ---
 N["P1"]: /{[引子]} (5d1)(5)3 (4)(56~) | 6 (2)1e 7 (5) | 6. (5~)5 (35~) | 5~ - (56~) 6 |
-N["P2"]: empty / empty / empty / (01)(1) 3 (6~) 6 |
+N["P2"]: e / e / e / (01)(1) 3 (6~) 6 |
 Na["L"]: X Y 0 Y | X Y 0 Y | X Y 0 Y | X Y 0 Y |
 Na["H"]: 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 (0) X X (0) |
 ---

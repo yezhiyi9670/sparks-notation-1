@@ -182,7 +182,7 @@ export class ArticleSequenceReader {
 				}
 			}
 
-			// 之前的事情：检查 reset、检查音乐属性变更
+			// 之前的事情：检查 reset、检查乐理属性变更
 			if(!this.checkReset('before')) {
 				return false
 			}
@@ -194,7 +194,7 @@ export class ArticleSequenceReader {
 		this.checkConflict()
 		this.pushCurrentSection()
 		this.checkPropsMatch()
-		// 之后的事情：检查音乐属性变更、检查 reset、检查反复记号并跳转、若未跳转检查结束
+		// 之后的事情：检查乐理属性变更、检查 reset、检查反复记号并跳转、若未跳转检查结束
 		this.checkMusicalVariation('after')
 		if(!this.flat) {
 			if(!this.checkReset('after')) {
@@ -270,7 +270,7 @@ export class ArticleSequenceReader {
 		return true
 	}
 	/**
-	 * 检测小节线属性，进行音乐属性变更
+	 * 检测小节线属性，进行乐理属性变更
 	 *
 	 * 这里不处理变拍，因为处理过了
 	 */
@@ -291,21 +291,27 @@ export class ArticleSequenceReader {
 		this.checkOneVariation(pos, 'shift')
 	}
 	/**
-	 * 速度变更
+	 * 处理速度/基调变更
 	 */
 	checkOneVariation(pos: SequenceSectionStat.AttrPosition, type: 'qpm' | 'shift') {
-		const primoSection = SequenceSectionStat.getPrimoSection(this.article, this.sectionCursor)
-
+		// 对每个声部各自进行变更
 		for(let part of this.article.parts) {
 			const section = part.notes.sections[this.sectionCursor]
 			
 			const applyingSeq: SeparatorAttr[] = (() => {
-				if(section.type != 'nullish') {
-					return SequenceSectionStat.getAttr(section.separator, pos).attrs
+				if(section.type != 'nullish') {  // 未显式指出的小节，其变速变调参照其他声部
+					const attrs = SequenceSectionStat.getAttr(section.separator, pos).attrs.filter(item => item.type == type)
+					if(type != 'qpm' || attrs.length > 0) {
+						// 对于变速：如果此声部没有变速，则应该检查其他同时的声部是否变速，如果是，则跟随其他声部变速。
+						// 对于变调：如果此声部没有变调，则不变调。
+						return attrs
+					}
 				}
 				for(let part of this.article.parts) {
 					const section = part.notes.sections[this.sectionCursor]
-					const attrs = SequenceSectionStat.getAttr(section.separator, pos).attrs
+					const attrs = (
+						SequenceSectionStat.getAttr(section.separator, pos).attrs.filter(item => item.type == type)
+					)
 					if(attrs.length > 0) {
 						return attrs
 					}
@@ -315,7 +321,7 @@ export class ArticleSequenceReader {
 			
 			for(let attr of applyingSeq) {
 				if(attr.type == type) {
-					// 重建修改后的音乐属性
+					// 重建修改后的乐理属性
 					this.currentProps[part.signature.hash] = SequenceSectionStat.recreateMusicalProps(
 						this.currentProps[part.signature.hash],
 						attr
@@ -367,6 +373,7 @@ export class ArticleSequenceReader {
 		let minSpeed = Infinity
 		const partsInfo: SequencePartInfo[] = this.article.parts.map(part => {
 			let mProps = this.currentProps[part.signature.hash]
+
 			if(octaveShift != 0) {
 				mProps = {
 					...mProps,
@@ -425,7 +432,7 @@ export class ArticleSequenceReader {
 		})
 	}
 	/**
-	 * 检查声部间音乐属性的匹配
+	 * 检查声部间乐理属性的匹配
 	 */
 	checkPropsMatch() {
 		const section = this.frontier!.sections[this.frontier!.sections.length - 1]

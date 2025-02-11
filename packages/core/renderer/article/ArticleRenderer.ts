@@ -137,7 +137,7 @@ class ArticleRendererClass {
 
 			currX += 2 * scale
 		})()
-		// 音乐属性
+		// 乐理属性
 		;(() => {
 			if(!article.musicalProps) {
 				return

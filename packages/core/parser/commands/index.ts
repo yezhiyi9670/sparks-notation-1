@@ -168,7 +168,7 @@ export const commandDefs: CommandDef[] = [
 		unique: 'Dr',
 		levels: [LineLevels.document]
 	},
-	// P 全文音乐属性
+	// P 全文乐理属性
 	{
 		head: 'P',
 		headFull: 'Props',
@@ -179,7 +179,7 @@ export const commandDefs: CommandDef[] = [
 		unique: 'P',
 		levels: [LineLevels.document]
 	},
-	// Pi 全文(隐)音乐属性
+	// Pi 全文(隐)乐理属性
 	{
 		head: 'Pi',
 		headFull: 'PropsImplicit',
@@ -232,7 +232,7 @@ export const commandDefs: CommandDef[] = [
 		levels: [LineLevels.article],
 		special: 'none'
 	},
-	// Sp Article 音乐属性
+	// Sp Article 乐理属性
 	{
 		head: 'Sp',
 		headFull: 'SectionProps',

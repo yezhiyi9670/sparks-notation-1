@@ -242,7 +242,7 @@ class SectionsParserClass {
 					'This section is empty. Empty sections should be placeheld using "empty", otherwise it may cause unexpected behavior.'
 				)
 			}
-			// 根据上一小节的 next 属性和此小节的 before 属性修改当前的音乐属性
+			// 根据上一小节的 next 属性和此小节的 before 属性修改当前的乐理属性
 			const handleAttrVariation = (attr: SeparatorAttr) => {
 				if(attr.type == 'beats') {
 					context.musical = Object.assign({}, context.musical)

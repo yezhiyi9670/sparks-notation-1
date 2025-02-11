@@ -117,7 +117,7 @@ export default function ExamplesPage() {
 					id='Childhood'
 					type='多声部乐曲'
 					title='Childhood'
-					features='变化音、多声部、转调、鼓点声部、反复与区分'
+					features='变化音、多声部、转调、鼓点行、反复与区分'
 					url='https://music-archive.sparkslab.art/7001'
 				/>
 				<ExampleScoreRow
@@ -197,7 +197,7 @@ export default function ExamplesPage() {
 					id='小女孩的诅咒'
 					type='流行歌曲'
 					title='小女孩的诅咒'
-					features='多声部、基调不对齐、变化音'
+					features='多声部、基调不一致、变化音'
 					url='https://y.qq.com/n/ryqq/songDetail/002KUunI48k12y'
 				/>
 				<ExampleScoreRow
@@ -211,14 +211,14 @@ export default function ExamplesPage() {
 				<ExampleScoreRow
 					number={16}
 					id='For the First Time in Forever'
-					type='《Frozen》'
+					type='冰雪奇缘歌曲'
 					title='For the First Time in Forever'
-					features='地狱绘图、布局调整、多声部、转调、变拍、变速、标记型歌词'
+					features='布局调整、多声部、转调、变拍、变速、标记型歌词'
 				/>
 				<ExampleScoreRow
 					number={17}
 					id='Let It Go'
-					type='《Frozen》'
+					type='冰雪奇缘歌曲'
 					title='Let It Go'
 					features='布局调整、多声部、转调、变拍、力度标记、歌词翻译'
 				/>
@@ -227,7 +227,7 @@ export default function ExamplesPage() {
 					id='TheMusicTheory'
 					type='多声部乐曲'
 					title='The Music Theory I'
-					features='多声部、鼓点声部、紧凑声部、反常拍号、转调、变拍、摇摆节奏、三连音、和弦标记'
+					features='多声部、鼓点行、紧凑声部、反常拍号、转调、变拍、摇摆节奏、三连音、和弦标记'
 				/>
 			</ExampleScoresTable>
 			

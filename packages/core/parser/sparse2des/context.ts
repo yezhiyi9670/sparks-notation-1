@@ -3,7 +3,7 @@ import { MusicTheory } from "@sparks-notation/util/music"
 import { AttrShift, MusicProps } from "./types"
 
 /**
- * 乐谱上下文（包含音乐属性和渲染属性）
+ * 乐谱上下文（包含乐理属性和渲染属性）
  */
 export type ScoreContext = {
 	musical: MusicProps

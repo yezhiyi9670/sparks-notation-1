@@ -91,9 +91,9 @@ export type SequencePartInfo = {
 	 */
 	section: MusicSection<NoteCharMusic>
 	/**
-	 * 实际音乐属性
+	 * 实际乐理属性
 	 *
-	 * 与乐谱渲染数据中音乐属性的区别在于依赖于反复结构的基调和拍速。
+	 * 与乐谱渲染数据中乐理属性的区别在于依赖于反复结构的基调和拍速。
 	 */
 	props: MusicProps
 }

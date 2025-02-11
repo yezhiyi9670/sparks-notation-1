@@ -1,11 +1,11 @@
 ---
-sidebar_position: 4
+sidebar_position: 1.4
 description: 控制旋律片段的分行位置，并调整小节宽度和边距
 ---
 import C from '@site/src/mdx'
 import * as Cr from '@site/src/mdx/reference/renderprops'
 
-# 分行、小节宽度与边距 {#section-lining}
+# 分行、小节宽度、小节边距 {#section-lining}
 
 默认情况下，Sparks NMN 总是采取四小节一行且每个小节等宽的排版方式，有时候，我们可能需要调整这些规则；当小节中连音线和三连音记号等内容过多时，它们可能与上方标记的文本（主要是小节线属性）出现重叠，通过添加上边距可以修复这一问题。
 
@@ -201,7 +201,7 @@ Lw: ware the fro-zen heart_{0}
 
 :::caution 常见错误
 
-`Frp:` 开头的行形式上是碎片的渲染属性，但是实际上只有 `n` 一个属性是有效的。目前这是有意的。
+`Frp:` 开头的行形式上是碎片的渲染属性，但是实际上只有 `n` <C.MinVersion min='1.15.5' inline>和后文提到的 `time_lining`</C.MinVersion> 两个属性是有效的。目前这是有意的。
 
 :::
 
@@ -440,11 +440,7 @@ N: 1 (12)(34)(32) 5 6 | 3 2 | 2 4 (56) 3 | 2 4 - |||
 `
 } />
 
-:::caution 常见错误
-
-目前，`time_lining` 属性在 `Frp:` 开头的行中也是无效的，千万注意。
-
-:::
+&#xFEFF;<C.MinVersion min='1.15.5' inline>也可以将 `time_lining` 属性写在 `Frp:` 开头的行中，实现只对特定的行开启或关闭时值权重。</C.MinVersion>
 
 根据时值调整权重的具体原理就是将当前小节的总时值（以四分音符为单位）直接当作权重使用，例如拍号 $\frac{3}{4}$ 的小节获得 $3$ 的权重，拍号 $\frac{5}{8}$ 的小节获得 $2.5$ 的权重。此外，如果小节开头或末尾标注了拍号，则每个拍号会额外增加 $0.25$ 的权重。
 
@@ -522,7 +518,7 @@ N: (15d)(27d)(15d)(7d5d) | (15d)(27d)(15d)(7d5d) | (15d)(27d)(15d)(7d5d) | (5d5d
 `Dp: 电影《冰雪奇缘》曲集 - 03
 Dt: For the First Time in Forever
 Dv: Version 20220229
-P: 1=F3 4/4 qpm=102 可变拍速(+5,-10)
+P: 1=F3 4/4 qpm=102/=92-107
 Rp: n=3 grayout=true left_separator=false explicitmarkers=false \\
     font_lyrics=Roman,CommonSerif/600/0.93
 ====
@@ -661,7 +657,7 @@ Lw: No-thing's in my way_{0}
 `Dp: 电影《冰雪奇缘》曲集 - 03
 Dt: For the First Time in Forever
 Dv: Version 20220229
-P: 1=F3 4/4 qpm=102 可变拍速(+5,-10)
+P: 1=F3 4/4 qpm=102/=92-107
 Rp: n=3 grayout=true left_separator=false explicitmarkers=false \\
     font_lyrics=Roman,CommonSerif/600/0.93
 ====
@@ -759,7 +755,7 @@ Lw: first time in for-e-ver, at least I got a chance.
 ---
 Frp: n=4
 B:
-N["E."]: 0 0 0 0 {"末尾略慢"}|{qpm=104} 0 0 0 0 ||["E"]{1=bE4, "(5为原调中3)"} (05d)(5d1) 1 0 | (05d)(5d2) 2 0 |
+N["E."]: 0 0 0 0 {"末尾略慢"}|{qpm=104} 0 0 0 0 ||["E"]{" ", 1=bE4, "(5为原调中3)"} (05d)(5d1) 1 0 | (05d)(5d2) 2 0 |
 Lw: Don't let them in. Don't let them see.
 ---
 Frp: n=4

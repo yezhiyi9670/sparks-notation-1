@@ -52,6 +52,7 @@ export default {
 		'unknown_base': '无效的基调值 ${0}',
 		'rp_unknown_key': '未知渲染属性 ${0}',
 		'rp_unknown_value': '无效的渲染属性值 ${1}（属性 ${0}）',
+		'frp_unsupported_key': '碎片的渲染属性只能包含 `n` 和 `time_lining`',
 		'unknown_jumper_attr': '无法将 `${0}` 解析为跳房子属性',
 		'nan_substitute_index': '无法确定替代音符的开始位置。你是不是忘了？',
 		'unknown_part_attr': '无法将 `${0}` 解析为声部属性',
@@ -74,7 +75,7 @@ export default {
 		'note_char_force_unknown1': '未知的力度标记词 ${0}',
 		'note_char_force_unknown2': '未知的力度标记符号 ${0}',
 		'note_char_annotation_unknown': '无法将 `${0}` 解析为标记符号',
-		'note_char_lyric_annotation_unknown': '无法将 `${0}` 解析为歌词标记符号',
+		'note_char_lyric_annotation_unknown': '无法将 `${0}` 解析为标记型歌词',
 
 		'unknown_section_separator': '未知的小节线符号 ${0}',
 		'empty_section': '存在空白的小节。如果你确实想这么做，请写入一个 `empty`，否则可能导致未预期的结果。',
@@ -98,9 +99,9 @@ export default {
 	},
 	'notices': {
 		'iter_invalid': '反复记号迭代数写在了无效的位置，很可能是错误的。',
-		'quarters_less': '此小节的拍数少于音乐属性指定的。如果这是一个不完整小节，请在右侧小节线添加虚线。',
+		'quarters_less': '此小节的拍数少于乐理属性指定的。如果这是一个不完整小节，请在右侧小节线添加虚线。',
 		'quarters_nonint': '此小节节拍为散板且拍数不是整数。如果这是一个不完整小节，请在右侧小节线添加虚线。',
-		'quarters_more': '此小节的拍数多于音乐属性指定的',
+		'quarters_more': '此小节的拍数多于乐理属性指定的',
 		'quarters_mismatch': '此小节的拍数与其他声部内相同位置的小节不匹配'
 	},
 	'commands': {
@@ -112,12 +113,12 @@ export default {
 		'Df': '尾注',
 		'Dl': '页脚左侧文本',
 		'Dr': '页脚右侧文本',
-		'P': '音乐属性',
-		'Pi': '音乐属性（不显示）',
+		'P': '乐理属性',
+		'Pi': '乐理属性（不显示）',
 		'Rp': '渲染属性',
 		'T': '文本标注',
 		'S': '文段标题',
-		'Sp': '音乐属性',
+		'Sp': '乐理属性',
 		'Srp': '渲染属性',
 		'B': '此前强制换行',
 		'J': '跳房子',
@@ -211,7 +212,7 @@ export default {
 	},
 	'efLabels': {
 		'top': '文档标题',
-		'author': '作者与音乐属性',
+		'author': '作者与乐理属性',
 		'topMargin': '页面头间距',
 		'footer': '尾注',
 		'articleMargin': '章节下边距',
@@ -279,7 +280,7 @@ export default {
 				"title": "空白文档",
 				"desc": {
 					"1": "此文档没有任何有效内容。",
-					"2": "要使文档有效，请向其中添加音乐属性行（以 P 或 Props 开头）。"
+					"2": "要使文档有效，请向其中添加乐理属性行（以 P 或 Props 开头）。"
 				}
 			}
 		},

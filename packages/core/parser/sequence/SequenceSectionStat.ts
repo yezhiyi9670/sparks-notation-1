@@ -84,7 +84,7 @@ export module SequenceSectionStat {
 		return primoSection
 	}
 	/**
-	 * 根据音乐属性变更指令重建音乐属性
+	 * 根据乐理属性变更指令重建乐理属性
 	 */
 	export function recreateMusicalProps(props: MusicProps, attr: SeparatorAttr & {type : 'qpm' | 'shift'}): MusicProps {
 		if(attr.type == 'qpm') {

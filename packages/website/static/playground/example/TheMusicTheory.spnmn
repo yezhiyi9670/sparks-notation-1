@@ -1,12 +1,12 @@
 Dt: The Music Theory I
-Ds: MemoryLine 原创音乐试作
+Ds: [redacted] 原创音乐试作
 Dv: (07-18) 2023-08-30, ArrangedFinal
 Pi: 1=bB 6/4 qpm=120
 Rp: page=A4 scale=0.95 margin_between_parts=1 double_sided=true \
     font_title=Roman,CommonSerif/700/1.15 font_subtitle=Roman,CommonSerif/400/1.05
 Dl: Copyright 2023 叶E大帝. Do not distribute.
 ====
-T: 此乐曲是 MemoryLine 项目的一部分。
+T: 此乐曲是 [redacted] 项目的一部分。
 T:
 T: 版权所有，未经允许禁止私传或发布。
 T: 此乐谱为“工作格式”，并非最终音乐的完整记录，请谨慎对待。乐曲可能不适合单人演奏，甚至不适合演奏。
@@ -180,23 +180,23 @@ Na["Tap"]: X. (X)T(XXX)T(XXX)(XX)T(XXX) | X 0 T(XXX) X 0 0 |
 ---
 N["1"]: /[qpm=114] 1d - - 1d 1 2 |
 A: r"rit." 0 0 c"1" c"4" c"5d7" |
-N["2"]: /[qpm=114] 5d - - 5d 6d 5d |
-Nc["I"]: /[qpm=114] 3d - - - 0 7dd |
-Nc["R"]: /[qpm=114] 1dd - - 0 4dd 4dd |
-Na["Tap"]: /[qpm=114] 0 0 0 Y Y Y |
+N["2"]: 5d - - 5d 6d 5d |
+Nc["I"]: 3d - - - 0 7dd |
+Nc["R"]: 1dd - - 0 4dd 4dd |
+Na["Tap"]: 0 0 0 Y Y Y |
 ---
 N["1"]: /[qpm=107] 3. (3)(23)2 3 4 |[qpm=97]{3/4, w=0.7} 4 7d 2 |[qpm=89]{6/4} 1~ - - - - - | 1[ext] - - - 0 0 |||
 A: c"1" - - c"2m" - - | c"5d7" - - | c"1" - - c"1" - - | c"1" - - 0 0 0 |
 A: h"结束句" 0 ++r"rit."
-N["2"]: /[qpm=107] 0 0 0 6d 7d 1 |[qpm=97]{3/4} 4d 5d 7d |[qpm=89]{6/4} 5d~ - - - - - | 5d[ext] - - - 0 0 |||
-N["3"]: /[qpm=107] 3d 3d 3d (4d2d)(3d5d)(6d7d) |[qpm=97]{3/4} (2d3d)(2d4d)(5d2d) |[qpm=89]{6/4} (3d1d)(3d1d)(3d1d) 3d~ - - | 3d[ext] - - - 0 0 |||
-Nc["I"]: /[qpm=107] 5dd - - 7dd - - |[qpm=97]{3/4} 5dd - - |[qpm=89]{6/4} 5dd~ - - - - - | 5dd[ext] - - - 0 0 |||
-Nc["R"]: /[qpm=107] 1dd - - 2dd - - |[qpm=97]{3/4} 2dd - - |[qpm=89]{6/4} 1dd~ - - - - - | 1dd - - - 0 0 |||
-Na["Tap"]: /[qpm=107] X. (X)(XX) X X X |[qpm=97]{3/4} X X X |[qpm=89]{6/4} X 0 0 0 0 0 | 0 0 0 0 0 0 |||
+N["2"]: 0 0 0 6d 7d 1 |{3/4} 4d 5d 7d |{6/4} 5d~ - - - - - | 5d[ext] - - - 0 0 |||
+N["3"]: 3d 3d 3d (4d2d)(3d5d)(6d7d) |{3/4} (2d3d)(2d4d)(5d2d) |{6/4} (3d1d)(3d1d)(3d1d) 3d~ - - | 3d[ext] - - - 0 0 |||
+Nc["I"]: 5dd - - 7dd - - |{3/4} 5dd - - |{6/4} 5dd~ - - - - - | 5dd[ext] - - - 0 0 |||
+Nc["R"]: 1dd - - 2dd - - |{3/4} 2dd - - |{6/4} 1dd~ - - - - - | 1dd - - - 0 0 |||
+Na["Tap"]: X. (X)(XX) X X X |{3/4} X X X |{6/4} X 0 0 0 0 0 | 0 0 0 0 0 0 |||
 
 ====
 Srp: font_text=Roman,CommonSerif/400/0.9
-T: 此乐谱由 Sparks NMN <https:/\/nmn.sparks-lab.art/> 渲染。乐谱源代码参见 <TheMusicTheory.spnmn>。
+T: 此乐谱由 Sparks NMN <https:/\/notation.sparkslab.art/> 渲染。乐谱源代码参见 <TheMusicTheory.spnmn>。
 
 // [SparksNMN.MIDIPlay.MixingConfig] #保存的混音配置文件
 //   {"id":"beatMachine","c":{"m":true,"s":false,"p":0,"v":70,"nx":"beat2","bm":3}}

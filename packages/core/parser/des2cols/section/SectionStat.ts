@@ -59,8 +59,8 @@ export module SectionStat {
 	/**
 	 * 小节的四分音符数量
 	 * 
-	 * - space, omit, nullish 按照音乐属性的一小节（即 4 * K_s），omit(x) 按照 x 个小节。
-	 * - 正常音乐小节按照字面计算，若 next 小节线不含有 `/`，和音乐属性要求取 max。
+	 * - space, omit, nullish 按照乐理属性的一小节（即 4 * K_s），omit(x) 按照 x 个小节。
+	 * - 正常音乐小节按照字面计算，若 next 小节线不含有 `/`，和乐理属性要求取 max。
 	 * - 若正常小节的统计量为 0，将使用 1/2。
 	 */
 	export function quarterCount(section: MusicSection<unknown>): Fraction {

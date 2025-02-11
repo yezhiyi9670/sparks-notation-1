@@ -1158,7 +1158,7 @@ export class MusicPaint {
 		return measure
 	}
 	/**
-	 * 绘制所有音乐属性
+	 * 绘制所有乐理属性
 	 */
 	drawMusicalProps(context: RenderContext, requireBeats: boolean, x: number, y: number, musicalProps: MusicProps, fontScale: number = 1, scale: number = 1, extraStyles: ExtraStyles = {}) {
 		

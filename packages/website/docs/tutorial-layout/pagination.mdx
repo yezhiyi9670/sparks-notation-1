@@ -1,11 +1,11 @@
 ---
-sidebar_position: 2.1
+sidebar_position: 4.1
 description: 指定页面大小，使 Sparks NMN 自动优化排版，并添加页脚和页码。
 ---
 import C from '@site/src/mdx'
 import * as Cr from '@site/src/mdx/reference/renderprops'
 
-# 页面精排与页脚 {#pagination}
+# 自动分页、页脚 {#pagination}
 
 默认状态下，Sparks NMN 不会对乐谱进行分页，因此也不会标注页脚或页码。打印时，浏览器将负责对乐谱进行分页，而这种分页方法非常粗糙，可能对可读性产生不利影响（尤其是声部较多时）。
 
@@ -95,7 +95,7 @@ Lc[2.]: 小孩小孩，快快上学校，别考个鸭蛋抱%回%家，别考个�
 :::caution 注意
 
 打印选择的纸张必须与渲染属性相匹配（相近，不需要严格相等）。如果纸张大小不匹配，可能导致页脚或乐谱错位。  
-由于一些神奇且无法解释的问题，Firefox 浏览器无法自动设置正确的打印边距，请使用 Google Chrome 或微软边缘进行打印。打印时，页面边距选择“默认”。
+由于一些神奇且无法解释的问题，Firefox 浏览器无法自动设置正确的打印边距，需要手动调整。若使用基于 Chromium 的浏览器，只须在页面边距处选择“默认”即可正确排版。
 
 :::
 

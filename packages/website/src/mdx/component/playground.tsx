@@ -29,7 +29,7 @@ export function PreloadPlaygroundFonts() {
 }
 function PreloadPlaygroundFontsInner() {
 	const playgroundUrl = usePlaygroundUrl()
-	const fontStaticPath = playgroundUrl + 'core-resources/font/'
+	const fontStaticPath = playgroundUrl + 'core-resources/font'
 
 	useEffect(() => {
 		setTimeout(() => {
