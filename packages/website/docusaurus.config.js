@@ -114,7 +114,7 @@ const config = {
             position: 'left',
           },
           {
-            label: '赞助',
+            label: '捐赠',
             href: siteDonate,
             position: 'left',
           },
@@ -170,7 +170,7 @@ const config = {
                 href: ghProfile
               },
               {
-                label: '爱发电赞助',
+                label: '爱发电捐赠',
                 href: siteDonate,
               },
             ],

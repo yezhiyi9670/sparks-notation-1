@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 export function MinVersion(props: {
 	min?: string
 	max?: string
 	inline?: boolean
 	bland?: boolean
+	children: ReactNode
 }) {
 	const type = (() => {
 		if(props.min !== undefined && props.max !== undefined) {
@@ -44,7 +45,7 @@ export function MinVersion(props: {
 				color: '#4527A0',
 				background: '#EDE7F6',
 			})
-		}}>最低版本：{props.min}</span>}
+		}}>新增于 {props.min}</span>}
 		{(type == 'max' || type == 'range') && <span style={{
 			borderRadius: '0.25rem',
 			padding: '0.25em 0.5em',
@@ -55,12 +56,22 @@ export function MinVersion(props: {
 				color: '#880E4F',
 				background: '#FCE4EC',
 			})
-		}}>最高版本：{props.max}</span>}
+		}}>移除于 {props.max}</span>}
 	</>
 
-	return props.inline ? <span style={{margin: '0 0'}}>
+	const tagElement = props.inline ? <sup style={{margin: '0 0'}}>
 		{' '}{tags}{' '}
-	</span> : <p style={{marginTop: '-0.5em'}}>
+	</sup> : <p style={{marginTop: '-0.5em'}}>
 		{tags}
 	</p>
+
+	return <>
+		{props.children && <span style={{
+			// background: type == 'min' ? '#4527A01C' : '#880E4F1C',
+			background: '#BFB9CE3C',
+			padding: '0.1rem',
+			borderRadius: '0.25rem'
+		}}>{props.children}</span>}
+		{tagElement}
+	</>
 }

@@ -1,15 +1,18 @@
 Dt: The Music Theory I
-Ds: [redacted] 原创音乐试作
-Dv: (07-18) 2023-08-30, 非最终版本
+Ds: MemoryLine 原创音乐试作
+Dv: (07-18) 2023-08-30, ArrangedFinal
 Pi: 1=bB 6/4 qpm=120
-Rp: page=A4 scale=0.95 margin_between_parts=1 \
+Rp: page=A4 scale=0.95 margin_between_parts=1 double_sided=true \
     font_title=Roman,CommonSerif/700/1.15 font_subtitle=Roman,CommonSerif/400/1.05
-Dl: Copyright 2023 yezhiyi9670. Do not distribute.
+Dl: Copyright 2023 叶E大帝. Do not distribute.
 ====
+T: 此乐曲是 MemoryLine 项目的一部分。
+T:
 T: 版权所有，未经允许禁止私传或发布。
 T: 此乐谱为“工作格式”，并非最终音乐的完整记录，请谨慎对待。乐曲可能不适合单人演奏，甚至不适合演奏。
 T:
 T: 踩点解析见乐谱下方的 Tap 行。由于手指按压的持续时间并不重要，此行将以尽可能简化的节奏型来书写。
+T: 其中的 X 表示必要踩点，Y 表示可选踩点（不影响转向与路径选择，但可能与某些机关有关）。
 ====
 Sp: 1=bB3 6/4 qpm=120
 
@@ -34,13 +37,13 @@ Na["Tap"]: X. (X)(XX)X X 0 | X X X X 0 X | X 0 (XX) X X X | X 0 0 0 0 0 |
 ---
 N["1"]: (1.(2))(1.(2))(1.(2))3 - (51) | (2.(3))(2.(3))(2.(3))4 - (64) | 3 5 4 3 2 1 | ((2)2(2))(23)(21) 7d ((1)1.)((1)2.) |
 A: c"1" - - - - - | c"5" - - c"2m" - - | c"1" - - - - - | c"5d7" - - - c"4" c"5" |
-A: +h"B / 基础节奏练习"
+A: h"B / 基础节奏练习"
 N["2"]: 1d 3d 5d 1d 5d 3d | 7dd 2d 5d 2d 6d 4d | 1d 3d 5d 1d 5d 3d | 7dd 2d 4d 2d 4d 5d |
 Nc["I"]: 5dd - - 5dd - 1d | 5dd - - 6dd - 2d | 5dd - 1d 5dd - 1d | 5dd 7dd 2d 7dd - 2d |
 Na["Tap"]: (X.(X))(X.(X))(X.(X))X 0 (XX) | (X.(X))(X.(X))(X.(X)) X 0 (XX) | X X X X X X | ((X)X(X))(XX)(XX)X ((X)X.)((X)X.) |
 ---
 N["1"]: (3.(4))(3.(4))(3.(4))5 - (65) | (6.(7))(6.(7))(6.(7))1e - (45) | 6.(7)(1e7) 1e 7 1e | (2e.(2e~))(2e)2e(2e)(0)7(1e)(1e2e) ||
-A: ++c"1" - - c"1" - - | c"4" - - c"4" - - | c"2m" - - c"2m" - - | c"5" - - - - - |
+A: c"1" - - c"1" - - | c"4" - - c"4" - - | c"2m" - - c"2m" - - | c"5" - - - - - |
 N["2"]: 1d 3d 5d 1d 3d 5d | 1d 4d 6d 1d 4d 6d | 6d 4d 2d 2d 4d 6d | 5d 7d 5d (0)5d (6d)(6d7d) ||
 Nc["I"]: 1dd - 3dd 1dd - 4dd | 4dd - 4dd 6dd - 4dd | 4dd - - 6dd - - | 7dd. 5dd. 6dd. 7dd. ||
 Nc["R"]: empty / 0 4dd 2dd 2dd - 2dd | 2dd - 2dd 2dd - 2dd | 2dd 2dd 2dd 4dd 2dd 2dd ||
@@ -49,8 +52,8 @@ Na["Tap"]: (X.(X))(X.(X))(X.(X)) X 0 (XX) | (X.(X))(X.(X))(X.(X))X 0 (XX) | X.(X
 
 ---
 N["1"]: 3e - 3e 2e 1e 7 | 1e. (6)(71e) 5 - (45) | 6 - - 5 - - | 6 7 1e 2e - - |
-A: +++c"1" - - c"5" - - | c"6m" - - c"3m" - - | c"2m" - - c"1" - - | c"2maj" - - c"5" - - |
-A: +h"C / 和弦进行"
+A: c"1" - - c"5" - - | c"6m" - - c"3m" - - | c"2m" - - c"1" - - | c"2maj" - - c"5" - - |
+A: h"C / 和弦进行"
 N["2"]: (15d)(15d)(15d)(7d5d)(7d5d)(6d7d) | (6d3d)(6d7d)(16d)(5d3d)(2d3d)(2d3d) | \
         (4d2d)(4d2d)(3d4d)(3d1d)(3d1d)(3d5d) | (2d#4d)(2d#4d)(2d6d)(7d5d)(6d7d)(12) |
 Nc["I"]: 5dd - 5dd 7dd - 7dd | 6dd - 6dd 7dd - 7dd | 6dd - 6dd 5dd - 5dd | 6dd - 6dd 7dd - 7dd |
@@ -58,7 +61,7 @@ Nc["R"]: 1dd 1dd - 5dd 5dd - | 3dd 3dd - 3dd 3dd - | 2dd 4dd - 1dd 3dd - | 2dd 2
 Na["Tap"]: X 0 X X X X | X. (X)(XX) X 0 (XX) | X 0 0 X 0 0 | X X X X 0 0 |
 ---
 N["1"]: 3e - 1e 2e 7 5 | 6. (5) 4 5 - 3 | 4 - (43) 2 1 7d | 1 - - - - - ||
-A: +++c"1" - - c"5" - - | c"6m" - - c"3m" - - | c"4" - - c"5d7" - - | c"1" - - - - -| 
+A: c"1" - - c"5" - - | c"6m" - - c"3m" - - | c"4" - - c"5d7" - - | c"1" - - - - -| 
 N["2"]: (15d)(13d)(5d1)(7d5d)(7d2d)(5d7d) | (16d)(13d)(6d1d)(3d3d)(2d3d)(5d3d) | \
         (1d1d)(6dd1d)(1d7dd)(4d2d)(6dd1d)(2d7dd) | (1d)5dd(5dd)(1d7dd) 1d - 0 ||
 Nc["I"]: 5dd - 5dd 7dd - 7dd | 6dd - 6dd 7dd - 7dd | 6dd 0 6dd 5dd - 5dd | 3dd 3dd 3dd  3d -   1d ||
@@ -77,7 +80,7 @@ Nc["R"]: /{6/4S} 2dd 4dd 2dd 3dd 5dd 3dd | 6dd #1dd 3dd 4dd 2dd 4dd | 2dd 6dd 4d
 Na["Tap"]: /{6/4S} X.(X)(0X)X 0 (0X) | (XX)(XX)(XX)X 0 (XX) | X. (X)X X X X | X 0 0 X 0 0 |
 ---
 N["1"]: 6 - - 7. (3)(#23) | (73)(#57)2e 6 - 3 | (4)2 #1 (#1) 2 3 4 | 2. 2(2) 3 - - {1=bB3, *}||
-A: +++c"2m" - - c"3maj" - - | c"3maj" - - c"6m" | c"2m". c"6d7". c"6d7" - - | c"2m" - - c"6d7" - - |
+A: c"2m" - - c"3maj" - - | c"3maj" - - c"6m" | c"2m". c"6d7". c"6d7" - - | c"2m" - - c"6d7" - - |
 N["2"]: (2d4d)(4d2d)(4d6d)(#5d3d)(#2d3d)(3d5d) | (3d#5d)(3d5d)(7d2d)(3d)1d(3d)6d | \
         (2d4d)(2d6dd)(3d5d)(5d3d)(3d#1d)(1d3d) | (4d)4d 4d(4d) #1d.(1d)(2d3d) {1=bB3}||
 Nc["R"]: 4dd 4dd 6dd #5dd 3dd 3dd | #5dd 3dd 5dd 1dd 3dd 3dd | 4dd 4dd 3dd 3dd 5dd 6dd | 6dd 6dd 6dd 6dd 3dd 3dd {1=bB3}||
@@ -97,7 +100,7 @@ Na["Tap"]: /{7/8} X. X X | X(X)X X | X. X X | X(X) X X |
 ---
 Frp: n=6
 N["1"]: 1e. 1e 6 {1=bE4, *}| 2(3) 4 3 | 1. 1 - | 2 (2~)(22)(34) |
-A: c"4" | c"5d7" | ++c"1" | c"5d7" |
+A: c"4" | c"5d7" | c"1" | c"5d7" |
 N["2"]: (464)(16d)(14) {1=bE4}| (5d7d5d)(27d)(5d7d) | (5d3d5d)(5d3d)(6d5d) | (5d7d5d)5d 5d |
 Nc["I"]: 4d. 4d 1d  {1=bE4}| 7dd. 2d 7dd        | 1d.  -  1d | 7dd. -  7dd |
 Nc["R"]: 6dd. 6dd - {1=bE4}| 5dd(5dd~) 5dd 5dd | 5dd. 5dd - | 5dd. 5dd -  |
@@ -105,7 +108,7 @@ Na["Tap"]: X. X X | X(X) X X | X. X 0 | X X (XXX) |
 ---
 Frp: n=5
 N["1"]: 5. 5 6 | 7. 7 1e | 4(4) 4 3 | 1. (17d)(11) | 1~. (11)(7d1) |
-A: c"1". - c"2m" | c"3m". - c"6m" | c"4" (0) 0 c"4maj7" | c"4" | +++c"4" |
+A: c"1". - c"2m" | c"3m". - c"6m" | c"4" (0) 0 c"4maj7" | c"4" | c"4" |
 N["2"]: (3d5d5d)(3d3d)(4d2d) | (3d5d3d)(3d5d)(3d6d) | (6d4d1d)(4d1d)(6d4d) | (4d6d4d)(3d2d)(6d4d) | (4d6d4d)(2d3d)(2d3d) |
 Nc["I"]: 1d.  -   6dd | 7dd. 7dd 1d | 6dd. 6dd - | 6dd. 7dd 6dd | 6dd. (0)7dd (6dd) |
 Nc["R"]: 5dd. 5dd 4dd | 5dd. - 6dd  | 4dd. - 4dd | 4dd. - 4dd | 4dd~. (4dd4dd~) 4dd |
@@ -128,8 +131,8 @@ Na["Tap"]: 0 0 0 Y Y Y |
 
 ---
 N["0"]: 1e - - 7 - 2e | 1e - - 7 - - | 1e - - 1e - - | 4 5 6 7 - - |
-A: +++c"1" - - c"5" c"5add9" - | c"1" - - c"5add9" - - | c"4" - - c"1" - - | c"4" - - c"5add6" - - |
-A: ++++h"F / 反拍"
+A: c"1" - - c"5" c"5add9" - | c"1" - - c"5add9" - - | c"4" - - c"1" - - | c"4" - - c"5add6" - - |
+A: h"F / 反拍"
 N["1"]: (35d)(12)(31)(23)(60)(50) | 5d 1 3 (60) 5 - | (46d)(14)(64)(53)(20)(10) | 6d 7d 1 (30) 2 - |
 Nc["I"]: 1d  -     -      2d  -     -       | 3d  -      -      2d  7d 5d | 1d  -      -      1d  -     -      | 1d  -      -      2d  1d 7dd |
 Nc["R"]: 3dd (1d 0)(3d 0) 5dd (2d 0)(7dd 0) | 5dd (5dd 0)(1d 0) 7dd -  -  | 4dd (6dd 0)(1d 0) 5dd (3d 0)(1d 0) | 4dd (6dd 0)(1d 0) 5dd -  -   |
@@ -137,7 +140,7 @@ Nc["Click"]: 0 Y Y 0 Y Y | 0 Y Y 0 Y Y | 0 Y Y 0 Y Y | 0 Y Y 0 Y Y |
 Na["Tap"]: X (XX)(XX) X X X | X X X X X 0 | X (XX)(XX) X X X | X X X X X 0 |
 ---
 N["0"]: 1e - - 7 - 2e | 3e - 6e 5e - 3e | 1e - - 4e - - | 2e - - 5 (07)(1e2e) ||
-A: +++c"1" - - c"5" c"5add9" - | c"1" - c"6m" c"5" - c"3m" | c"4" - - c"2m" - - | c"2maj" - - c"5" - - |
+A: c"1" - - c"5" c"5add9" - | c"1" - c"6m" c"5" - c"3m" | c"4" - - c"2m" - - | c"2maj" - - c"5" - - |
 N["1"]: (35d)(12)(31)(23)(60)(50) | 1 3 1e (70) 5. (5) | 4. (3)(45)6 5 6 | 6 5 6 7 (25)(67) ||
 Nc["I"]: 1d  -     -      2d  -     -       | 5d  -      1d      2d  2 7d  | 1d  -    -      1d  3d 4d   | #4d  3d  2d 7dd 5dd 7dd ||
 Nc["R"]: 3dd (1d 0)(3d 0) 5dd (2d 0)(7dd 0) | 3dd (5dd 0)(6dd 0) 5dd  -  -  | 6dd (1d0)(4d0) 6dd -  6dd | 6dd #4dd 2dd 5dd  2dd 2dd ||
@@ -148,9 +151,9 @@ Na["Tap"]: X (XX)(XX) X X X | X X X X X (0X) | X. (X)(XX) X X X | X X X X (0Y)(Y
 ---
 Frp: n=3
 N["1"]: /{t=0.5} 3e - T(1e2e3e) 2e T(2e1e7) T(71e2e) | 1e. (6)T(671e) 5 - T(345) | 6 - T(671e) 1e T(1e71e)T(1e76) | T(1e76)T(671e) (1e7) 2e (07)T(71e2e) |
-A: +++c"1" - - c"5" - - | c"6m" - - c"3m" - - | c"2m" - - c"1" - - | +++c"2maj" - - c"5" - - |
+A: c"1" - - c"5" - - | c"6m" - - c"3m" - - | c"2m" - - c"1" - - | c"2maj" - - c"5" - - |
 A: "注意踩点解析中也是三连音"
-A: +h"C / 三连音 (再现)"
+A: h"C / 三连音 (再现)"
 N["2"]: (15d)(15d)(15d)(7d5d)(7d5d)(6d7d) | (6d3d)(6d7d)(16d)(5d3d)(2d3d)(2d3d) | \
         (4d2d)(4d2d)(3d4d)(3d1d)(3d1d)(3d5d) | (2d#4d)(2d#4d)(2d6d)(7d5d)(6d7d)(12) |
 Nc["I"]: 5dd - 5dd 7dd - 7dd | 6dd - 6dd 7dd - 7dd | 6dd - 6dd 5dd - 5dd | 6dd - 6dd 7dd - 7dd |
@@ -167,7 +170,7 @@ Na["Tap"]: X X T(0XX) X X T(0XX) | X T(0XX)T(0XX) X 0 (XX) |
 ---
 Frp: n=3
 N["1"]: /{t=0.5} 4. (3) T(432) T(217d) (7d1)T(7d12) | 1 - - 1d~ - - ||
-A: +++c"4" - - c"5d7" - - | c"1" - - - - - |
+A: c"4" - - c"5d7" - - | c"1" - - - - - |
 N["2"]: (1d1d)(6dd1d)(1d7dd)(4d2d)(6dd1d)(2d7dd) | (1d)5dd(5dd)T(1d7dd1d) 5d~ - - ||
 Nc["I"]: 6dd 0 6dd 5dd - 5dd | 5dd - 5dd  3d~ - - ||
 Nc["R"]: 4dd. 4dd. 4dd. 4dd. | 3dd - - 1dd~ - - ||
@@ -183,7 +186,7 @@ Nc["R"]: /[qpm=114] 1dd - - 0 4dd 4dd |
 Na["Tap"]: /[qpm=114] 0 0 0 Y Y Y |
 ---
 N["1"]: /[qpm=107] 3. (3)(23)2 3 4 |[qpm=97]{3/4, w=0.7} 4 7d 2 |[qpm=89]{6/4} 1~ - - - - - | 1[ext] - - - 0 0 |||
-A: ++c"1" - - c"2m" - - | c"5d7" - - | c"1" - - c"1" - - | c"1" - - 0 0 0 |
+A: c"1" - - c"2m" - - | c"5d7" - - | c"1" - - c"1" - - | c"1" - - 0 0 0 |
 A: h"结束句" 0 ++r"rit."
 N["2"]: /[qpm=107] 0 0 0 6d 7d 1 |[qpm=97]{3/4} 4d 5d 7d |[qpm=89]{6/4} 5d~ - - - - - | 5d[ext] - - - 0 0 |||
 N["3"]: /[qpm=107] 3d 3d 3d (4d2d)(3d5d)(6d7d) |[qpm=97]{3/4} (2d3d)(2d4d)(5d2d) |[qpm=89]{6/4} (3d1d)(3d1d)(3d1d) 3d~ - - | 3d[ext] - - - 0 0 |||
@@ -193,7 +196,7 @@ Na["Tap"]: /[qpm=107] X. (X)(XX) X X X |[qpm=97]{3/4} X X X |[qpm=89]{6/4} X 0 0
 
 ====
 Srp: font_text=Roman,CommonSerif/400/0.9
-T: 此乐谱由 Sparks NMN <https:/\/notation.sparkslab.art/> 渲染。乐谱源代码参见 <TheMusicTheory.spnmn>。
+T: 此乐谱由 Sparks NMN <https:/\/nmn.sparks-lab.art/> 渲染。乐谱源代码参见 <TheMusicTheory.spnmn>。
 
 // [SparksNMN.MIDIPlay.MixingConfig] #保存的混音配置文件
 //   {"id":"beatMachine","c":{"m":true,"s":false,"p":0,"v":70,"nx":"beat2","bm":3}}

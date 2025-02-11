@@ -13,5 +13,5 @@ ErrorDocument 404 /404.html
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.+\w)$ /$1/index.html
-RewriteRule ^(.+\w)\/+$ /$1 [R=302]
+RewriteRule ^(.+[^\/])$ /$1/index.html [L]
+RewriteRule ^(.+[^\/])\/+$ /$1 [R=302]

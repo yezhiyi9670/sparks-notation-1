@@ -60,7 +60,7 @@ N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |\\
 <Cd.CommandReference level={0} />
 
 - 文档头中所有指令的属性均直接作为文本处理。
-- 目前，尾注文本 `Df` 会显示在整个乐谱的末尾（这一行为未来可能改变），因此也可以添加在整个文档最后，而不必在开头。<C.MinVersion min='Sparks NMN 1.14.16' inline />
+- &#xFEFF;<C.MinVersion min='1.14.16' inline>目前，尾注文本 `Df` 会显示在整个乐谱的末尾（这一行为未来可能改变），因此也可以添加在整个文档最后，而不必在开头。</C.MinVersion>
 
 :::info 提示
 
@@ -79,6 +79,17 @@ N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - |\\
 包含这些指令：
 
 <Cd.CommandReference level={1} special />
+
+:::tip 提示
+
+文本章节中的文本行有以下特殊语法：
+
+- 如果行首的字符是 `|`，该字符会被删除，但其之后的空格将会保留。这允许为文本行添加前导空格。
+- &#xFEFF;<C.MinVersion min='1.15.4' inline>**在行首有 `|` 的情况下**，可以在文本中插入**一处** `>` 字符以标记文本对齐点。</C.MinVersion>
+
+具体例子见[指南中的解释](/docs/tutorial-basics/multiarticle#text-aligning)。
+
+:::
 
 #### 音乐章节 {#st-article-music}
 
