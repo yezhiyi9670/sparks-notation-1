@@ -13,7 +13,7 @@ export class DisposableAudioTimer {
 
 	resetTime() {
 		this.now = Tone.now()
-		this.visualLatency = Math.max(0, Tone.context.lookAhead * 1000 - 60)
+		this.visualLatency = Math.max(0, Tone.getContext().lookAhead * 1000 + 30)
 	}
 
 	schedule(func: (time: number) => void, timeMillis: number, delayLookAhead: boolean = false) {
