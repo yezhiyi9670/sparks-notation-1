@@ -1,5 +1,5 @@
 import { NMNI18n, SparksNMN } from "@sparks-notation/core"
-import React, { createRef, useEffect, useState } from "react"
+import React, { createRef, useEffect, useLayoutEffect, useState } from "react"
 import { useMemo } from "react"
 import { usePlaygroundUrl } from "../component/playground"
 import { SparksNMNDisplay } from "@sparks-notation/react-editor/base/SparksNMNDisplay"
@@ -41,7 +41,7 @@ export function NMNDisplay(props: {
 		return md5(props.code + JSON.stringify(props.efRange))
 	}, [props.code, props.efRange])
 	
-	const [ init, setInit ] = useState(FontLoaderProxy.getState() == 'loaded')
+	const [ init, setInit ] = useState(false)
 	const [ rendered, setRendered ] = useState(false)
 	const [ progressData, setProgressData ] = useState([0, 1])
 	const getRendered = Util.useMethod(() => rendered)
@@ -98,11 +98,12 @@ export function NMNDisplay(props: {
 					language={NMNI18n.languages.zh_cn}
 					transformFields={transformFields}
 					doPagination={props.doPagination}
-					onReportError={() => setTimeout(() => {
+					onReportError={() => {
 						if(!rendered) {
 							// 链接锚点修正
 							countInfo.rendered += 1
 							if(countInfo.rendered == countInfo.alive) {
+								// [TODO] 此机制在页面上没有乐谱，但某个折叠内容里有乐谱的时候并不正确
 								const $docbox = $(
 									'article>div.markdown'
 								)
@@ -116,7 +117,7 @@ export function NMNDisplay(props: {
 
 							setRendered(true)
 						}
-					}, 0)}
+					}}
 				/>
 			</div>}
 			{(!init || !rendered) && <div style={{padding: '4px 8px'}}>
