@@ -14,6 +14,12 @@ const entries: PrefRendererInfo = [
 				defaultValue: ['string', "system-ui"],
 				type: 'string'
 			},
+			{
+				key: 'allowUpdateCheck',
+				defaultValue: ['string', "on"],
+				type: 'select',
+				choices: ['off', 'on']
+			},
 		]
 	},
 	{

@@ -57,22 +57,24 @@ function AppIn() {
 
 	// ===== 更新检查 =====
 	useOnceEffect(() => {
-		setTimeout(() => {
-			$.ajax({
-				dataType: 'json',
-				method: 'GET',
-				timeout: 15000,
-				url: checkUpdateUrl,
-				success: (testObj) => {
-					if(compareVersions(testObj.desktop_version, window.Versions.app) > 0) {
-						showToast(LNG('toast.new_version', testObj.desktop_version), 3500)
+		if(prefs.getValue('allowUpdateCheck') == 'on') {
+			setTimeout(() => {
+				$.ajax({
+					dataType: 'json',
+					method: 'GET',
+					timeout: 15000,
+					url: checkUpdateUrl,
+					success: (testObj) => {
+						if(compareVersions(testObj.desktop_version, window.Versions.app) > 0) {
+							showToast(LNG('toast.new_version', testObj.desktop_version), 3500)
+						}
+					},
+					error: (err) => {
+						console.warn('Update chek failed', err)
 					}
-				},
-				error: (err) => {
-					console.warn('Update chek failed', err)
-				}
-			})
-		}, 1000)
+				})
+			}, 1000)
+		}
 	})
 
 	const fileFiltersOpen: Electron.FileFilter[] = useMemo(() => [
