@@ -38,4 +38,33 @@ This repository contains the core, the desktop application and the website toget
 
 ## Building & Integration Instructions
 
-Coming soon™.
+此仓库是多个模块的 workspace，使用 yarn berry 进行管理，但是为避免过多配置问题没有采用 PnP。
+
+仓库内没有将 Sparks NMN 核心单独打包成 JS 的功能，但是你可以像此项目中一样直接引用其源代码。
+
+### 网页 Demo `packages/demo`
+
+（同时用于测试核心功能）
+
+- 测试：`yarn dev`
+- 构建：`yarn build`，输出到 `dist/`
+- 预览构建结果：`yarn preview`
+
+### 导出模板 `packages/static-resources`
+
+- 生成导出模板：`yarn build-wrapper`
+
+### 桌面版 `packages/desktop`
+
+先决条件：生成导出模板。桌面版的测试/构建步骤执行前会自动复制导出模板的构建输出。
+
+- 测试：`yarn start`
+- 构建：`yarn package`
+- 构建到 zip：`yarn make`
+
+### 网站 `packages/website`
+
+- 先决条件：构建网页 Demo，并在此处运行 `yarn presync` 复制构建结果。
+- 测试：`yarn start`
+- 构建：`yarn build`
+- 预览构建结果：`yarn serve`
