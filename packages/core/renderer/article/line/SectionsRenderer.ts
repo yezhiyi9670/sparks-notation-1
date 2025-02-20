@@ -139,13 +139,11 @@ export class SectionsRenderer {
 			firstSection = (section.type == 'nullish')
 		})
 		// ===== 调试用中心线 =====
-		if(false) {
-			root.drawLine(
-				this.columns.startPosition(0), currY,
-				this.columns.endPosition(this.columns.data.length - 1),
-				currY, 0.05, 0, scale
-			)
-		}
+		// root.drawLine(
+		// 	this.columns.startPosition(0), currY,
+		// 	this.columns.endPosition(this.columns.data.length - 1),
+		// 	currY, 0.05, 0, scale
+		// )
 		// ===== 压行框线 =====
 		if(type == 'accompany') {
 			const topY = currY - fieldHeight / 2
@@ -356,11 +354,6 @@ export class SectionsRenderer {
 						msp.drawInsert(context, pos, currY, decor.char, isSmall, scale)
 					}
 				})
-				// 画属性
-				const topAttr = findWithKey(section.separator.before.attrs, 'type', 'top')
-				const topAdjust = (topAttr && topAttr.type == 'top') ? topAttr.margin : 0
-				msp.drawBeforeAfterAttrs(context, this.columns.startPosition(sectionIndex), currY - topAdjust, fieldHeight, section.separator.before.attrs, section, sectionIndex == 0, 'before', 1, scale, {}, !noTopAttr)
-				msp.drawBeforeAfterAttrs(context, this.columns.endPosition(sectionIndex), currY - topAdjust, fieldHeight, section.separator.after.attrs, section, sectionIndex == 0, 'after', 1, scale, {}, !noTopAttr)
 			} else if(section.type == 'omit') {
 				const omitFontMetric = new FontMetric('CommonBlack/400', 2.16)
 				if(section.count != section.count) {
@@ -380,6 +373,13 @@ export class SectionsRenderer {
 					root.drawLine(endPaddedX, currY - sideLength, endPaddedX, currY + sideLength, 0.15, 0, scale) // 右边界线
 					root.drawTextFast(midX, currY, section.count.toString(), omitNumberMetric, scale, 'center', 'bottom')
 				}
+			}
+			if(section.type != 'empty' && section.type != 'nullish') {
+				// 画属性
+				const topAttr = findWithKey(section.separator.before.attrs, 'type', 'top')
+				const topAdjust = (topAttr && topAttr.type == 'top') ? topAttr.margin : 0
+				msp.drawBeforeAfterAttrs(context, this.columns.startPosition(sectionIndex), currY - topAdjust, fieldHeight, section.separator.before.attrs, section, sectionIndex == 0, 'before', 1, scale, {}, !noTopAttr)
+				msp.drawBeforeAfterAttrs(context, this.columns.endPosition(sectionIndex), currY - topAdjust, fieldHeight, section.separator.after.attrs, section, sectionIndex == 0, 'after', 1, scale, {}, !noTopAttr)
 			}
 		})
 

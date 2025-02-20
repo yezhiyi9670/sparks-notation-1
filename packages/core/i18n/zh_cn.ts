@@ -78,7 +78,7 @@ export default {
 		'note_char_lyric_annotation_unknown': '无法将 `${0}` 解析为标记型歌词',
 
 		'unknown_section_separator': '未知的小节线符号 ${0}',
-		'empty_section': '存在空白的小节。如果你确实想这么做，请写入一个 `empty`，否则可能导致未预期的结果。',
+		'empty_section': '存在空白的小节。如果你确实想这么做，请写入一个 `empty`（或简写为 `e`），否则可能导致未预期的结果。',
 		'attr_beats_above': '临时拍号不能标记在小节线上方',
 		"invalid_begin_separator": "小节线 ${0} 不能用在小节序列的开头",
 		"invalid_end_separator": "小节线 ${0} 不能用在小节线的末尾",

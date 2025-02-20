@@ -124,6 +124,9 @@ export class LineRenderer {
 		const firstAnnotation = SectionStat.fcaPrimary(part)
 		for(let i = 0; i < line.sectionCount; i++) {
 			const section = part.notes.sections[i]
+			if(section.type == 'empty' || section.type == 'nullish') {
+				continue
+			}
 			if(firstAnnotation) {
 				if(!SectionStat.allEmpty(firstAnnotation, i, 1) && SectionStat.hasSeparatorSideAttrs(part, section)) {
 					hasAnnAttrOverlap = true
