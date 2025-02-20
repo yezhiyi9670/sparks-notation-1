@@ -166,7 +166,7 @@ export class SectionsRenderer {
 		// ===== 小节序号 =====
 		if(sectionCount > 0) {
 			const ordinalMode = context.render!.sectionorder
-			if(isFirstPart && !hasJumperOverlap && ordinalMode != 'none' && sections.length > 0) {
+			if(isFirstPart && ordinalMode != 'none' && sections.length > 0) {
 				let ordinalText = (sectionCount + 1).toString()
 				if(ordinalMode == 'paren') {
 					ordinalText = '(' + ordinalText + ')'
@@ -174,7 +174,7 @@ export class SectionsRenderer {
 				if(ordinalMode == 'bracket') {
 					ordinalText = '[' + ordinalText + ']'
 				}
-				const ordinalX = this.columns.paddedStartPosition(0) - 0.5 * scale
+				const ordinalX = this.columns.paddedStartPosition(0) - (0.5 + (hasJumperOverlap ? 0.5 : 0)) * scale
 				const ordinalMetric = new FontMetric(context.render.font_sectionorder!, 1.8)
 				root.drawText(ordinalX, currY - 3.5, ordinalText, ordinalMetric, scale, 'right', 'bottom', {
 					fontStyle: ordinalMode == 'plain' ? 'italic' : 'normal'

@@ -430,7 +430,7 @@ export module SectionStat {
 	/**
 	 * 连接跳房子符号（这一操作对原始数据有破坏）
 	 */
-	export function connectJumpers(jumpers: Jumper[]): Jumper[] {
+	export function connectJumpers_m(jumpers: Jumper[]): Jumper[] {
 		const ret: Jumper[] = []
 
 		jumpers.sort((x, y) => {
@@ -440,7 +440,9 @@ export module SectionStat {
 		let lastSig = ''
 		let lastPushed: Jumper | undefined = undefined as any
 		jumpers.forEach((jumper) => {
-			const currSig = JSON.stringify(jumper.attrs)
+			// 跳房子为空时，也延续上一个记号。
+			const currSig = jumper.attrs.length == 0 ? lastSig : JSON.stringify(jumper.attrs)
+
 			if(lastPushed && currSig == lastSig && lastPushed.endSection == jumper.startSection) {
 				lastPushed.endSection = jumper.endSection
 			} else {
