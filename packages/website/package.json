@@ -8,7 +8,7 @@
   "dependencies": {
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/preset-classic": "^3.7.0",
-    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/react": "^3.1.0",
     "@sparks-notation/core": "workspace:^",
     "@sparks-notation/desktop": "workspace:^",
     "@sparks-notation/util": "workspace:^",
@@ -24,9 +24,9 @@
     "react-dom": "^18.3.1",
     "react-icons": "^4.7.1",
     "react-jss": "^10.10.0",
-    "rehype-katex": "^5.0.0",
+    "rehype-katex": "7",
     "remark-cjk-friendly": "^1.0.0",
-    "remark-math": "^3.0.1"
+    "remark-math": "6"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.7.0",

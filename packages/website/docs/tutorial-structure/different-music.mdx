@@ -91,6 +91,39 @@ Lw: Do Re Mi Fa Sol La Ti Do Sol Do!
 `
 } />
 
+&#xFEFF;<C.MinVersion min='1.15.6' inline>对于跨越多个碎片的跳房子记号，为简单起见，也可以从第二个碎片开始只写 `J:`，省略之后的属性。</C.MinVersion>
+
+<C.RealtimeScore noPreview children={
+`P: 1=bB 4/4 qpm=120
+Rp: font_lyrics=Roman,CommonSerif/600
+====
+N: empty | empty | empty | omit(9) |
+---
+N: /{w=1.1} 7. (3)(#4#5)(67) |{w=0.9} 1e - 0 (7b7) |
+Lw: Ti, a drink with jam and bread, that will
+---
+J: 1.
+N: 6 4 7 5 | 1e 5 3 2 {"下一遍加速到", qpm=126}:||
+Lw: lead us back to Do oh oh oh
+---
+J: 2.
+N: 6 4 7 5 {"下一遍加速到", qpm=132}:||
+Lw: lead us back to
+---
+// preserve-start
+// highlight-next-line
+J: 3., "结束句"
+N: 6 4 7 5 |{w=0.85} 1e - - 0 |
+Lw: lead us back to Do.
+---
+// highlight-next-line
+J:
+N: /{w=1.15} (01)(23)(45)(67) | 1e[str] 5[str] 1e[str] 0 |||
+Lw: Do Re Mi Fa Sol La Ti Do Sol Do!
+// preserve-end
+`
+} />
+
 ### 省略中间横线 {#omit-horizontal-line}
 
 当跳房子记号下的内容变得特别长时，中间会出现一条很长的横线，这显得过于冗余。下面例子来自歌曲[《宝贝宝贝》](https://www.kuwo.cn/play_detail/9847974)。
@@ -137,7 +170,7 @@ J: 1.
 N: 1e - - - | 
 Lc: 随_{0}
 ---
-J: 1.
+J:
 N: &lpr; 3 - 5 1e | 2e. (2e) 6 - | 5 (56)(7)1e (2e) | 1e - - - &rpr; :||
 ---
 // preserve-start
@@ -151,7 +184,7 @@ N: 1e - - - &int; | 3 5 5 (1e1e) | (2e2e)2e 6 - &int; | 5 6 7 1e | 1e - 2e^.(1e^
 Lc: 随_{0} 你是我们的心肝宝贝，爸妈的爱永相
 ---
 // highlight-next-line
-J: 3., "结束句"
+J:
 N: 1e~ - - - | 1e - - - | &lpr; 5 (56)(7)1e (2e) | 1e - - - | 1e 0 0 0 &rpr; |||
 Lc: 随_{0}
 // preserve-end
@@ -202,7 +235,7 @@ J: 1.
 N: 1e - - - | 
 Lc: 随_{0}
 ---
-J: 1.
+J:
 N: &lpr; 3 - 5 1e | 2e. (2e) 6 - | 5 (56)(7)1e (2e) | 1e - - - &rpr; :||
 ---
 // preserve-start
@@ -216,7 +249,7 @@ N: 1e - - - &int; | 3 5 5 (1e1e) | (2e2e)2e 6 - &int; | 5 6 7 1e | 1e - 2e^.(1e^
 Lc: 随_{0} 你是我们的心肝宝贝，爸妈的爱永相
 ---
 // highlight-next-line
-J: 3., "结束句"
+J:
 N: 1e~ - - - | 1e - - - | &lpr; 5 (56)(7)1e (2e) | 1e - - - | 1e 0 0 0 &rpr; |||
 Lc: 随_{0}
 // preserve-end
@@ -396,7 +429,7 @@ J: 1.
 N: (6d0)((6d)1(6d))(7d.(3))(43~) |
 ---
 // highlight-next-line
-J: 1.
+J:
 N: /{2/4, w=0.5} 3 - :||
 ---
 // highlight-next-line
@@ -408,7 +441,7 @@ J: 3.
 N: /{3/8, w=0.6} 0. |
 ---
 // highlight-next-line
-J: 3.
+J:
 Frp: n=5
 N: /{4/4} 6 3 #2 3 | #5 3 2 #2 | 6 3 #2 3 | #5 3 2 #2~ | #2 - 0 0 |||
 // preserve-end
@@ -487,22 +520,22 @@ N: 0 0 0 (6d1)  | 2 3 (6d(12~))(25~) | (53~) 3 0 (6d1) |
 Lc: 轻解霓裳，咽泪换笑妆。等你
 ---
 B:
-J: 2.
+J:
 N: 2e 3e (2e(1e2e~))(2e5e~) | (5e3e) 3e^ 0 ((5e^6e6e1ee)) | 6e. (3e) 2e^.(0) | (1ee^7e)(1ee2e) 1e^.(0) |
 Lc: _{8} 啊_{6} 啊_{4}
 N: 2 3 (2(12~))(25~) | (53~) 3 0 ((6661e)) | (65)(63) 2.(0) | (1e7)(1e2) 1.(0) |
 Lc: 戎装，去呼啸沧桑。过往终究止不住流淌，去御剑飞翔，
 ---
-J: 2.
+J:
 N: (6^5e~) 5e~ -   (5e6)  | 1e^ - - &lpr;(61e) ||
 Lc: 啊_{3}
 N: (6d5)(56d)(6d)5 (6d) | 1 - - 0 ||
 Lc: 也许会飞出这感伤。
 ---
-J: 2.
+J:
 N: 2e 3e (6(1e2e~))(2e5e) | 3e - - (61e) | 2e 3e (2e3e)(5e6e) | 3e - - ((5e6e6e1ee)) |
 ---
-J: 2.
+J:
 N: (6e5e)(6e3e) 2e -  | (1ee7e)(5e2e) 1e. (7) | (65e)(5e6)(65e)(5e6) | 1e - 2e 3e | #4e - #5e - &rpr; :||
 ---
 N: ~ (76~) 6 0 (61e) ||: 2e 3e (6(1e2e~))(2e5e~) | (5e3e~) 3e 0 (61e) | 2e 3e (2e(1e2e~))(2e5e~) | (5e3e~) 3e - ((5e^6e6e1ee)) |

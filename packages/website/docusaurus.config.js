@@ -1,9 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const math = require('remark-math');
-const katex = require('rehype-katex');
-const remarkCjkFriendly = import('remark-cjk-friendly');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
@@ -19,84 +16,85 @@ const siteDemo = site + 'playground/'
 const siteDonate = site + 'donate/'
 const siteSparksLab = 'https://sparkslab.art/'
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
-  title: title,
-  tagline: desc,
-  favicon: 'logo.ico',
-
-  // Set the production url of your site here
-  url: site,
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'yezhiyi9670', // Usually your GitHub org/user name.
-  projectName: 'sparks-nmn-website', // Usually your repo name.
-
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: 'zh-Hans',
-    locales: ['zh-Hans'],
-  },
-
-  scripts: [
-    // umami TRACKING SCRIPT
-    {
-      src: 'https://analytics.sparkslab.art/script.js',
-      async: true,
-      'data-website-id': '1070a9aa-0b89-4e2c-9ad2-1022aa1d6c65',
-      'data-domains': domain
+async function createConfigAsync() {
+  /** @type {import('@docusaurus/types').Config} */
+  const config = {
+    title: title,
+    tagline: desc,
+    favicon: 'logo.ico',
+  
+    // Set the production url of your site here
+    url: site,
+    // Set the /<baseUrl>/ pathname under which your site is served
+    // For GitHub pages deployment, it is often '/<projectName>/'
+    baseUrl: '/',
+  
+    // GitHub pages deployment config.
+    // If you aren't using GitHub pages, you don't need these.
+    organizationName: 'yezhiyi9670', // Usually your GitHub org/user name.
+    projectName: 'sparks-nmn-website', // Usually your repo name.
+  
+    onBrokenLinks: 'throw',
+    onBrokenMarkdownLinks: 'warn',
+  
+    // Even if you don't use internalization, you can use this field to set useful
+    // metadata like html lang. For example, if your site is Chinese, you may want
+    // to replace "en" with "zh-Hans".
+    i18n: {
+      defaultLocale: 'zh-Hans',
+      locales: ['zh-Hans'],
     },
-    {
-      src: '/script/track-proxy.js',
-    }
-  ],
-  headTags: [],
-
-  presets: [
-    [
-      'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
-        docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          remarkPlugins: [math],
-          rehypePlugins: [katex],
-        },
-        blog: {
-          showReadingTime: true,
-        },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      }),
+  
+    scripts: [
+      // umami TRACKING SCRIPT
+      {
+        src: 'https://analytics.sparkslab.art/script.js',
+        async: true,
+        'data-website-id': '1070a9aa-0b89-4e2c-9ad2-1022aa1d6c65',
+        'data-domains': domain
+      },
+      {
+        src: '/script/track-proxy.js',
+      }
     ],
-  ],
-
-  // themes: [
-  //   [
-  //     require.resolve('@easyops-cn/docusaurus-search-local'),
-  //     // /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
-  //     ({
-  //       // ... Your options.
-  //       // `hashed` is recommended as long-term-cache of index file is possible.
-  //       hashed: true,
-
-  //       // For Docs using Chinese, it is recomended to set:
-  //       language: ["en", "zh"],
-  //     })
-  //   ]
-  // ],
-
-  themeConfig:
+    headTags: [],
+  
+    presets: [
+      [
+        'classic',
+        /** @type {import('@docusaurus/preset-classic').Options} */
+        ({
+          docs: {
+            sidebarPath: require.resolve('./sidebars.js'),
+            remarkPlugins: [(await import('remark-math')).default, (await import('remark-cjk-friendly')).default],
+            rehypePlugins: [(await import('rehype-katex')).default],
+          },
+          blog: {
+            showReadingTime: true,
+          },
+          theme: {
+            customCss: require.resolve('./src/css/custom.css'),
+          },
+        }),
+      ],
+    ],
+  
+    // themes: [
+    //   [
+    //     require.resolve('@easyops-cn/docusaurus-search-local'),
+    //     // /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+    //     ({
+    //       // ... Your options.
+    //       // `hashed` is recommended as long-term-cache of index file is possible.
+    //       hashed: true,
+  
+    //       // For Docs using Chinese, it is recomended to set:
+    //       language: ["en", "zh"],
+    //     })
+    //   ]
+    // ],
+  
+    themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       metadata: [{name: 'keywords', content: '音乐, 简谱, 制作, 脚本, 文本语言'}],
@@ -229,6 +227,8 @@ const config = {
         crossorigin: 'anonymous',
       },
     ],
-};
+  };
+  return config;
+}
 
-module.exports = config;
+module.exports = createConfigAsync;
