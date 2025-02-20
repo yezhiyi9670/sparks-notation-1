@@ -2,6 +2,9 @@ export default {
 	packagerConfig: {
 		name: "sparks-nmn-desktop",
 		icon: "./logo/logo",
+		asar: {
+			unpackDir: 'dist/renderer/core-resources/font'  // Preview HTML need to load fonts from here
+		},
 		ignore: (path) => {
 			if(['', '/package.json'].includes(path)) {
 				return false

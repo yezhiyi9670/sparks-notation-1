@@ -61,4 +61,10 @@ export default {
 	getResourcePath: (): string => {
 		return ipcRenderer.sendSync('getResourcePath')
 	},
+	/**
+	 * 获取资源文件 asar.unpacked 目录
+	 */
+	getResourceUnpackedPath: (): string => {
+		return ipcRenderer.sendSync('getResourceUnpackedPath')
+	},
 }

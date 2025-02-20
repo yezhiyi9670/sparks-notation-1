@@ -98,5 +98,16 @@ export module EventFileSystem {
 			let resPath = app.getAppPath()
 			evt.returnValue = resPath
 		})
+		// 获取应用资源文件 asar.unpacked 目录
+		ipcMain.on('getResourceUnpackedPath', (evt) => {
+			const resPath = app.getAppPath()
+			const basename = path.basename(resPath)
+			const dirname = path.dirname(resPath)
+			if(basename == 'app.asar') {
+				evt.returnValue = path.join(dirname, 'app.asar.unpacked')
+			} else {
+				evt.returnValue = resPath
+			}
+		})
 	}
 }

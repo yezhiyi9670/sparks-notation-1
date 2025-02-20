@@ -213,7 +213,7 @@ function AppIn() {
 		return true
 	}
 	async function exportHtmlIn(path: string, editorApi: IntegratedEditorApi) {
-		const localFontLocation = 'file:///' + window.FileSystem.getResourcePath().replace(/\\/g, '/') + '/dist/renderer/core-resources/font'
+		const localFontLocation = 'file:///' + window.FileSystem.getResourceUnpackedPath().replace(/\\/g, '/') + '/dist/renderer/core-resources/font'
 		const exportContent = editorApi.exportHtml(exportTemplate, localFontLocation)
 		const basename = window.Path.basename(path)
 		if(await window.FileSystem.saveText(path, exportContent)) {
