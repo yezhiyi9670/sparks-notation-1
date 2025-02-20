@@ -6,8 +6,8 @@
   "author": "yezhiyi9670 <yezhiyi9670@sparks-lab.art>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@docusaurus/core": "2.3.1",
-    "@docusaurus/preset-classic": "2.3.1",
+    "@docusaurus/core": "^3.7.0",
+    "@docusaurus/preset-classic": "^3.7.0",
     "@mdx-js/react": "^1.6.22",
     "@sparks-notation/core": "workspace:^",
     "@sparks-notation/desktop": "workspace:^",
@@ -25,10 +25,11 @@
     "react-icons": "^4.7.1",
     "react-jss": "^10.10.0",
     "rehype-katex": "^5.0.0",
+    "remark-cjk-friendly": "^1.0.0",
     "remark-math": "^3.0.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.3.1",
+    "@docusaurus/module-type-aliases": "^3.7.0",
     "@tsconfig/docusaurus": "^1.0.5",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"

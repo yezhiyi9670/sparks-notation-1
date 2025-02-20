@@ -51,6 +51,16 @@ export class LyricsParser {
 	checkBoundary() {
 		return this.charPtr == 0
 	}
+	currentTokenType() {
+		const token = this.input[this.tokenPtr]
+		if(token == undefined) {
+			return undefined
+		}
+		if('bracket' in token) {
+			return undefined
+		}
+		return token.type
+	}
 	
 	constructor(input: BracketTokenList, lineNumber: number, context: ScoreContext) {
 		this.input = input
@@ -156,7 +166,7 @@ export class LyricsParser {
 		const ret: LyricToken[] = []
 		let lastToken: LyricToken | undefined = undefined as any
 		let lastCharToken: LyricToken | undefined = undefined as any
-		let waitingAfterSymbol = false
+		let waitingPostfixSymbol = false
 		while(true) {
 			const ch = this.getchar()
 			if(ch === undefined) {
@@ -173,7 +183,7 @@ export class LyricsParser {
 						char: ch.text.substring(brPad, ch.text.length - brPad),
 						isCharBased: typeSampler == 'char'
 					})
-					waitingAfterSymbol = false
+					waitingPostfixSymbol = false
 				} else if(ch.bracket == '[') {
 					// 中括号：内部的歌词作为 Lw 类型处理
 					const innerResult = new LyricsParser(Tokens.join(ch.tokens, {
@@ -185,7 +195,7 @@ export class LyricsParser {
 					for(let item of innerResult) {
 						ret.push(lastToken = item)
 					}
-					waitingAfterSymbol = false
+					waitingPostfixSymbol = false
 				} else {
 					addIssue(issues,
 						this.lineNumber, ch.range[0], 'error', 'unexpected_lrc_bracket',
@@ -196,12 +206,36 @@ export class LyricsParser {
 			} else {
 				const charIndex = this.input[this.tokenPtr]!.range[0]
 				const isBoundary = this.checkBoundary()
-				const token = this.input[this.tokenPtr]
+				
+				const charTokenType = this.currentTokenType()
 				let symbolType = getLrcSymbolType(ch, typeSampler)
-				// if(token && ('bracket' in token || token.type == 'stringLiteral')) {
-				// 	symbolType = 'word'
-				// }
 				this.passchar()
+
+				// 对于当前字符，如果发现 `<`，下一个字符按后置标点处理
+				if(ch == '<' && charTokenType != 'stringLiteral') {
+					waitingPostfixSymbol = true
+					continue
+				}
+
+				// 对于当前字符，如果发现 `>`，直接忽略
+				if(ch == '<' && charTokenType != 'stringLiteral') {
+					continue
+				}
+
+				// 窥探下一个字符，如果发现 `>`，则按前置标点处理当前字符
+				const nextChar = this.getchar()
+				const nextCharTokenType = this.currentTokenType()
+				if(nextChar == '>' && nextCharTokenType != 'stringLiteral') {
+					this.passchar()
+					symbolType = 'prefix'
+				}
+
+				// 对于当前字符，如果等待后置标点，则按照后置标点处理
+				if(waitingPostfixSymbol) {
+					waitingPostfixSymbol = false
+					symbolType = 'postfix'
+				}
+
 				if(symbolType == 'word') {
 					if(typeSampler == 'word' && !isBoundary && lastToken && lastToken.type == 'char') {
 						lastToken.char += ch
@@ -209,7 +243,7 @@ export class LyricsParser {
 						ret.push(lastCharToken = lastToken = {
 							charIndex: charIndex,
 							char: ch,
-							...(waitingAfterSymbol ? {
+							...(waitingPostfixSymbol ? {
 								type: 'symbol',
 								slot: 'after'
 							} : {
@@ -217,7 +251,6 @@ export class LyricsParser {
 								isCharBased: typeSampler == 'char'
 							})
 						})
-						waitingAfterSymbol = false
 					}
 				} else if(symbolType == 'divide' || symbolType == 'placeholder') {
 					let repeats = 1
@@ -249,26 +282,13 @@ export class LyricsParser {
 							char: ch
 						})
 					}
-					waitingAfterSymbol = false
 				} else if(symbolType == 'postfix' || symbolType == 'prefix') {
-					if(ch == '>') {
-						if(lastToken && lastToken.type == 'char') {
-							Object.assign(lastToken, {
-								slot: 'before',
-								type: 'symbol'
-							})
-						}
-					} else if(ch == '<') {
-						waitingAfterSymbol = true
-					} else {
-						ret.push(lastToken = {
-							charIndex: charIndex,
-							type: 'symbol',
-							slot: (symbolType == 'postfix' || waitingAfterSymbol) ? 'after' : 'before',
-							char: ch
-						})
-						waitingAfterSymbol = false
-					}
+					ret.push(lastToken = {
+						charIndex: charIndex,
+						type: 'symbol',
+						slot: (symbolType == 'postfix' || waitingPostfixSymbol) ? 'after' : 'before',
+						char: ch
+					})
 				} else {
 					const _: never = symbolType
 				}

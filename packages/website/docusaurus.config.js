@@ -3,6 +3,7 @@
 
 const math = require('remark-math');
 const katex = require('rehype-katex');
+const remarkCjkFriendly = import('remark-cjk-friendly');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
@@ -79,6 +80,21 @@ const config = {
       }),
     ],
   ],
+
+  // themes: [
+  //   [
+  //     require.resolve('@easyops-cn/docusaurus-search-local'),
+  //     // /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+  //     ({
+  //       // ... Your options.
+  //       // `hashed` is recommended as long-term-cache of index file is possible.
+  //       hashed: true,
+
+  //       // For Docs using Chinese, it is recomended to set:
+  //       language: ["en", "zh"],
+  //     })
+  //   ]
+  // ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -176,7 +192,6 @@ const config = {
             ],
           },
         ],
-        // The script is TRACKING CODE. PLEASE REMOVE.
         copyright: `Contact: yezhiyi9670 at sparkslab dot art<br />Copyright © ${new Date().getFullYear()} yezhiyi9670. Built with Docusaurus.`,
       },
       docs: {
