@@ -38,33 +38,33 @@ This repository contains the core, the desktop application and the website toget
 
 ## Building & Integration Instructions
 
-此仓库是多个模块的 workspace，使用 yarn berry 进行管理，但是为避免过多配置问题没有采用 PnP。
+This is a multi-package workspace, managed using yarn berry. However, due to many compatibility problems, PnP is not used.
 
-仓库内没有将 Sparks NMN 核心单独打包成 JS 的功能，但是你可以像此项目中一样直接引用其源代码。
+The repository currently does not contain the pipeline to package the Sparks NMN core into an independent module. However, in this workspace, you can directly infer to its code by importing.
 
-### 网页 Demo `packages/demo`
+### Web demo `packages/demo`
 
-（同时用于测试核心功能）
+(Also used for testing core functionalities)
 
-- 测试：`yarn dev`
-- 构建：`yarn build`，输出到 `dist/`
-- 预览构建结果：`yarn preview`
+- Dev: `yarn dev`
+- Build: `yarn build`, output to `dist/`
+- Preview build output: `yarn preview`
 
-### 导出模板 `packages/static-resources`
+### HTML export template `packages/static-resources`
 
-- 生成导出模板：`yarn build-wrapper`
+- Build: `yarn build-wrapper`
 
-### 桌面版 `packages/desktop`
+### Desktop app `packages/desktop`
 
-先决条件：生成导出模板。桌面版的测试/构建步骤执行前会自动复制导出模板的构建输出。
+Prerequisite: Build the export template first. The build pipeline of the desktop app will copy the build output of the export template automatically.
 
-- 测试：`yarn start`
-- 构建：`yarn package`
-- 构建到 zip：`yarn make`
+- Dev: `yarn dev`
+- Build: `yarn package`
+- Build zip: `yarn make`
 
-### 网站 `packages/website`
+### Website `packages/website`
 
-- 先决条件：构建网页 Demo，并在此处运行 `yarn presync` 复制构建结果。
-- 测试：`yarn start`
-- 构建：`yarn build`
-- 预览构建结果：`yarn serve`
+- Prerequisite: Build the web demo, and run `yarn presync` here to copy the results.
+- Dev: `yarn start`
+- Build: `yarn build`
+- Preview build output: `yarn serve`
