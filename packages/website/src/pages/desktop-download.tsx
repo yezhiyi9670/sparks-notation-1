@@ -29,7 +29,9 @@ export default function DownloadPage() {
 	const urls = {
 		ghReleases: 'https://github.com/yezhiyi9670/sparks-notation-1/releases',
 		gh: 'https://github.com/yezhiyi9670/sparks-notation-1',
-		download: baseUrl + '/.download-bin/sparks-nmn-desktop-win32-x64-' + C.desktop_version + '.zip'
+		winDownload: baseUrl + '/.download-bin/windows/sparks-nmn-desktop-win32-x64-' + C.desktop_version + '.zip',
+		gnuLinuxDownload: baseUrl + '/.download-bin/gnu-linux/sparks-nmn-desktop-linux-x64-' + C.desktop_version + '.zip',
+		appImageDownload: baseUrl + '/.download-bin/gnu-linux/sparks-nmn-desktop-' + C.desktop_version + '.AppImage'
 	}
 
 	return (
@@ -48,11 +50,14 @@ export default function DownloadPage() {
 
 			<Tabs>
 				<TabItem value='windows' label='Windows'>
-					<p>预构建版本不需要安装，解压即可使用。</p>
-					<p>考虑到 GitHub 可能速度慢的问题，我们提供了直接下载链接。注意，通过此链接只能下载到最新的预构建版本。</p>
-					<Link className={`button button--primary`} style={buttonStyles} href={urls.download} onClick={() => window.sendAnalyticsEvent('Download')}>
+					<p>Windows 版本有以下运行方式：</p>
+					<ul>
+						<li><b>Zip 版本</b> 不需要安装，解压运行 <code>sparks-nmn-desktop.exe</code> 即可使用。数据存储在同一文件夹下的 <code>data</code> 文件夹中。</li>
+					</ul>
+					<p>注意，请勿保存或分享网站上带有版本号的下载直链，因为网站上只会保留最近两个版本。</p>
+					<Link className={`button button--primary`} style={buttonStyles} href={urls.winDownload} onClick={() => window.sendAnalyticsEvent('Download')}>
 						<Icons.FaDownload style={faIconStyles} />
-						直接下载 <Mdx.DesktopVersion />
+						直链 Zip <Mdx.DesktopVersion />
 					</Link>
 					<Link className={`button button--info`} style={buttonStyles} href={urls.ghReleases} onClick={() => window.sendAnalyticsEvent('Download')}>
 						<Icons.FaDownload style={faIconStyles} />
@@ -63,15 +68,33 @@ export default function DownloadPage() {
 						从源代码构建
 					</Link>
 				</TabItem>
-				<TabItem value='linux' label='Linux'>
-					<p>目前还没有适用于 Linux 的预构建版本，但我们很快会尝试添加。</p>
+				<TabItem value='gnu-linux' label='GNU/Linux'>
+					<p>GNU/Linux 版本有以下运行方式：</p>
+					<ul>
+						<li><b>Zip 版本</b> 不需要安装，解压运行 <code>sparks-nmn-desktop</code> 即可使用。数据存储在 <code>~/.config/sparks-nmn-desktop</code> 文件夹中。</li>
+						<li><b>AppImage 版本</b> 需要有 AppImage 运行环境（有相当多的桌面发行版内置），直接双击即可运行。数据存储在 <code>~/.config/sparks-nmn-desktop</code> 文件夹中。</li>
+					</ul>
+					<p>注意，请勿保存或分享网站上带有版本号的下载直链，因为网站上只会保留最近两个版本。</p>
+					<Link className={`button button--primary`} style={buttonStyles} href={urls.gnuLinuxDownload} onClick={() => window.sendAnalyticsEvent('Download')}>
+						<Icons.FaDownload style={faIconStyles} />
+						直链 Zip <Mdx.DesktopVersion />
+					</Link>
+					<Link className={`button button--primary`} style={buttonStyles} href={urls.appImageDownload} onClick={() => window.sendAnalyticsEvent('Download')}>
+						<Icons.FaDownload style={faIconStyles} />
+						直链 AppImage <Mdx.DesktopVersion />
+					</Link>
+					<Link className={`button button--info`} style={buttonStyles} href={urls.ghReleases} onClick={() => window.sendAnalyticsEvent('Download')}>
+						<Icons.FaDownload style={faIconStyles} />
+						GitHub Releases
+					</Link>
 					<Link className={`button button--secondary`} style={buttonStyles} href={urls.gh} onClick={() => window.sendAnalyticsEvent('Download sources')}>
 						<Icons.FaTerminal style={faIconStyles} />
 						从源代码构建
 					</Link>
 				</TabItem>
 				<TabItem value='macos' label='Mac OS'>
-					<p>我们没用过也没有 Mac，无法直接在 Mac OS 上构建程序，因此短期内不会提供 Mac OS 预构建版本。</p>
+					<p>由于 Apple 的限制，构建 Mac OS 程序需要有支持 Mac OS 的实体设备。我们短期内不会提供 Mac OS 预构建版本。</p>
+					<p>但是，桌面版应用通过 Electron 实现，理论上支持 Mac OS，因此你可以尝试自己编译源代码。</p>
 					<Link className={`button button--secondary`} style={buttonStyles} href={urls.gh} onClick={() => window.sendAnalyticsEvent('Download sources MacOS')}>
 						<Icons.FaTerminal style={faIconStyles} />
 						尝试从源代码构建
