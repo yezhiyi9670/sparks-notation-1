@@ -52,12 +52,12 @@ export const sectionSeparatorChars = {
 	'|': ['一般小节线', require('./assets/separator-y.png').default],
 	'||': ['分段线', require('./assets/separator-yy.png').default],
 	'|||': ['终止线', require('./assets/separator-yyy.png').default],
-	'||:': ['反复目标记号', require('./assets/separator-yyz.png').default],
-	':||': ['反复指令记号', require('./assets/separator-zyy.png').default],
+	'||:': ['前反复记号', require('./assets/separator-yyz.png').default],
+	':||': ['后反复记号', require('./assets/separator-zyy.png').default],
 	':||:': ['双侧反复记号', require('./assets/separator-zyyz.png').default],
 	'/||': ['不完整一般小节线', require('./assets/separator-xyy.png').default],
-	'/||:': ['不完整反复目标记号', require('./assets/separator-xyyz.png').default],
-	':/||': ['不完整反复指令记号', require('./assets/separator-zxyy.png').default],
+	'/||:': ['不完整前反复记号', require('./assets/separator-xyyz.png').default],
+	':/||': ['不完整后反复记号', require('./assets/separator-zxyy.png').default],
 	':/||:': ['不完整双侧反复记号', require('./assets/separator-zxyyz.png').default]
 } as {[_: string]: any}
 
