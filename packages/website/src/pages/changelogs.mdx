@@ -8,9 +8,13 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 
 # 更新日志 {#changelogs}
 
-:::tip 征集想法：Sparks NMN 2
+:::tip 征集想法：第二代 Sparks NMN
 
-全新 Sparks NMN 2 正在设计中，如果你有关于语法、交互体验、显示效果等方面的建议，也欢迎通过 GitHub Issues 提交。Sparks NMN 2 的标准**不需要**与当前的 Sparks NMN 兼容，后续会提供相应转换工具转换原有的乐谱。当然，现在你可以放心使用第一代，因为第二代发布后，第一代仍然会继续进行维护性更新。
+第二代 Sparks NMN 现在征集你的设计想法（是的，**你的**想法）！简而言之，第二代的目的是提供一套新的标准，用来优雅地实现柱状和弦、声部分组、吉他谱（广义和弦谱）、线形记号、更加智能的自动布局以及更多令人兴奋的新特性。第二代的标准**不需要**与现行标准兼容，因为之后会提供转换工具。
+
+目前我的部分初步想法[写在这里](https://github.com/yezhiyi9670/sparks-notation-1/tree/main/_v2-designs/version-2)。也欢迎你来 [GitHub Issue](https://github.com/yezhiyi9670/sparks-notation-1/issues) 进行讨论、补充甚至质疑。
+
+当然，如果你现在已经习惯第一代了，也不必担心，我们尊重你的选择。即使在第二代正式发布后，第一代仍然会进行维护性更新以确保正常使用。
 
 :::
 
@@ -37,16 +41,13 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 
 ## 1.15.x
 
-### 未标记 <Source to='https://github.com/yezhiyi9670/sparks-notation-1' /> {#untagged}
+### 1.15.6 (2025-02-20) <Source to='https://github.com/yezhiyi9670/sparks-notation-1/tree/ddafc6e51cd292d4df8386227014907df1dea364' />
 
-- <Del/> <Important/> 网站：从文档中删除所有 1.15.1 版本之前的历史内容。
+- <Del/> <Important/> **网站：从文档中删除所有 1.15.1 版本之前的历史内容。**
   - 如果你目前使用的是更早的版本，推荐你更新。
   - 如果确实有查阅历史文档的需要，请[查看或编译 1.15.2 版本的网站源代码](https://github.com/yezhiyi9670/sparks-notation-1/tree/445b6e16cf9468af72392added532f1c6813b1ea)。
 - <Mod/> 网站：添加更新日志页面。
-
-### 1.15.6 (2025-02-20) <Source to='https://github.com/yezhiyi9670/sparks-notation-1/tree/5b54cd0a5c57bd898bd8821ff122228b26b94018' />
-
-- <New/> <Important/> 桌面版：现在开始为 GNU/Linux 系统提供预构建版本的下载。
+- <New/> <Important/> **桌面版：现在开始为 GNU/Linux 系统提供预构建版本的下载。**
 - <Fix/> 构建流程：修复全新构建桌面应用时，出现目录不存在错误的问题。
 - <Mod/> 修改概念名称「反复指令记号」→「后反复记号」，「反复目标记号」→「前反复记号」。
 - <New/> 网站：现在支持搜索。本站所采用的搜索模块不借助第三方服务。
@@ -63,7 +64,7 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 
 ### 1.15.5 (2025-02-11) <Source to='https://github.com/yezhiyi9670/sparks-notation-1/tree/2b6a688803245ddc3432034d3ccc129b4fccbd18' />
 
-- <Fix/> 网站：修复了字体加载网址不统一，从而导致的缓存性能问题。现在新的访客浏览一段时间主页后，将能够更快打开试用页面。
+- <Fix/> 网站：修复了字体加载网址不统一导致的缓存性能问题。现在新的访客浏览一段时间主页后再打开试用页面，将能够更快加载。
 - <Mod/> 多声部乐谱中，变速现在只需要在其中一个声部中写出变速记号，而不需要在所有声部中都写出。
   - 变拍仍然需要在所有声部中写出。
 - <Mod/> 在 `Frp:` 开头的行中使用除 `n` 和 `time_lining` 以外的不受支持的渲染属性，将会显示错误。
@@ -87,7 +88,7 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 - <Mod/> 网站：首次打开试用页面时，将显示一个带有默认内容的文档，而非完全空白的文档。
 - <Mod/> 第一行不再显示小节序号。
 - <Mod/> 桌面版：新建文档时将创建一个带有默认内容的文档，而非完全空白的文档。
-- <Mod/> 调整了音效试听中音符高亮的颜色。新的配色更加匀称和柔和。
+- <Mod/> 调整了音效试听中音符高亮的颜色。新的配色更加匀称柔和。
 - <New/> 小节序号现在可以通过 `font_sectionorder` 渲染属性指定字体。
 - <Del/> 由于小节序号不再侵入第一个小节，不需要再采取操作避免第一个小节上方标注的文本与小节序号重叠。
 - <Mod/> 小节序号不再侵入第一个小节上方的空间，而是靠右对齐到第一个小节的左边缘位置。
