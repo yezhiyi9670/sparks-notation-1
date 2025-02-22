@@ -75,7 +75,7 @@ const renderPropsLabel = {
 	'double_sided': ['boolean', '分页时假设双面打印'],
 	'n': ['number', '每行小节数'],
 	'time_lining': ['boolean', '基于时值的小节宽度'],
-	'legacy_positioning': ['boolean', '使用旧版布局算法', '1.14.20'],
+	'legacy_positioning': ['boolean', '使用旧版布局算法'],
 	'debug': ['boolean', '预览中显示校验信息'],
 	'sectionorder': ['"paren"|"bracket"|"plain"|"none"', '小节线序号模式'],
 	'scale': ['number', '文档缩放'],

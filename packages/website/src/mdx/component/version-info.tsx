@@ -42,8 +42,8 @@ export function MinVersion(props: {
 			...(props.bland ? {
 				border: '1px solid #0002'
 			} : {
-				color: '#4527A0',
-				background: '#EDE7F6',
+				color: '#366334',
+				background: '#D4EED3',
 			})
 		}}>新增于 {props.min}</span>}
 		{(type == 'max' || type == 'range') && <span style={{

@@ -72,6 +72,10 @@ async function createConfigAsync() {
           blog: {
             showReadingTime: true,
           },
+          pages: {
+            remarkPlugins: [(await import('remark-math')).default, (await import('remark-cjk-friendly')).default],
+            rehypePlugins: [(await import('rehype-katex')).default],
+          },
           theme: {
             customCss: require.resolve('./src/css/custom.css'),
           },
@@ -123,7 +127,12 @@ async function createConfigAsync() {
             label: '下载',
             position: 'left',
           },
-          {to: '/blog', label: '博客', position: 'left'},
+          // {to: '/blog', label: '博客', position: 'left'},
+          {
+            to: '/changelogs',
+            label: '更新日志',
+            position: 'left'
+          },
           {
             label: '试用',
             href: siteDemo,
@@ -151,9 +160,17 @@ async function createConfigAsync() {
                 label: '指南',
                 to: '/docs/intro',
               },
+              // {
+              //   label: '博客',
+              //   to: '/blog',
+              // },
               {
-                label: '博客',
-                to: '/blog',
+                label: '桌面版下载',
+                to: '/desktop-download',
+              },
+              {
+                label: '更新日志',
+                to: '/changelogs',
               },
               {
                 label: '在线试玩',

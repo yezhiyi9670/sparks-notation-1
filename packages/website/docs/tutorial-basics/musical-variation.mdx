@@ -352,42 +352,6 @@ Lc: 局。[Whoa_{9}] 一起写我们的%结%局。
 - $2,3,6,7$（以及 $7n+2,7n+3,7n+6,7n+7$）度分「大」「小」，它们之间相差 $1\text{Key}$。
 - $1$ 度至 $7$ 度的大/完全音程依次表示 $(0,2,4,5,7,9,11)\text{Key}$，这是自然大调的音调列，或者说相邻两者的差满足「全-全-半-全-全-全-半」。
 
-## 调整转调和变速记号的位置 {#tweak-position}
-
-<C.MinVersion max='1.15.1' />
-
-<C.Spoiler expandText='展开过时内容'>
-
-实际操作的时候可能会出现转调与变速记号与小节序号重叠。如果出现这种情况，可以在属性之前添加一个引号引起的空格来调整其位置。例如，
-
-<C.RealtimeScore efRange={65} children={
-`P: 1=C 6/8
-====
-Frp: n=1
-N: omit(64) |
----
-// preserve-start
-N: /{spm=233, "恢复速度"} 3e.(#1e2e3e) | 4e.(4e3e2e) | 2e.(71e2e) | 3e.(3e2e1e) | 1e.(671e) | 2e.(2e1e7) | 7.(71e7) | 1e.2e. |
-// preserve-end
-`
-} />
-
-应当修改为，
-
-<C.RealtimeScore efRange={65} children={
-`P: 1=C 6/8
-====
-Frp: n=1
-N: omit(64) |
----
-// preserve-start
-N: /{"  ", spm=233, "恢复速度"} 3e.(#1e2e3e) | 4e.(4e3e2e) | 2e.(71e2e) | 3e.(3e2e1e) | 1e.(671e) | 2e.(2e1e7) | 7.(71e7) | 1e.2e. |
-// preserve-end
-`
-} />
-
-</C.Spoiler>
-
 ## 变速 {#change-speed}
 
 与转调类似，变速是在旋律中间某处改变拍速。
