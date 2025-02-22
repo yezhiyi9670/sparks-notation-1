@@ -40,7 +40,7 @@
 }
 
 /* Nested lists */
-li>ul, li>ol {
+.markdown li>ul, .markdown li>ol {
   margin-top: var(--ifm-list-item-margin);
 }
 
