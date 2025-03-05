@@ -2,9 +2,9 @@ import * as Tone from 'tone'
 import { TonicToneInstrument } from '../ToneInstrument';
 
 /**
- * 长笛
+ * 短笛
  */
-export class FluteInstrument extends TonicToneInstrument {
+export class PiccoloInstrument extends TonicToneInstrument {
 	create() {
 		return new Tone.PolySynth(Tone.MonoSynth, {
 			volume: -8,

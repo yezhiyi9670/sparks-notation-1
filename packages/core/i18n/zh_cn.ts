@@ -337,7 +337,7 @@ export default {
 					"instrument": {
 						"chip": "芯片*",
 						"saw": "锯齿*",
-						"flute": "长笛*",
+						"piccolo": "短笛*",
 						"piano": "钢琴",
 						"organ": "管风琴",
 						"violin": "提琴",

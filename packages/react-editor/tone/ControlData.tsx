@@ -1,7 +1,7 @@
 import { PartSignature } from "@sparks-notation/core/parser/des2cols/types"
 import { ChipInstrument } from "./instrument/tonic/ChipInstrument"
 import { SnareDrumlineInstrument, SnareTonicInstrument } from "./instrument/SnareInstrument"
-import { FluteInstrument } from "./instrument/tonic/FluteInstrument"
+import { PiccoloInstrument } from "./instrument/tonic/PiccoloInstrument"
 import { PianoInstrument } from "./instrument/tonic/PianoInstrument"
 import { inCheck, iterateMap } from "@sparks-notation/util/array"
 import { OrganInstrument } from "./instrument/tonic/OrganInstrument"
@@ -56,7 +56,7 @@ export const controlDataPartBeatMachine: ControlDataPart = {
 export const TonicInstruments = {
 	chip: ChipInstrument,
 	saw: SawInstrument,
-	flute: FluteInstrument,
+	piccolo: PiccoloInstrument,
 	piano: PianoInstrument,
 	organ: OrganInstrument,
 	violin: ViolinInstrument,

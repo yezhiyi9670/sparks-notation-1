@@ -124,7 +124,7 @@ N["P2"]: 5 - - - |||
 //   {"id":"beatMachine","c":{"m":true,"s":false,"p":0,"v":100,"nx":"beat2","bm":1}}
 //   {"id":"N_index_0","c":{"m":false,"s":false,"p":0,"v":100,"nx":"drum","nn":"piano","o":0}}
 //   {"id":"N_text_P1","c":{"m":false,"s":false,"p":0,"v":100,"nx":"drum","nn":"chip","o":0}}
-//   {"id":"N_text_P2","c":{"m":false,"s":false,"p":0,"v":80,"nx":"drum","nn":"flute","o":0}}
+//   {"id":"N_text_P2","c":{"m":false,"s":false,"p":0,"v":80,"nx":"drum","nn":"piccolo","o":0}}
 //   {"id":"Na_text_L","c":{"m":false,"s":false,"p":0,"v":70,"nx":"drum","nn":"piano","o":0}}
 //   {"id":"Na_text_H","c":{"m":false,"s":false,"p":0,"v":70,"nx":"drum","nn":"piano","o":0}}
 //   {"id":"Na_text_B","c":{"m":false,"s":false,"p":0,"v":70,"nx":"beat2","nn":"piano","o":0}}
