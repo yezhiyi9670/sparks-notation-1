@@ -7,13 +7,13 @@ import { TonicToneInstrument } from '../ToneInstrument';
 export class PiccoloInstrument extends TonicToneInstrument {
 	create() {
 		return new Tone.PolySynth(Tone.MonoSynth, {
-			volume: -8,
+			volume: -11,
 			oscillator: {
 				type: "square8"
 			},
 			envelope: {
-				attack: 0.05,
-				decay: 0.3,
+				attack: 0.12,
+				decay: 0.0,
 				sustain: 0.4,
 				release: 0.8,
 			},
