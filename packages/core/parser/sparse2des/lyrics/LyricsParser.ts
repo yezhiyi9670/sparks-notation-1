@@ -208,7 +208,7 @@ export class LyricsParser {
 				const isBoundary = this.checkBoundary()
 				
 				const charTokenType = this.currentTokenType()
-				let symbolType = getLrcSymbolType(ch, typeSampler)
+				let symbolType = getLrcSymbolType(ch, typeSampler, charTokenType)
 				this.passchar()
 
 				// 对于当前字符，如果发现 `<`，下一个字符按后置标点处理
@@ -218,7 +218,7 @@ export class LyricsParser {
 				}
 
 				// 对于当前字符，如果发现 `>`，直接忽略
-				if(ch == '<' && charTokenType != 'stringLiteral') {
+				if(ch == '>' && charTokenType != 'stringLiteral') {
 					continue
 				}
 

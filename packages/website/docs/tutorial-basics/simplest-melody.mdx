@@ -203,7 +203,7 @@ N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - | ||
 |来源|页面左上角|`DocPrescript`|`Dp: <来源>`|
 |版本号|页面右上角|`DocVersion`|`Dv: <版本号>`|
 |作者| |`DocAuthor`|`Da<[<作为>]?>: <作者>`，例如 `Da[作词]: 佚名` |
-|尾注| |`DocFootnote`|`Df<[<编号>]?>: <文本>`，例如 `Df[1]: 这里的符号表示换气` |
+|<C.MinVersion max='soon' inline>尾注</C.MinVersion><br /><C.MinVersion min='soon' inline>脚注</C.MinVersion>| |`DocFootnote`|`Df<[<编号>]?>: <文本>`，例如 `Df[1]: 这里的符号表示换气` |
 
 这里格式中的 `<` `?>` 表示尖括号内的内容可有可无。所以，你也可以写 `Da: 佚名 作曲`。
 
@@ -213,7 +213,9 @@ N: 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - | ||
 
 :::tip 提示
 
-目前，尾注文本 `Df` 会显示在整个乐谱的末尾（这一行为未来可能改变），因此也可以添加在整个文档最后，而不必在开头。
+&#xFEFF;<C.MinVersion max='soon' inline>目前，尾注文本 `Df` 会显示在整个乐谱的末尾，因此也可以添加在整个文档最后，而不必在开头。</C.MinVersion>
+
+&#xFEFF;<C.MinVersion min='soon' inline>在开启[页面精排](/docs/tutorial-layout/pagination)后，脚注将会显示在**第一页**的底部。若要在文档底部添加文本注释，请直接在乐谱末尾加入一个[大段文本章节](/docs/tutorial-basics/multiarticle#text-article)。</C.MinVersion>
 
 :::
 

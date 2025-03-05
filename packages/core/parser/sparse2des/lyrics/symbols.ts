@@ -1,13 +1,16 @@
 import { inCheck } from "@sparks-notation/util/array";
 import { LyricDestructionType } from "../types";
+import { TokenType } from "../../tokenizer/tokenizer";
 
 export type LrcSymbolType = 'word' | 'prefix' | 'postfix' | 'divide' | 'placeholder'
 
 /**
  * 确定歌词中某种字符的类型
  */
-export function getLrcSymbolType(symbol: string, typeSampler: LyricDestructionType): LrcSymbolType {
-	if(['_', '%'].indexOf(symbol) != -1) {
+export function getLrcSymbolType(
+	symbol: string, typeSampler: LyricDestructionType, tokenType: TokenType | undefined
+): LrcSymbolType {
+	if(['_', '%'].indexOf(symbol) != -1 && tokenType != 'stringLiteral') {
 		return 'placeholder'
 	}
 	if(symbol == "'") {
@@ -19,7 +22,7 @@ export function getLrcSymbolType(symbol: string, typeSampler: LyricDestructionTy
 	}
 	if([
 		')', ']', ']]', '}',
-		'~', '—',
+		'~', '—', '%',
 		'!', '！',
 		'^', '…',
 		';', '；',
@@ -41,7 +44,7 @@ export function getLrcSymbolType(symbol: string, typeSampler: LyricDestructionTy
 		return 'prefix'
 	}
 	if([
-		' ', '-', "\\", '|', '/', '+', '='
+		' ', '-', '_', "\\", '|', '/', '+', '='
 	].indexOf(symbol) != -1) {
 		return 'divide'
 	}

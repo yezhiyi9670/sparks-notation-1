@@ -14,8 +14,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = createRef<HTMLIFrameElement>()
-  const playgroundUrl = usePlaygroundUrl()
-  
+
   useEffect(() => {
     if(iframeRef.current) {
       // iframeRef.current.src = playgroundUrl

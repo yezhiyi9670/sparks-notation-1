@@ -2,7 +2,7 @@
 title: 更新日志
 ---
 
-import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/changelog-tags'
+import { New, Fix, Mod, Del, Dep, Important, Source } from '@site/src/mdx/changelog/changelog-tags'
 
 <div class="theme-doc-markdown markdown">
 
@@ -41,13 +41,23 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 
 ## 1.15.x
 
+### 1.15.7 (2025-03-05) <Source to='about:blank' />
+
+- <Dep/> <Important/> 不再建议用 `Df` 行编写需要显示在**整个文档底部**的注释文本。
+  - 如果需要此类注释，请改用[文本章节](/docs/tutorial-basics/multiarticle#text-article)。
+  - 未来版本中，`Df` 的名称将改为「脚注」。开启[页面精排](/docs/tutorial-layout/pagination)后，脚注将会显示在**第一页**底部。
+- <Fix/> 现在试用版和桌面版中包含 SourceMap，可以在出现故障时帮助开发者或有能力的用户更好地定位错误。
+  - 在桌面版中，按 Ctrl + Shift + I 可打开调试工具。
+- <Mod/> 合成音色「长笛」改名为「短笛」，标识符从 `flute` 改为 `piccolo`。
+  - 如果乐谱中的混音设置中有 `flute` 标识符，加载时将自动视为 `piccolo`。
+
 ### 1.15.6 (2025-02-20) <Source to='https://github.com/yezhiyi9670/sparks-notation-1/tree/ddafc6e51cd292d4df8386227014907df1dea364' />
 
-- <Del/> <Important/> **网站：从文档中删除所有 1.15.1 版本之前的历史内容。**
+- <Del/> <Important/> 网站：从文档中删除所有 1.15.1 版本之前的历史内容。
   - 如果你目前使用的是更早的版本，推荐你更新。
   - 如果确实有查阅历史文档的需要，请[查看或编译 1.15.2 版本的网站源代码](https://github.com/yezhiyi9670/sparks-notation-1/tree/445b6e16cf9468af72392added532f1c6813b1ea)。
 - <Mod/> 网站：添加更新日志页面。
-- <New/> <Important/> **桌面版：现在开始为 GNU/Linux 系统提供预构建版本的下载。**
+- <New/> <Important/> 桌面版：现在开始为 GNU/Linux 系统提供预构建版本的下载。
 - <Fix/> 构建流程：修复全新构建桌面应用时，出现目录不存在错误的问题。
 - <Mod/> 修改概念名称「反复指令记号」→「后反复记号」，「反复目标记号」→「前反复记号」。
 - <New/> 网站：现在支持搜索。本站所采用的搜索模块不借助第三方服务。
@@ -92,7 +102,7 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 - <New/> 小节序号现在可以通过 `font_sectionorder` 渲染属性指定字体。
 - <Del/> 由于小节序号不再侵入第一个小节，不需要再采取操作避免第一个小节上方标注的文本与小节序号重叠。
 - <Mod/> 小节序号不再侵入第一个小节上方的空间，而是靠右对齐到第一个小节的左边缘位置。
-- <Fix/> <Important/> **重组了代码仓库结构。**
+- <Fix/> <Important/> 重组了代码仓库结构。
   - 内核、桌面版和网站现在合并到一个代码仓库中。原先的桌面版仓库由于包含 Releases，被重命名并作为新的代码仓库使用。另外两个仓库被归档并废弃。
   - 这也是网站和文档的源代码首次公开发布。
 
@@ -143,7 +153,7 @@ import { New, Fix, Mod, Del, Important, Source } from '@site/src/mdx/changelog/c
 ### 1.14.6 (2023-07-15) <Source to='https://github.com/yezhiyi9670/sparks-nmn-dev/tree/465754de07f34e589e943634bfb68c2fadfcdde8' />
 
 - <New/> 添加了保存音效试听中的混音配置的功能。
-- <New/> <Important/> **添加了音效试听与结构检查功能。**
+- <New/> <Important/> 添加了音效试听与结构检查功能。
   - 音效试听的快捷键：播放/暂停 - `K`；返回开头 - `R`；自动滚动 - `A`。
 - <New/> 现在编辑器会对同一小节中各声部拍号或曲速不匹配的情况给出警告。
 - <Mod/> 时值校验的色块在导出和打印时不再显示。

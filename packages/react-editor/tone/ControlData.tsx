@@ -136,8 +136,15 @@ export module MixingControlUtils {
 			target.drumlineInstrument = configObj.nx as any
 		}
 		if(target.type != 'beatMachine') {
-			if('nn' in configObj && typeof configObj.nn == 'string' && inCheck(configObj.nn, TonicInstruments)) {
-				target.tonicInstrument = configObj.nn as any
+			if('nn' in configObj && typeof configObj.nn == 'string') {
+				let nn = configObj.nn
+				if(!inCheck(nn, TonicInstruments) && nn == 'flute') {
+					// [Compat] Version 1.15.7 compat: flute rename to piccolo
+					nn = 'piccolo'
+				}
+				if(inCheck(nn, TonicInstruments)) {
+					target.tonicInstrument = configObj.nn as any
+				}
 			}
 			if('o' in configObj && typeof configObj.o == 'number' && configObj.o == configObj.o) {
 				target.octave = Math.min(maxOctave, Math.max(-maxOctave, Math.floor(configObj.o)))

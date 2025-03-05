@@ -42,6 +42,9 @@ export function Mod() {
 export function Del() {
   return <ChangelogTag foreground='#880E4F' background='#F5E3E4'>移除</ChangelogTag>
 }
+export function Dep() {
+  return <ChangelogTag foreground='#7E4F12' background='#FFE2D0'>废弃</ChangelogTag>
+}
 export function Important() {
   return <ChangelogTag foreground='#ffffff' background='#9575cd'>重要</ChangelogTag>
 }

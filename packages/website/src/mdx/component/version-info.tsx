@@ -32,31 +32,66 @@ export function MinVersion(props: {
 				background: '#ECEFF1',
 			})
 		}}>所有版本</span>}
-		{(type == 'min' || type == 'range') && <span style={{
-			borderRadius: '0.25rem',
-			padding: '0.25em 0.5em',
-			fontSize: '0.9em',
-			...(type == 'range' && {
-				marginRight: '0.5rem'
-			}),
-			...(props.bland ? {
-				border: '1px solid #0002'
-			} : {
-				color: '#366334',
-				background: '#D4EED3',
-			})
-		}}>新增于 {props.min}</span>}
-		{(type == 'max' || type == 'range') && <span style={{
-			borderRadius: '0.25rem',
-			padding: '0.25em 0.5em',
-			fontSize: '0.9em',
-			...(props.bland ? {
-				border: '1px solid #0002'
-			} : {
-				color: '#880E4F',
-				background: '#FCE4EC',
-			})
-		}}>移除于 {props.max}</span>}
+		{(type == 'min' || type == 'range') && (
+			props.min == 'soon' ? (
+				<span style={{
+					borderRadius: '0.25rem',
+					padding: '0.25em 0.5em',
+					fontSize: '0.9em',
+					...(type == 'range' && {
+						marginRight: '0.5rem'
+					}),
+					...(props.bland ? {
+						border: '1px solid #0002'
+					} : {
+						color: '#37474F',
+						background: '#ECEFF1',
+					})
+				}}>即将到来</span>
+			) : (
+				<span style={{
+					borderRadius: '0.25rem',
+					padding: '0.25em 0.5em',
+					fontSize: '0.9em',
+					...(type == 'range' && {
+						marginRight: '0.5rem'
+					}),
+					...(props.bland ? {
+						border: '1px solid #0002'
+					} : {
+						color: '#366334',
+						background: '#D4EED3',
+					})
+				}}>新增于 {props.min}</span>
+			)
+		)}
+		{(type == 'max' || type == 'range') && (
+			props.max == 'soon' ? (
+				<span style={{
+					borderRadius: '0.25rem',
+					padding: '0.25em 0.5em',
+					fontSize: '0.9em',
+					...(props.bland ? {
+						border: '1px solid #0002'
+					} : {
+						color: '#7E4F12',
+						background: '#FFE2D0',
+					})
+				}}>即将移除</span>
+			) : (
+				<span style={{
+					borderRadius: '0.25rem',
+					padding: '0.25em 0.5em',
+					fontSize: '0.9em',
+					...(props.bland ? {
+						border: '1px solid #0002'
+					} : {
+						color: '#880E4F',
+						background: '#FCE4EC',
+					})
+				}}>移除于 {props.max}</span>
+			)
+		)}
 	</>
 
 	const tagElement = props.inline ? <sup style={{margin: '0 0'}}>
