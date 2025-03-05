@@ -256,14 +256,14 @@ export type SeparatorAttrBase =
  * 小节线属性的可用位置
  */
 export const separatorAttrPosition: {
-	[_: string]: [boolean, boolean, boolean, 'begin' | 'end'] // 前(pre/after)-中(next)-后(post/before)-禁止自身属性的位置
+	[_: string]: [boolean, boolean, boolean, 'begin' | 'end'] // 前(pre/after)-中(next)-后(post/before)-禁止上方属性的位置
 } = {
 	weight: [false, false, true, 'begin'],
 	top: [false, false, true, 'begin'],
 	padding: [false, false, true, 'begin'],
 	
 	iter: [true, false, true, 'begin'],
-	reset: [true, false, true, 'begin'],
+	reset: [true, true, true, 'end'],
 	durability: [true, false, false, 'begin'],
 	repeat: [true, true, true, 'begin'],
 	

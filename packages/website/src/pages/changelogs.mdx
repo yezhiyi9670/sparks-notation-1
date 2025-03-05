@@ -21,15 +21,10 @@ import { New, Fix, Mod, Del, Dep, Important, Source } from '@site/src/mdx/change
 <!--
 可能存在的未修复问题：
 
-1.15.6
-- 自定义标点的修复仍然存在一个不影响使用的小问题，即游离 `>` 符号的处理。问题位于 LyricsParser.ts L221。
-- 考虑使双引号引起的 `%` `_` 字符不再表示占位符。
+1.15.7
+- 即将到来：将 `Df` 显示在整个文档底部。
+- 即将到来：不再显示 `reset`。
 
-1.14.17
-- 未标号歌词行的选择机制：经过小节的次数在经过 reset 时应当重置，但是这里没有重置。
-
-1.13.17
-- 歌词标点测量可以优化。
 -->
 
 :::note 备注
@@ -46,6 +41,9 @@ import { New, Fix, Mod, Del, Dep, Important, Source } from '@site/src/mdx/change
 - <Dep/> <Important/> 不再建议用 `Df` 行编写需要显示在**整个文档底部**的注释文本。
   - 如果需要此类注释，请改用[文本章节](/docs/tutorial-basics/multiarticle#text-article)。
   - 未来版本中，`Df` 的名称将改为「脚注」。开启[页面精排](/docs/tutorial-layout/pagination)后，脚注将会显示在**第一页**底部。
+- <Fix/> 优化了歌词标点渲染的性能。
+- <Mod/> 自动歌词中，双引号引起的 `%` `_` 不再被视为占位符。
+  - `%` 现在是后置标点，`_` 是连接标点。
 - <Fix/> 现在试用版和桌面版中包含 SourceMap，可以在出现故障时帮助开发者或有能力的用户更好地定位错误。
   - 在桌面版中，按 Ctrl + Shift + I 可打开调试工具。
 - <Mod/> 合成音色「长笛」改名为「短笛」，标识符从 `flute` 改为 `piccolo`。

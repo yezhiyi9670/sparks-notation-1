@@ -97,7 +97,7 @@ class SectionsParserClass {
 				}
 				return false
 			}
-			// 右端，自身属性 (next)
+			// 右端，上方属性 (next)
 			if(isBracket(tokens[sep.range[1]], '[')) {
 				sep.next.attrs = this.matchSeparatorAttr(
 					(tokens[sep.range[1]] as BracketPair).tokens,

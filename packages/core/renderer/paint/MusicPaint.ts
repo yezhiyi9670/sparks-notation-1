@@ -373,6 +373,21 @@ export class MusicPaint {
 		return [0, 0]
 	}
 	/**
+	 * 测量歌词标点 Token（会修改原 Token）
+	 */
+	measureLyricSymbolToken_m(token: PaintTextToken) {
+		const origSymbol = token.text
+		const equivSymbol = getLrcSymbolEquivalent(origSymbol)
+		const fullMeasure = token.measureFast(this.root)[0] / (  // 使用半宽度，稍后与半角等价字符宽度取 max
+			equivSymbol != origSymbol ? 2 : 1
+		)
+		token.text = equivSymbol
+		return Math.max(
+			fullMeasure,
+			equivSymbol != origSymbol ? token.measureFast(this.root)[0] : 0
+		)
+	}
+	/**
 	 * 绘制歌词字符
 	 */
 	drawLyricChar(context: RenderContext, startX: number, y: number, note: Linked2LyricChar, baseAnchor: 'left' | 'center' | 'right', scale: number = 1, extraStyles: ExtraStyles = {}, dryRun: boolean = false): [number, number] {
@@ -408,14 +423,7 @@ export class MusicPaint {
 				scale
 			)
 			if(!dryRun) tokenLeft.drawFast(this.root, currLeft, y, 'right', 'middle')
-			const halfWidthField = tokenLeft.measureFast(this.root)[0] / (  // 不再使用半角符号，而是使用半宽度
-				getLrcSymbolEquivalent(tokenLeft.text) != tokenLeft.text ? 2 : 1
-			)
-			tokenLeft.text = getLrcSymbolEquivalent(tokenLeft.text)
-			currLeft -= Math.max(
-				halfWidthField,
-				tokenLeft.measureFast(this.root)[0]
-			)
+			currLeft -= this.measureLyricSymbolToken_m(tokenLeft)
 		}
 
 		if(note.rolePrefix) {
@@ -435,14 +443,7 @@ export class MusicPaint {
 				scale
 			)
 			if(!dryRun) tokenRight.drawFast(this.root, currRight, y, 'left', 'middle')
-			const halfWidthField = tokenRight.measureFast(this.root)[0] / (  // 不再使用半角符号，而是使用半宽度
-				getLrcSymbolEquivalent(tokenRight.text) != tokenRight.text ? 2 : 1
-			)
-			tokenRight.text = getLrcSymbolEquivalent(tokenRight.text)
-			currRight += Math.max(
-				halfWidthField,
-				tokenRight.measureFast(this.root)[0]
-			)
+			currRight += this.measureLyricSymbolToken_m(tokenRight)
 		}
 
 		return [currLeft, currRight]

@@ -44,7 +44,7 @@ export class ArticleSequenceReader {
 	 */
 	passingTimes: number[] = []
 	/**
-	 * 反复指令记号的耐久度信息
+	 * 后反复记号的耐久度信息
 	 */
 	repeatDamage: number[] = []
 	/**
@@ -156,7 +156,7 @@ export class ArticleSequenceReader {
 	 * 返回值表示能否继续操作，终止条件如下：
 	 * - 指针超出乐谱末尾
 	 * - 发现不加注 Fine. 的终止线，直接结束
-	 * - 发现加注 Fine. 的小节线，如果之后存在被用过的反复指令记号或结构反复标记，则结束
+	 * - 发现加注 Fine. 的小节线，如果之后存在被用过的后反复记号或结构反复标记，则结束
 	 * - 为下一小节创建新的前沿时失败（超出最大限制）
 	 */
 	exploreSection(): boolean {
@@ -183,7 +183,7 @@ export class ArticleSequenceReader {
 			}
 
 			// 之前的事情：检查 reset、检查乐理属性变更
-			if(!this.checkReset('before')) {
+			if(!this.checkReset(['nextPrev', 'before'])) {
 				return false
 			}
 		}
@@ -197,7 +197,7 @@ export class ArticleSequenceReader {
 		// 之后的事情：检查乐理属性变更、检查 reset、检查反复记号并跳转、若未跳转检查结束
 		this.checkMusicalVariation('after')
 		if(!this.flat) {
-			if(!this.checkReset('after')) {
+			if(!this.checkReset(['after'])) {
 				return false
 			}
 			if(!this.checkRepeatJump()) {
@@ -259,8 +259,18 @@ export class ArticleSequenceReader {
 	 * 
 	 * 返回是否成功的检查
 	 */
-	checkReset(pos: SequenceSectionStat.AttrPosition) {
-		if(this.frontier!.number > 1 && SequenceSectionStat.checkReset(this.article, this.sectionCursor, pos)) {
+	checkReset(posList: SequenceSectionStat.AttrPosition[]) {
+		let hasReset = false
+		for(let pos of posList) {
+			if(SequenceSectionStat.checkReset(this.article, this.sectionCursor, pos)) {
+				hasReset = true
+				break
+			}
+		}
+		if(hasReset) {
+			this.passingTimes.fill(0)
+		}
+		if(this.frontier!.number > 1 && hasReset) {
 			if(!this.frontier || this.frontier.sections.length > 0) {
 				return this.expandFrontier(1)
 			} else {

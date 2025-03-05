@@ -100,7 +100,7 @@ export module SequenceSectionStat {
 		return props
 	}
 	/**
-	 * 判断小节线是否为小节线反复指令记号
+	 * 判断小节线是否为小节线后反复记号
 	 */
 	export function isSeparatorRepeatCommand(article: Linked2MusicArticle, index: number) {
 		return mapPartsSeparators(article, index, sep => {
