@@ -11,6 +11,7 @@ export default {
       format: 'es'  // Worker defaults to iife build https://github.com/vitejs/vite/issues/18585
     },
     build: {
+      sourcemap: true,
       outDir: 'dist/main'
     }
   }),
@@ -20,6 +21,7 @@ export default {
       format: 'es'  // Worker defaults to iife build https://github.com/vitejs/vite/issues/18585
     },
     build: {
+      sourcemap: true,
       outDir: 'dist/preload'
     }
   }),
@@ -39,6 +41,7 @@ export default {
       format: 'es'  // Worker defaults to iife build https://github.com/vitejs/vite/issues/18585
     },
     build: {
+      sourcemap: true,
       outDir: 'dist/renderer'
     }
   })

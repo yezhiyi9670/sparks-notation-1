@@ -15,6 +15,9 @@ export default defineConfig({
     }),
     react()
   ],
+  build: {
+    sourcemap: true
+  },
   worker: {
     format: 'es'  // Worker defaults to iife build https://github.com/vitejs/vite/issues/18585
   }
