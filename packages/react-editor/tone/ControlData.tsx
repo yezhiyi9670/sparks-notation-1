@@ -143,7 +143,7 @@ export module MixingControlUtils {
 					nn = 'piccolo'
 				}
 				if(inCheck(nn, TonicInstruments)) {
-					target.tonicInstrument = configObj.nn as any
+					target.tonicInstrument = nn as any
 				}
 			}
 			if('o' in configObj && typeof configObj.o == 'number' && configObj.o == configObj.o) {
