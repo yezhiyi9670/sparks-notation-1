@@ -203,7 +203,7 @@ export interface IntegratedEditorPrefs {
 	},
 	inspectorOpen?: boolean,
 
-	importantWarning?: {text: string, height: number},
+	importantWarning?: {html: string, height: number},
 	temporarySave?: boolean,
 	logTimeStat?: boolean,
 

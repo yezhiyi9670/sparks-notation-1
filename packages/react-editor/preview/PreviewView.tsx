@@ -78,29 +78,16 @@ export function PreviewView(props: {
 			props.onReportPages && props.onReportPages(NaN)
 		}
 	})
-	useOnceEffect(() => {
+	useEffect(() => {
 		if(warningDivRef.current) {
 			const ef = new Equifield(warningDivRef.current)
-			const fontSize = 1.8
 			ef.render([{
-				element: $('<div></div>').text(prefs.importantWarning?.text ?? '').css({
-					whiteSpace: 'pre',
-					padding: `${1.8 / fontSize}em`,
-					fontSize: `${fontSize * 5}em`,
-					width: `${100 / fontSize}em`,
-					boxSizing: 'border-box',
-					background: '#fffbe6',
-					border: `${0.15 / fontSize}em solid #f4bd00`,
-					color: '#000D',
-					lineHeight: 1.35,
-					transformOrigin: 'left top',
-					transform: 'scale(0.2)'
-				})[0],
+				element: $('<div></div>').html(prefs.importantWarning?.html ?? '')[0],
 				height: prefs.importantWarning?.height ?? 0,
 				padding: [11, 11]
 			}])
 		}
-	})
+	}, [prefs.importantWarning])
 
 	const blankPreview = useMemo(() => (
 		<PreviewBlank />
