@@ -53,6 +53,7 @@ export default {
 		'rp_unknown_key': '未知渲染属性 ${0}',
 		'rp_unknown_value': '无效的渲染属性值 ${1}（属性 ${0}）',
 		'frp_unsupported_key': '碎片的渲染属性只能包含 `n` 和 `time_lining`',
+		'rp_document_only_key': '渲染属性 `${0}` 只能用于全局',
 		'unknown_jumper_attr': '无法将 `${0}` 解析为跳房子属性',
 		'nan_substitute_index': '无法确定替代音符的开始位置。你是不是忘了？',
 		'unknown_part_attr': '无法将 `${0}` 解析为声部属性',
@@ -136,6 +137,7 @@ export default {
 	'render_props': {
 		'page': '页面高度与宽度之比',
 		'double_sided': '分页时假设双面打印',
+		'page_margin_x': '页面左右侧的边距',
 		'n': '每行小节数',
 		'time_lining': '基于时值的小节宽度',
 		'legacy_positioning': '使用旧版布局算法',

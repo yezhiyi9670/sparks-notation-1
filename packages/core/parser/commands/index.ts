@@ -63,7 +63,7 @@ export const LineLevels = {
 }
 export const lineLevelNames = [
 	// 由于历史遗留问题，章节 (article) 在 Sparks NMN 代码的命令名中称为 section。
-	// 代码其余地方的 section 指的应该是「小节」。
+	// 代码其余地方的 section 指的应该是「小节」或者渲染时的「块」。
 	'document', 'article', 'fragment', 'part', 'lyricLine'
 ]
 export const lineDelimiters = [

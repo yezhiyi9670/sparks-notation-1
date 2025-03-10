@@ -137,7 +137,7 @@ export function doIfNonNull<T>(func: (val: T) => void, item: T | null | undefine
 /**
  * inCheck
  */
-export function inCheck(item: string, thing: {[_: string]: unknown}) {
+export function inCheck(item: string, thing: {[_: string]: unknown} | {}) {
 	if(item in {}) {
 		return false
 	}

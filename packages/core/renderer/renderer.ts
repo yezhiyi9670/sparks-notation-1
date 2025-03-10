@@ -59,6 +59,11 @@ class RendererClass {
 			sections.pop()
 		}
 
+		// ==== 添加页面边距 ====
+		sections.forEach(section => {
+			section.padding = context.render.page_margin_x!
+		})
+
 		return sections
 	}
 }

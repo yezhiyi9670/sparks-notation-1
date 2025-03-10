@@ -97,6 +97,7 @@ export function PreviewView(props: {
 					transform: 'scale(0.2)'
 				})[0],
 				height: prefs.importantWarning?.height ?? 0,
+				padding: [11, 11]
 			}])
 		}
 	})
@@ -149,21 +150,24 @@ function PreviewBlank(props: {}) {
 						fontWeight: 700,
 						color: '#999'
 					}).text(NMNI18n.editorText(language, 'preview.blank.title'))[0],
-					height: 6
+					height: 6,
+					padding: [11, 11]
 				},
 				{
 					element: $('<span></span>').css({
 						fontSize: '2em',
 						color: '#999'
 					}).text(NMNI18n.editorText(language, 'preview.blank.desc.1'))[0],
-					height: 4
+					height: 4,
+					padding: [11, 11]
 				},
 				{
 					element: $('<span></span>').css({
 						fontSize: '2em',
 						color: '#999'
 					}).text(NMNI18n.editorText(language, 'preview.blank.desc.2'))[0],
-					height: 4
+					height: 4,
+					padding: [11, 11]
 				},
 			])
 		}

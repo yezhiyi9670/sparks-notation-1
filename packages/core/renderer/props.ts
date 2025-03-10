@@ -1,3 +1,5 @@
+import { inCheck } from "@sparks-notation/util/array"
+
 /**
  * 渲染属性
  */
@@ -10,6 +12,10 @@ export interface RenderProps {
 	 * 假设双面打印
 	 */
 	double_sided?: boolean
+	/**
+	 * 页面左右边距
+	 */
+	page_margin_x?: [number, number],
 	/**
 	 * 每行小节数
 	 */
@@ -175,6 +181,7 @@ export interface RenderProps {
 export const renderPropsDefault: RenderProps = {
 	page: 0,
 	double_sided: false,
+	page_margin_x: [11, 11],
 	n: 4,
 	time_lining: false,
 	legacy_positioning: false,
@@ -224,6 +231,15 @@ export const renderPropsDefault: RenderProps = {
 }
 
 /**
+ * 仅允许文档级使用的属性
+ */
+export const renderPropsDocumentOnlyKeys = ['page', 'double_sided', 'page_margin_x']
+/**
+ * 碎片级仅支持以下属性属性
+ */
+export const renderPropsFragmentLevelExclusiveKeys = ['n', 'time_lining']
+
+/**
  * 验证并转换属性
  */
 export function renderPropConvert(key: string, val: string) {
@@ -243,6 +259,20 @@ export function renderPropConvert(key: string, val: string) {
 		}
 		if(r >= 0 && r <= 65535) {
 			return r
+		}
+		return { error: 'value' }
+	}
+	if(key == 'page_margin_x') {
+		let s = val.split(',')
+		if(s.length != 2 && s.length != 1) {
+			return { error: 'value' }
+		}
+		const nums = s.map(v => +v)
+		if(s.length == 1 && nums[0] >= 0 && nums[0] <= 65535) {
+			return [ nums[0], nums[0] ]
+		}
+		if(nums[0] >= 0 && nums[0] <= 65535 && nums[1] >= 0 && nums[1] <= 65535) {
+			return nums
 		}
 		return { error: 'value' }
 	}
@@ -278,7 +308,7 @@ export function renderPropConvert(key: string, val: string) {
 		}
 		return num
 	}
-	if(key in renderPropsDefault) {
+	if(inCheck(key, renderPropsDefault)) {
 		return val
 	}
 	return { error: 'key' }

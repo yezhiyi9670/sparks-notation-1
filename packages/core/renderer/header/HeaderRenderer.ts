@@ -108,6 +108,7 @@ class HeaderRendererClass {
 		sections.push({
 			element: new DomPaint().getElement(),
 			height: context.render.margin_after_props! * context.render.scale!,
+			isMargin: true,
 			...I18n.efLabel(context.language, 'topMargin')
 		})
 	}

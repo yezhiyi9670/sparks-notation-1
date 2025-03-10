@@ -21,7 +21,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		width: 100vw;
-		font-size: calc(100vw / 122) !important;
+		font-size: calc(100vw / 64) !important;
 		box-sizing: border-box;
 	}
 	.wcl-equifield-field {

@@ -1,5 +1,5 @@
-import { renderPropConvert, RenderProps, renderPropsDefault } from "../../renderer/props";
-import { doIfNonNull, pushIfNonNull } from "@sparks-notation/util/array";
+import { renderPropConvert, RenderProps, renderPropsDefault, renderPropsDocumentOnlyKeys, renderPropsFragmentLevelExclusiveKeys } from "../../renderer/props";
+import { doIfNonNull, inCheck, pushIfNonNull } from "@sparks-notation/util/array";
 import { Frac, Fraction } from "@sparks-notation/util/frac";
 import { MusicTheory } from "@sparks-notation/util/music";
 import { splitBy } from "@sparks-notation/util/string";
@@ -105,7 +105,6 @@ export class Destructor {
 	}
 	parseFragment(fragment: LineTree<SparseLine>, context: ScoreContext, issues: LinedIssue[]): DestructedFragment {
 		const renderProps = this.destructAndMergeRenderProps(fragment.lines, 'Frp', issues, context) as RenderPropsLine
-		this.validateFragmentRenderProps(renderProps, context, issues)
 		const newContext = addRenderProp(context, renderProps?.props)
 		const prevContext = copyContext(newContext)
 		const retData = {
@@ -136,19 +135,6 @@ export class Destructor {
 		context.musical = newContext.musical
 
 		return retData
-	}
-	validateFragmentRenderProps(frp: RenderPropsLine, context: ScoreContext, issues: LinedIssue[]) {
-		if(frp == undefined) {
-			return
-		}
-		for(const key in frp.props) {
-			if(key != 'n' && key != 'time_lining') {
-				addIssue(issues,
-					frp.lineNumber, 0, 'error', 'frp_unsupported_key',
-					'Fragment render props can only contain `n` and `time_lining`.'
-				)
-			}
-		}
 	}
 	parsePart(part: LineTree<SparseLine>, context: ScoreContext, issues: LinedIssue[]): DestructedPart {
 		const eatenNotes = this.destructNotes(part.uniqueLines['N'] as any, issues, context, true) as (DestructedLine & {head: 'N' | 'Na' | 'Nc'})
@@ -349,7 +335,9 @@ export class Destructor {
 	destructAndMergeRenderProps(lines: SparseLine[], head: Exclude<RenderPropsLine, undefined>['head'], issues: LinedIssue[], context: ScoreContext) {
 		const renderPropsLines = lines.filter((line) => line.head == head)
 		const destructedRenderProps = renderPropsLines.map(line => {
-			return this.destruct(line, issues, context) as RenderPropsLine
+			const parsed = this.destruct(line, issues, context) as RenderPropsLine
+			this.validateRenderProps(parsed, issues, context)
+			return parsed
 		}).filter(item => {
 			return item !== undefined
 		})
@@ -361,6 +349,33 @@ export class Destructor {
 			Object.assign(ret.props, destructedRenderProps[i].props)
 		}
 		return ret
+	}
+	validateRenderProps(line: RenderPropsLine, issues: LinedIssue[], context: ScoreContext) {
+		if(line == undefined) {
+			return
+		}
+		if(line.head == 'Frp') {
+			for(const key in line.props) {
+				if(-1 == renderPropsFragmentLevelExclusiveKeys.indexOf(key)) {
+					addIssue(issues,
+						line.lineNumber, 0, 'error', 'frp_unsupported_key',
+						'Fragment render props can only contain `n` and `time_lining`.'
+					)
+					break
+				}
+			}
+		} else if(line.head != 'Rp') {
+			for(const key of renderPropsDocumentOnlyKeys) {
+				if(inCheck(key, line.props)) {
+					addIssue(issues,
+						line.lineNumber, 0, 'error', 'rp_document_only_key',
+						'Render prop `${0}` can only be used at document level.',
+						key
+					)
+					break
+				}
+			}
+		}
 	}
 	destructRenderProp(line: SparseLine & {head: 'Rp'}, issues: LinedIssue[]): DestructedLine {
 		let props: RenderProps = {}

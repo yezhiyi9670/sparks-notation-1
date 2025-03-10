@@ -14,6 +14,7 @@ class PaginizerClass {
 		const renderProps = addRenderProp(scoreContextDefault, result.renderProps?.props).render
 		const scale = renderProps.scale!
 		const doubleSided = renderProps.double_sided!
+		const pageMarginX = renderProps.page_margin_x!
 
 		const separatorField = 12
 		const separatorWidth = 0.5
@@ -26,16 +27,13 @@ class PaginizerClass {
 
 		const uniformWidth = 1
 		const uniformHeight = renderProps.page!
-		const innerRatio = (uniformHeight - uniformWidth * 0.08 * 2) / (uniformWidth * 1 * (100 / 122))
+		const innerRatio = (uniformHeight - uniformWidth * 0.08 * 2) / (
+			uniformWidth * 1 * (
+				100 / (100 + pageMarginX[0] + pageMarginX[1])
+			)
+		)
 		const descendExtraMargin = (+hasDescend) * descendTextField * scale * 0.3  // 0.3 是有意为之的调整参数
 		const maxHeightEm = innerRatio * 100 - (+hasDescend) * descendTextField * scale * (1) - descendExtraMargin
-
-		function isConsideredEmpty(efLabel?: string) {
-			if(efLabel === undefined) {
-				return false
-			}
-			return ['topMargin', 'articleMargin', 'musicLineMargin'].includes(efLabel)
-		}
 
 		if(uniformHeight == 0) { // 不启用程序分页
 			return {
@@ -60,7 +58,7 @@ class PaginizerClass {
 				break
 			}
 			currHeight += field.height
-			if(!isFirst || !isConsideredEmpty(field.label)) {
+			if(!isFirst || !field.isMargin) {
 				frontier.push(field)
 				isFirst = false
 			}
@@ -70,7 +68,7 @@ class PaginizerClass {
 		for(let page of pageFields) {
 			while(page.length > 0) {
 				const lastField = page[page.length - 1]
-				if(isConsideredEmpty(lastField.label)) {
+				if(lastField.isMargin) {
 					page.splice(page.length - 1, 1)
 				} else {
 					break
@@ -94,6 +92,17 @@ class PaginizerClass {
 		for(let page = 0; page < pages; page++) {
 			const pageNumber = page + 1
 			const isLastPage = pageNumber == pages
+			const inverseLeftRight = doubleSided && (page % 2 == 1)  // 这表示偶数页码
+			function realPagePadding(pagePadding: [number, number] | undefined): [number, number] | undefined {
+				if(pagePadding == undefined) {
+					return undefined
+				}
+				if(inverseLeftRight) {
+					return [pagePadding[1], pagePadding[0]]
+				}
+				return pagePadding
+			}
+
 			let originalHeight = 0
 			let emptyCount = 0
 			let doneHeight = 0
@@ -101,7 +110,7 @@ class PaginizerClass {
 			// 统计总高度
 			for(let field of pageFields[page]) {
 				originalHeight += field.height
-				if(isConsideredEmpty(field.label)) {
+				if(field.isMargin) {
 					emptyCount += 1
 				}
 			}
@@ -110,13 +119,14 @@ class PaginizerClass {
 			// 推入内容
 			for(let field of pageFields[page]) {
 				let height = field.height
-				if(!isLastPage && isConsideredEmpty(field.label)) {  // 最后一页不使用空白分布，不然...
+				if(!isLastPage && field.isMargin) {  // 最后一页不使用空白分布，不然...
 					height += lackHeight / (emptyCount + (+hasDescend) * 0.5)  // 最后一项是调节参数
 				}
 				newFields.push({
 					...field,
 					height: height,
-					breakAfter: 'avoid'
+					breakAfter: 'avoid',
+					padding: realPagePadding(field.padding)
 				})
 				doneHeight += height
 			}
@@ -126,11 +136,12 @@ class PaginizerClass {
 				element: new DomPaint().getElement(),
 				height: maxHeightEm - doneHeight + descendExtraMargin,
 				breakAfter: hasDescend ? 'avoid' : 'always',
+				isMargin: true,
+				padding: realPagePadding(pageMarginX),
 				...I18n.efLabel(lng, 'pageBottomMargin')
 			})
 			// 创建页脚
 			if(hasDescend) {
-				const inverseLeftRight = doubleSided && (page % 2 == 1)  // 这表示偶数页码
 				const descendPaint = new DomPaint()
 				descendPaint.drawTextFast(
 					0, descendTextField / 2,
@@ -148,6 +159,7 @@ class PaginizerClass {
 					element: descendPaint.getElement(),
 					height: descendTextField * scale,
 					breakAfter: 'always',
+					padding: realPagePadding(pageMarginX),
 					...I18n.efLabel(lng, 'pageDescend', pageNumber.toString())
 				})
 			}
@@ -161,6 +173,8 @@ class PaginizerClass {
 			newFields.push({
 				element: separatorPaint.getElement(),
 				height: separatorField * scale,
+				isMargin: true,
+				padding: realPagePadding(pageMarginX),
 				...I18n.efLabel(lng, 'pageSeparator')
 			})
 		}

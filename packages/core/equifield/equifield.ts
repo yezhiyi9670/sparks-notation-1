@@ -8,12 +8,11 @@ export type EquifieldSection = {
 	isMargin?: boolean
 	label?: string
 	localeLabel?: string
+	padding?: [number, number]
 }
 
 export class Equifield {
 	element: HTMLDivElement
-	field: number = 122
-	padding: number = 11
 	listener: () => void
 
 	constructor(element: HTMLDivElement) {
@@ -31,7 +30,7 @@ export class Equifield {
 		const $element = jquery(this.element)
 		let width = this.element.offsetWidth
 		if(width > 0) {
-			$element.css('font-size', `${width / (this.field - 0 * this.padding)}px`)
+			$element.css('font-size', `${width / 64}px`)
 		}
 	}
 	
@@ -50,13 +49,17 @@ export class Equifield {
 		
 		let totalHeight = 0
 		sections.forEach((section, index) => {
+			const sectionPadding = section.padding ?? [0, 0]
+
 			const $content = jquery('<div></div>').addClass('wcl-equifield-content')
 			const targetElement = section.element
 			$content[0].appendChild(targetElement)
 			const $field = jquery('<div></div>').addClass('wcl-equifield-field').css({
+				fontSize: `${64 / (100 + sectionPadding[0] + sectionPadding[1])}em`,
 				height: `${section.height}em`,
 				// containIntrinsicHeight: `${section.height}em`,
-				padding: `0 ${this.padding}em`
+				paddingLeft: `${sectionPadding[0]}em`,
+				paddingRight: `${sectionPadding[1]}em`
 			})
 				.append(
 					$content
