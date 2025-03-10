@@ -5,7 +5,7 @@ import { CodeEditor } from "./CodeEditor/CodeEditor"
 import AceEditor from 'react-ace'
 import 'ace-builds/src-noconflict/mode-plain_text'
 import './mode/sparksnmn'
-import { renderPropsDefault } from "@sparks-notation/core/renderer/props"
+import { renderPropsDefault, renderPropsDocumentOnlyKeys, renderPropsFragmentLevelExclusiveKeys } from "@sparks-notation/core/renderer/props"
 import { iterateMap } from "@sparks-notation/util/array"
 import { LanguageArray } from "@sparks-notation/core/i18n"
 
@@ -87,6 +87,18 @@ export const SparksNMNEditor = React.forwardRef((props: SparksNMNEditorProps, pa
 							score: 100,
 							meta: NMNI18n.renderPropsDesc(languageArray, key)
 						}
+					}).filter(item => {
+						if(!linePrefixText.startsWith('Rp')) {
+							if(renderPropsDocumentOnlyKeys.includes(item.caption ?? '')) {
+								return false
+							}
+						}
+						if(linePrefixText.startsWith('Frp')) {
+							if(!renderPropsFragmentLevelExclusiveKeys.includes(item.caption ?? '')) {
+								return false
+							}
+						}
+						return true
 					})
 					callback(null, completes)
 				}
