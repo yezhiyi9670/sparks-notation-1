@@ -128,11 +128,11 @@ export class LineRenderer {
 				continue
 			}
 			if(firstAnnotation) {
-				if(!SectionStat.allEmpty(firstAnnotation, i, 1) && SectionStat.hasSeparatorSideAttrs(part, section)) {
+				if(!SectionStat.lyricsOrAnnAllEmpty(firstAnnotation, i, 1) && SectionStat.hasRenderableSeparatorSideAttrs(part, section)) {
 					hasAnnAttrOverlap = true
 				}
 			}
-			if(SectionStat.hasSeparatorSideAttrs(part, section, false, true) || SectionStat.hasSeparatorTopAttrs(section)) {
+			if(SectionStat.hasRenderableSeparatorSideAttrs(part, section, false, true) || SectionStat.hasSeparatorTopAttrs(section)) {
 				hasAttr = true
 			}
 			upsetMax = Math.max(upsetMax, getTopMargin(section))
@@ -250,7 +250,7 @@ export class LineRenderer {
 				if(startIn) {
 					const sectionIndex = jumper.startSection - line.startSection
 					const section = firstPart.notes.sections[sectionIndex]
-					if(SectionStat.hasSeparatorSideAttrs(part, section, true)) {
+					if(SectionStat.hasRenderableSeparatorSideAttrs(part, section, true)) {
 						hasJumperAttrOverlap = true
 					}
 				}
@@ -271,7 +271,7 @@ export class LineRenderer {
 				}
 				if(
 					lastAnnotation &&
-					!SectionStat.allEmpty(
+					!SectionStat.lyricsOrAnnAllEmpty(
 						lastAnnotation,
 						startSectionIn,
 						endSectionIn - startSectionIn
@@ -351,7 +351,7 @@ export class LineRenderer {
 
 		let annotationsCount = 0
 		for(let ann of part.fcaItems) {
-			if(!SectionStat.allEmpty(ann.sections, 0, line.sectionCount)) {
+			if(!SectionStat.lyricsOrAnnAllEmpty(ann.sections, 0, line.sectionCount)) {
 				annotationsCount += 1
 			}
 		}
@@ -626,7 +626,7 @@ export class LineRenderer {
 		// ===== 文本标记 =====
 		for(let i = line.fcaItems.length - 1; i >= 0; i--){
 			let ann = line.fcaItems[i]
-			if(SectionStat.allEmpty(ann.sections, 0, ann.sections.length)) {
+			if(SectionStat.lyricsOrAnnAllEmpty(ann.sections, 0, ann.sections.length)) {
 				continue
 			}
 			currY += FCALineField / 2
@@ -680,7 +680,7 @@ export class LineRenderer {
 		// ===== 标记 =====
 		for(let i = line.fcaItems.length - 1; i >= 0; i--){
 			let ann = line.fcaItems[i]
-			if(SectionStat.allEmpty(ann.sections, 0, ann.sections.length)) {
+			if(SectionStat.lyricsOrAnnAllEmpty(ann.sections, 0, ann.sections.length)) {
 				continue
 			}
 			currY += FCALineField / 2
@@ -692,6 +692,11 @@ export class LineRenderer {
 				let endPos = this.columns.fracEndPosition(endFracPos, false)
 				msp.drawFCANote(context, pos, endPos, currY, ann.originIndex, note.char, isSmall, scale)
 			}))
+			for(let sectionIndex = 0; sectionIndex < ann.sections.length; sectionIndex++) {
+				const section = ann.sections[sectionIndex]
+				msp.drawBeforeAfterAttrs(context, this.columns.startPosition(sectionIndex), currY, 0, section.separator.before.attrs, section, sectionIndex == 0, 'before', 1, scale, {}, true)
+				msp.drawBeforeAfterAttrs(context, this.columns.endPosition(sectionIndex), currY, 0, section.separator.after.attrs, section, sectionIndex == 0, 'after', 1, scale, {}, true)
+			}
 			currY += FCALineField / 2
 		}
 

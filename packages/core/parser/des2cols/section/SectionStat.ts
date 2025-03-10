@@ -283,7 +283,7 @@ export module SectionStat {
 	/**
 	 * 统计小节是否全部无音符，若是，说明标记或歌词行的渲染空间可以被省略
 	 */
-	export function allEmpty(sections: MusicSection<NoteCharAny>[], startSection: number, sectionCount: number) {
+	export function lyricsOrAnnAllEmpty(sections: MusicSection<NoteCharAny>[], startSection: number, sectionCount: number) {
 		for(let i = startSection; i < startSection + sectionCount; i++) {
 			const section = sections[i]
 			if(section.type == 'section') {
@@ -292,6 +292,9 @@ export module SectionStat {
 						return false
 					}
 				}
+			}
+			if(hasRenderableSeparatorSideAttrs({}, section, false, false)) {
+				return false;
 			}
 		}
 		return true
@@ -319,11 +322,11 @@ export module SectionStat {
 		if(!isLyricSectionEmpty(lyricLine.sections[index])) {
 			return true
 		}
-		if(!allEmpty([lyricLine.lyricAnnotations!.sections[index]], 0, 1)) {
+		if(!lyricsOrAnnAllEmpty([lyricLine.lyricAnnotations!.sections[index]], 0, 1)) {
 			return true
 		}
 		for(let ann of lyricLine.fcaItems) {
-			if(!allEmpty([ann.sections[index]], 0, 1)) {
+			if(!lyricsOrAnnAllEmpty([ann.sections[index]], 0, 1)) {
 				return true
 			}
 		}
@@ -350,7 +353,7 @@ export module SectionStat {
 				return true
 			}
 		}
-		if(lyricLine.lyricAnnotations && !allEmpty(lyricLine.lyricAnnotations.sections, 0, lyricLine.lyricAnnotations.sections.length)) {
+		if(lyricLine.lyricAnnotations && !lyricsOrAnnAllEmpty(lyricLine.lyricAnnotations.sections, 0, lyricLine.lyricAnnotations.sections.length)) {
 			return true
 		}
 		return false
@@ -494,7 +497,7 @@ export module SectionStat {
 	/**
 	 * 小节是否包含前置/后置小节线属性
 	 */
-	export function hasSeparatorSideAttrs(partInfo: {
+	export function hasRenderableSeparatorSideAttrs(partInfo: {
 		notes?: {head?: string}
 		noMargin?: [boolean, boolean]
 	}, section: MusicSection<unknown>, beforeOnly: boolean = false, ignoreOpenRange: boolean = false) {
@@ -544,7 +547,7 @@ export module SectionStat {
 	export function fcaPrimary(section: DestructedFCA) {
 		if(section.fcaItems.length > 0) {
 			for(let ann of section.fcaItems) {
-				if(!SectionStat.allEmpty(ann.sections, 0, ann.sections.length)) {
+				if(!SectionStat.lyricsOrAnnAllEmpty(ann.sections, 0, ann.sections.length)) {
 					return ann.sections
 				}
 			}
@@ -558,7 +561,7 @@ export module SectionStat {
 		let result: MusicSection<NoteCharAnnotation>[] | undefined = undefined
 		if(section.fcaItems.length > 0) {
 			for(let ann of section.fcaItems) {
-				if(!SectionStat.allEmpty(ann.sections, 0, ann.sections.length)) {
+				if(!SectionStat.lyricsOrAnnAllEmpty(ann.sections, 0, ann.sections.length)) {
 					result = ann.sections
 				}
 			}
