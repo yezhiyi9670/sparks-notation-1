@@ -1076,7 +1076,7 @@ export class MusicPaint {
 	 */
 	drawSpeed(x: number, y: number, speed: Qpm, fontScale: number = 1, scale: number = 1, extraStyles: ExtraStyles = {}, dryRun: boolean = false) {
 		let text = '=' + speed.value.toString()
-		if(speed.text) {
+		if(speed.text != undefined) {
 			text = speed.text
 		}
 		const textToken = new PaintTextToken(
@@ -1088,7 +1088,7 @@ export class MusicPaint {
 		
 		let symbolText = this.symbolBeats(speed.symbol)
 		let dotText = speed.symbol.indexOf('.') != -1 ? '\uE127' : ''
-		if(speed.text && speed.text[0] != '=') {
+		if(speed.text != undefined && speed.text[0] != '=') {
 			symbolText = ''
 			dotText = ''
 		}

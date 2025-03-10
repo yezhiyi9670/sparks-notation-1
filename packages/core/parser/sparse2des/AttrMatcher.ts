@@ -414,7 +414,7 @@ export module AttrMatcher {
 		)
 		const descriptor = item.substring(item.indexOf('=') + 1)
 		let val = 0
-		let desc = ''
+		let desc: string | undefined = undefined
 		if(descriptor.indexOf('/') != -1) {
 			let split = descriptor.indexOf('/')
 			val = +descriptor.substring(0, split)
@@ -422,7 +422,7 @@ export module AttrMatcher {
 		} else {
 			val = +descriptor
 		}
-		if(val != val || Math.abs(val) >= 65536) {
+		if(val != val || val >= 65536 || val < 0) {
 			addIssue(issues,
 				lineNumber, index, 'error', 'unknown_qpm',
 				'Cannot figure out what the speed value ${0} is.',
@@ -433,7 +433,7 @@ export module AttrMatcher {
 		return {
 			value: val,
 			symbol: symbol,
-			text: desc != '' ? desc : undefined
+			text: desc
 		}
 	}
 	export function stringBeats(item: string, lineNumber: number, index: number, issues: LinedIssue[]): Beats | undefined {

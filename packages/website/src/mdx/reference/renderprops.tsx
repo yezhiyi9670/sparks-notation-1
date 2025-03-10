@@ -6,7 +6,7 @@ import { MinVersion } from '../component/version-info'
 type PropsFamily = 'n' | 'page' | 'misc' | 'offset' | 'font' | 'margin'
 
 function determineFamily(name: string): PropsFamily {
-	if(name == 'page' || name == 'double_sided') {
+	if(name == 'page' || name == 'double_sided' || name == 'page_margin_x') {
 		return 'page'
 	}
 	if(name == 'n' || name == 'time_lining' || name == 'legacy_positioning') {
@@ -73,11 +73,12 @@ export function RenderPropsReference(props: {
 const renderPropsLabel = {
 	'page': ['page', '页面大小，设置后启用页面精排'],
 	'double_sided': ['boolean', '分页时假设双面打印'],
+	'page_margin_x': ['2numbers', '页面左侧和右侧的边距', '1.15.8'],
 	'n': ['number', '每行小节数'],
 	'time_lining': ['boolean', '基于时值的小节宽度'],
 	'legacy_positioning': ['boolean', '使用旧版布局算法'],
 	'debug': ['boolean', '预览中显示校验信息'],
-	'sectionorder': ['"paren"|"bracket"|"plain"|"none"', '小节线序号模式'],
+	'sectionorder': ['"paren"|"bracket"|"plain"|"none"', '小节序号模式'],
 	'scale': ['number', '文档缩放'],
 	'gutter_left': ['number', '曲谱的额外左边距'],
 	'connector_left': ['number', '连谱号的额外左边距'],
