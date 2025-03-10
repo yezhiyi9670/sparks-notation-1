@@ -2,17 +2,20 @@ import { FontMetric } from "../../../FontMetric";
 import { RenderProps } from "../../../props";
 import { RenderContext } from "../../../renderer";
 
-const smallNoteScale = 0.9
-const noteAltScale = 1
-export const addNotesScale = 0.65
+const smallNoteScale = 0.9           // 用于替代旋律
+const noteAltScale = 1               // 用于特殊音符字符 `_`，不影响测量
+export const addNotesScale = 0.65    // 装饰音
 
 const LineFonts: {[_: string]: FontMetric | ((_: RenderProps) => FontMetric)} = {
 	note: () => new FontMetric('SparksNMN-EOPNumber/400', 2.4),
 	noteAlt: () => new FontMetric('CommonBlack/700', 2.4 * noteAltScale),
+	
 	noteSmall: () => new FontMetric('SparksNMN-EOPNumber/400', 2.4 * smallNoteScale),
 	noteAltSmall: () => new FontMetric('CommonBlack/700', 2.4 * smallNoteScale * noteAltScale),
+	
 	accidental: () => new FontMetric('SparksNMN-mscore-20', 2.2),
-	accidentalSmall: () => new FontMetric('SparksNMN-mscore-20', 2.0),
+	accidentalSmall: () => new FontMetric('SparksNMN-mscore-20', 2.2 * smallNoteScale),
+
 	lyrics: (prop) => new FontMetric(prop.font_lyrics!, 2.16)
 }
 

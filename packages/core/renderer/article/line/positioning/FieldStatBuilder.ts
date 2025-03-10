@@ -92,6 +92,7 @@ export class FieldStatBuilder {
 	 * 写入宽度需求数据
 	 */
 	writeConstraint(rowHash: string, pos: Fraction, sectionIndex: number, field: [number, number], occupiesSpace: boolean) {
+		console.log(rowHash, pos, sectionIndex, field, occupiesSpace)
 		if(this.ignoreRowHash) {
 			rowHash = 'ignored'
 		}

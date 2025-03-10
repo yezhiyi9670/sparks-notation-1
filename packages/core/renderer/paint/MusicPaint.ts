@@ -712,7 +712,7 @@ export class MusicPaint {
 		// ===== 变化音符号 =====
 		if(note.char.delta == note.char.delta) {
 			const accidentalToken = new PaintTextToken(
-				this.symbolAccidental(note.char.delta), new FontMetric('SparksNMN-mscore-20/400', noteMetric.fontSize),
+				this.symbolAccidental(note.char.delta), getLineFont(isSmall ? 'accidentalSmall' : 'accidental', context),
 				scale, { ...extraStyles, ...grayoutStyle }
 			)
 			accidentalToken.drawFast(this.root, leftCur, y, 'right', 'bottom')
@@ -788,8 +788,8 @@ export class MusicPaint {
 		note.attrs.forEach((attr) => {
 			if(attr.type == 'slide') {
 				const handleX = rightCur
-				const radius = noteMeasure[1] / 2 * 0.9
-				const handleY = y + (attr.direction == 'up' ? -1 : 1) * radius
+				const radius = noteMeasure[1] * 0.45
+				const handleY = y + (attr.direction == 'up' ? -1.2 : 0.3) * radius
 				this.root.drawQuarterCircle(handleX, handleY, radius, 'right', attr.direction == 'up' ? 'bottom' : 'top', 0.15, () => 1, scale)
 				const arrowMetric = new FontMetric('SparksNMN-Bravura/400', noteMetric.fontSize * 1)
 				const arrowText = attr.direction == 'up' ? "\uEE57" : "\uEE56"
@@ -803,13 +803,21 @@ export class MusicPaint {
 					return
 				}
 				const handleX = attr.slot == 'postfix' ? rightCur : leftCur
-				const radius = noteMeasure[1] / 2 * 0.6
+				const radius = noteMeasure[1] * 0.3
 				const handleY = y - radius * 1.15
 				this.root.drawQuarterCircle(handleX, handleY, radius, attr.slot == 'postfix' ? 'right' : 'left', 'bottom', 0.15, () => 1, scale)
-				const topX = handleX + (attr.slot == 'postfix' ? 1 : -1) * scale * radius
-				const totalWidth = noteMeasure[0] * addNotesScale * attr.notes.notes.length
-				this.root.drawLine(topX - totalWidth / 2, handleY, topX + totalWidth / 2, handleY, 0.15, 0, scale)
-				this.drawAddNotes(context, topX, handleY - addNotesScale * reductionLineSpace, attr.notes, isSmall, scale, extraStyles)
+
+				const sign = attr.slot == 'postfix' ? 1 : -1
+				const topX = handleX + sign * scale * radius
+
+				const fullWidth = addNotesScale * noteMeasure[0] * attr.notes.notes.length
+				const startX = (fullWidth / 2 <= scale * radius) ? (
+					topX
+				) : (
+					handleX + sign * fullWidth / 2
+				)
+
+				this.drawAddNotes(context, startX, handleY, attr.notes, isSmall, scale, extraStyles)
 			}
 		})
 	}
@@ -820,10 +828,10 @@ export class MusicPaint {
 		const octaveDotSpace = 0.25
 		
 		// ==== 统计 ====
-		let maxReductionLevel = 0
+		let maxReductionLevel = 1  // 初始减时线空间
 		section.decoration.forEach((decor) => {
 			if(decor.char == '_') {
-				maxReductionLevel = Math.max(maxReductionLevel, decor.level - 1) // 因为装饰音符的 level 从 1 开始
+				maxReductionLevel = Math.max(maxReductionLevel, decor.level) // 装饰音符的 level 从 1 开始，但还有一条初始减时线
 			}
 		})
 		let maxOctaveDots = 0
@@ -832,11 +840,14 @@ export class MusicPaint {
 				maxOctaveDots = Math.max(maxOctaveDots, -note.char.octave)
 			}
 		})
+		
 		let noteMetric = getLineFont(isSmall ? 'noteSmall' : 'note', context)
 		noteMetric.fontSize *= addNotesScale
 		let noteMeasure = this.measureNoteChar(context, isSmall, scale)
 		noteMeasure = [ noteMeasure[0] * addNotesScale, noteMeasure[1] * addNotesScale ]
+
 		let baseHeight = y - addNotesScale * reductionLineSpace * maxReductionLevel - Math.max((maxOctaveDots * octaveDotSpace - 0.1) * noteMeasure[1], 0)
+		
 		let currY = baseHeight - noteMeasure[1] * 0.4
 		let currX = x - noteMeasure[0] / 2 * section.notes.length
 		let positions: {hash: string, index: number}[] = []
@@ -846,10 +857,17 @@ export class MusicPaint {
 				index: index
 			})
 		})
+		// ===== 初始减时线 =====
+		const initialLineY = y - addNotesScale * reductionLineSpace * (maxReductionLevel - 1)
+		this.root.drawLine(
+			x - noteMeasure[0] / 2 * section.notes.length, initialLineY,
+			x + noteMeasure[0] / 2 * section.notes.length, initialLineY,
+			0.15, 0, scale
+		)
 		// ===== 画减时线 =====
 		section.decoration.forEach((decor) => {
 			if(decor.char == '_') {
-				const lineY = y - addNotesScale * reductionLineSpace * (maxReductionLevel - decor.level + 1)
+				const lineY = y - addNotesScale * reductionLineSpace * (maxReductionLevel - decor.level)
 				const startX = currX + noteMeasure[0] * (findWithKey(positions, 'hash', Frac.repr(decor.startPos))!.index)
 				const endX = currX + noteMeasure[0] * (findWithKey(positions, 'hash', Frac.repr(decor.endPos))!.index + 1)
 				this.root.drawLine(startX, lineY, endX, lineY, 0.15, 0, scale)
@@ -868,7 +886,7 @@ export class MusicPaint {
 			// ===== 变化音符号 =====
 			if(note.char.delta == note.char.delta) {
 				const accidentalToken = new PaintTextToken(
-					this.symbolAccidental(note.char.delta), new FontMetric('SparksNMN-mscore-20/400', noteMetric.fontSize),
+					this.symbolAccidental(note.char.delta), getLineFont(isSmall ? 'accidentalSmall' : 'accidental', context),
 					scale, extraStyles
 				)
 				accidentalToken.drawFast(this.root, leftCur, currY, 'center', 'bottom')

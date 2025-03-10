@@ -280,12 +280,12 @@ export class PositionDispatcher {
 			if(!sections) {
 				return
 			}
-			const noteCharMetric = getLineFont(isSmall ? 'noteSmall' : 'note', this.context)
-			const accidentalCharMetric = getLineFont(isSmall ? 'noteSmall' : 'note', this.context)
-			accidentalCharMetric.fontFamily = 'SparksNMN-Bravura'
-			const noteCharMeasure = this.root.measureTextFast('0', noteCharMetric, this.scale)
-			const accidentalMeasure = this.root.measureTextFast("\uE114", accidentalCharMetric, this.scale)
-			const addNoteCharMeasure = [noteCharMeasure[0] * addNotesScale, 0]
+			
+			const noteCharMeasure = msp.measureNoteChar(this.context, isSmall, this.scale)
+			const addNoteCharMeasure = [noteCharMeasure[0] * addNotesScale, noteCharMeasure[1] * addNotesScale]
+
+			const accidentalCharMetric = getLineFont(isSmall ? 'accidentalSmall' : 'accidental', this.context)
+			
 			sections.forEach((section, sectionIndex) => {
 				const actualIndex = sectionIndex + rangeStart
 				if(actualIndex < 0 || actualIndex > this.line.sectionFields.length) {
@@ -297,10 +297,11 @@ export class PositionDispatcher {
 				section.notes.forEach((note) => {
 					const fracPos = Frac.add(this.line.sectionFields[actualIndex][0], note.startPos)
 					if(isMusic) {
-						let accidentalCount = 0
-						let hasSlide = false
-						let leftAddCount = 0
-						let rightAddCount = 0
+						let accidentalSymbol = ''
+						let hasSlideUp = false
+						let hasSlideDown = false
+						let leftAddCount = -1
+						let rightAddCount = -1
 						let dotCount = 0
 						if(note.type == 'note') {
 							const noteChar = note.char
@@ -308,7 +309,7 @@ export class PositionDispatcher {
 								throw new Error('Position dispatching occured with a non-music note.')
 							}
 							if(noteChar.delta == noteChar.delta) {
-								accidentalCount = msp.symbolAccidental(noteChar.delta).length
+								accidentalSymbol = msp.symbolAccidental(noteChar.delta)
 							}
 							for(let attr of note.attrs) {
 								if(attr.type == 'notes') {
@@ -318,11 +319,21 @@ export class PositionDispatcher {
 										rightAddCount = attr.notes.type == 'section' ? attr.notes.notes.length : 0
 									}
 								} else if(attr.type == 'slide') {
-									hasSlide = true
+									if(attr.direction == 'up') {
+										hasSlideUp = true
+									} else {
+										hasSlideDown = true
+									}
 								}
 							}
 							dotCount = countArray(note.suffix, '.')
 						}
+
+						const leftAddWidth = leftAddCount * addNoteCharMeasure[0]
+						const rightAddWidth = rightAddCount * addNoteCharMeasure[0]
+						const addNotesHandleWidth = noteCharMeasure[1] * this.scale * 0.3
+						const slideHandleWidth = noteCharMeasure[1] * this.scale * 0.45
+
 						const normalCharWidthRatio = 1.1
 						builder.writeConstraint(rowHash, fracPos, actualIndex, [
 							noteCharMeasure[0] / 2 * 1,
@@ -333,11 +344,23 @@ export class PositionDispatcher {
 							noteCharMeasure[0] / 2 * normalCharWidthRatio
 						], false) // 音符本身占据排版域
 						builder.writeConstraint(rowHash, fracPos, actualIndex, [
-							noteCharMeasure[0] / 2 + accidentalCount * accidentalMeasure[0] + leftAddCount * addNoteCharMeasure[0] / 2 + noteCharMeasure[1] * 1.2,
+							(
+								noteCharMeasure[0] / 2 +
+								this.root.measureTextFast(accidentalSymbol, accidentalCharMetric, this.scale)[0] +
+								(leftAddCount == -1 ? (0) : (
+									leftAddWidth / 2 +
+									Math.max(addNotesHandleWidth, leftAddWidth / 2)
+								))
+							),
 							noteCharMeasure[0] / 2 + Math.max(
-								noteCharMeasure[0] / 2 * dotCount,
-								rightAddCount * addNoteCharMeasure[0] / 2 + noteCharMeasure[1] * 1.2,
-								(+hasSlide) * noteCharMeasure[1] * 0.45 * this.scale
+								(
+									noteCharMeasure[0] / 2 * dotCount
+								), rightAddCount == -1 ? (0) : (
+									rightAddWidth / 2 +
+									Math.max(addNotesHandleWidth, rightAddWidth / 2)
+								), (
+									(+(hasSlideUp || hasSlideDown)) * slideHandleWidth * 1.2  // 箭头还需要额外宽度
+								)
 							)
 						], false) // 音符的附加符号（升降调、装饰音、滑音）的排版空间必须满足，但不需要参与计算
 					} else {
@@ -373,6 +396,7 @@ export class PositionDispatcher {
 								rpt += 1
 							}
 							for(let i = charIndex + 1; i < rpt; i++) {
+								// 此部分为连接标点留出空间
 								const char2 = chars[i]
 								boundaries[1] += msp.drawLyricChar(this.context, 0, 0, char2, 'left', this.scale, {}, true)[1]
 							}
