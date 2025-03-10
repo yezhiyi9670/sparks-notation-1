@@ -33,7 +33,7 @@ export class Destructor {
 	parse(issues: LinedIssue[]): DestructedScore {
 		const score = this.input
 		const musicalProps = this.destruct(score.uniqueLines['P'], issues, scoreContextDefault) as MusicalPropsLine
-		const renderProps = this.destruct(score.uniqueLines['Rp'], issues, scoreContextDefault) as RenderPropsLine
+		const renderProps = this.destructAndMergeRenderProps(score.lines, 'Rp', issues, scoreContextDefault) as RenderPropsLine
 		const newContext = addRenderProp(
 			addMusicProp(scoreContextDefault, musicalProps?.props),
 			renderProps?.props
@@ -71,7 +71,7 @@ export class Destructor {
 	}
 	parseArticle(article: LineTree<SparseLine>, context: ScoreContext, issues: LinedIssue[]): DestructedArticle {
 		const musicalProps = this.destruct(article.uniqueLines['Sp'], issues, context) as MusicalPropsLine
-		const renderProps = this.destruct(article.uniqueLines['Srp'], issues, context) as RenderPropsLine
+		const renderProps = this.destructAndMergeRenderProps(article.lines, 'Srp', issues, context) as RenderPropsLine
 		const newContext = addRenderProp(addMusicProp(context, musicalProps?.props), renderProps?.props)
 		const mutableContext = copyContext(newContext)
 		let isText = false
@@ -104,7 +104,7 @@ export class Destructor {
 		}
 	}
 	parseFragment(fragment: LineTree<SparseLine>, context: ScoreContext, issues: LinedIssue[]): DestructedFragment {
-		const renderProps = this.destruct(fragment.uniqueLines['Frp'], issues, context) as RenderPropsLine
+		const renderProps = this.destructAndMergeRenderProps(fragment.lines, 'Frp', issues, context) as RenderPropsLine
 		this.validateFragmentRenderProps(renderProps, context, issues)
 		const newContext = addRenderProp(context, renderProps?.props)
 		const prevContext = copyContext(newContext)
@@ -345,6 +345,22 @@ export class Destructor {
 			head: line.head,
 			props: props
 		}
+	}
+	destructAndMergeRenderProps(lines: SparseLine[], head: Exclude<RenderPropsLine, undefined>['head'], issues: LinedIssue[], context: ScoreContext) {
+		const renderPropsLines = lines.filter((line) => line.head == head)
+		const destructedRenderProps = renderPropsLines.map(line => {
+			return this.destruct(line, issues, context) as RenderPropsLine
+		}).filter(item => {
+			return item !== undefined
+		})
+		if(destructedRenderProps.length == 0) {
+			return undefined
+		}
+		const ret = destructedRenderProps[0]
+		for(let i = 1; i < destructedRenderProps.length; i++) {
+			Object.assign(ret.props, destructedRenderProps[i].props)
+		}
+		return ret
 	}
 	destructRenderProp(line: SparseLine & {head: 'Rp'}, issues: LinedIssue[]): DestructedLine {
 		let props: RenderProps = {}

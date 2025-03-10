@@ -17,7 +17,7 @@ export type SparseLine = {
 	props: string | null
 	content: string
 } | {
-	head: 'P' | 'Pi' | 'Rp' | 'Sp' | 'Frp'
+	head: 'P' | 'Pi' | 'Rp' | 'Sp' | 'Srp' | 'Frp'
 	content: string[]
 } | {
 	head: 'B'

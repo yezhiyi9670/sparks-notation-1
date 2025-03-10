@@ -191,7 +191,7 @@ export class LineTreeBuilder {
 					}
 				}
 				// 验证 required
-				let requiredMap: {[_: number]: true} = {}
+				let requiredMap: {[_: string]: true} = {}
 				for(let line of currentTree.lines) {
 					const commandDef = getCommandDef(line.head)!
 					if(commandDef.required !== undefined) {

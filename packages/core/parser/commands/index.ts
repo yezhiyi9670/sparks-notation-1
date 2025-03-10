@@ -37,11 +37,11 @@ export interface CommandDef {
 	 */
 	special?: boolean | 'none'
 	/**
-	 * 当前级别内必须
+	 * 当前级别内必须（属性值指定组名，相同组的只需要有一个即满足要求）
 	 */
-	required?: number
+	required?: string
 	/**
-	 * 当前级别内不允许重复
+	 * 当前级别内不允许重复（属性值指定组名，相同组内不允许重复，即使命令名不同）
 	 */
 	unique?: string
 	/**
@@ -62,6 +62,8 @@ export const LineLevels = {
 	lyricLine: 4
 }
 export const lineLevelNames = [
+	// 由于历史遗留问题，章节 (article) 在 Sparks NMN 代码的命令名中称为 section。
+	// 代码其余地方的 section 指的应该是「小节」。
 	'document', 'article', 'fragment', 'part', 'lyricLine'
 ]
 export const lineDelimiters = [
@@ -175,7 +177,7 @@ export const commandDefs: CommandDef[] = [
 		contentType: 'separated',
 		hasProps: 'none',
 		propsType: 'none',
-		required: 1,
+		required: 'P',
 		unique: 'P',
 		levels: [LineLevels.document]
 	},
@@ -186,7 +188,7 @@ export const commandDefs: CommandDef[] = [
 		contentType: 'separated',
 		hasProps: 'none',
 		propsType: 'none',
-		required: 1,
+		required: 'P',
 		unique: 'P',
 		levels: [LineLevels.document]
 	},
@@ -197,7 +199,6 @@ export const commandDefs: CommandDef[] = [
 		contentType: 'separated',
 		hasProps: 'none',
 		propsType: 'none',
-		unique: 'Rp',
 		levels: [LineLevels.document]
 	},
 	// T 文本标注
@@ -228,7 +229,6 @@ export const commandDefs: CommandDef[] = [
 		contentType: 'text',
 		hasProps: 'none',
 		propsType: 'none',
-		unique: 'Srp',
 		levels: [LineLevels.article],
 		special: 'none'
 	},
@@ -269,7 +269,6 @@ export const commandDefs: CommandDef[] = [
 		contentType: 'separated',
 		hasProps: 'none',
 		propsType: 'none',
-		unique: 'Frp',
 		levels: [LineLevels.fragment]
 	},
 	// N 音符
@@ -280,7 +279,7 @@ export const commandDefs: CommandDef[] = [
 		hasProps: 'optional',
 		propsType: 'multiple',
 		unique: 'N',
-		required: 1,
+		required: 'N',
 		levels: [LineLevels.part]
 	},
 	// Na 鼓点音符
@@ -291,7 +290,7 @@ export const commandDefs: CommandDef[] = [
 		hasProps: 'optional',
 		propsType: 'multiple',
 		unique: 'N',
-		required: 1,
+		required: 'N',
 		levels: [LineLevels.part]
 	},
 	// Nc 压行音符
@@ -302,7 +301,7 @@ export const commandDefs: CommandDef[] = [
 		hasProps: 'optional',
 		propsType: 'multiple',
 		unique: 'N',
-		required: 1,
+		required: 'N',
 		levels: [LineLevels.part]
 	},
 	// L 手动分割歌词
@@ -313,7 +312,7 @@ export const commandDefs: CommandDef[] = [
 		hasProps: 'optional',
 		propsType: 'multiple',
 		unique: 'L',
-		required: 1,
+		required: 'L',
 		levels: [LineLevels.lyricLine]
 	},
 	// Lc 字基歌词
@@ -324,7 +323,7 @@ export const commandDefs: CommandDef[] = [
 		hasProps: 'optional',
 		propsType: 'multiple',
 		unique: 'L',
-		required: 1,
+		required: 'L',
 		levels: [LineLevels.lyricLine]
 	},
 	// Lw 词基歌词
@@ -335,7 +334,7 @@ export const commandDefs: CommandDef[] = [
 		hasProps: 'optional',
 		propsType: 'multiple',
 		unique: 'L',
-		required: 1,
+		required: 'L',
 		levels: [LineLevels.lyricLine]
 	},
 	// Ns 替代音符
