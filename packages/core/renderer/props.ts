@@ -25,6 +25,10 @@ export interface RenderProps {
 	 */
 	time_lining?: boolean
 	/**
+	 * 按音符数微调小节宽度
+	 */
+	note_count_lining?: boolean
+	/**
 	 * 使用旧版布局算法
 	 */
 	legacy_positioning?: boolean
@@ -184,6 +188,7 @@ export const renderPropsDefault: RenderProps = {
 	page_margin_x: [11, 11],
 	n: 4,
 	time_lining: false,
+	note_count_lining: false,
 	legacy_positioning: false,
 	debug: true,
 	sectionorder: 'paren',
@@ -283,7 +288,10 @@ export function renderPropConvert(key: string, val: string) {
 		}
 		return { error: 'value' }
 	}
-	if(['time_lining', 'debug', 'grayout', 'explicitmarkers', 'left_separator', 'double_sided', 'legacy_positioning'].includes(key)) {
+	if([
+		'time_lining', 'note_count_lining',
+		'debug', 'grayout', 'explicitmarkers', 'left_separator', 'double_sided', 'legacy_positioning'
+	].includes(key)) {
 		if(val == 'true') {
 			return true
 		}

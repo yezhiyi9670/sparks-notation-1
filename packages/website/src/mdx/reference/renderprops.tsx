@@ -9,7 +9,7 @@ function determineFamily(name: string): PropsFamily {
 	if(name == 'page' || name == 'double_sided' || name == 'page_margin_x') {
 		return 'page'
 	}
-	if(name == 'n' || name == 'time_lining' || name == 'legacy_positioning') {
+	if(name == 'n' || name == 'time_lining' || name == 'note_count_lining' || name == 'legacy_positioning') {
 		return 'n'
 	}
 	if(name.startsWith('offset_')) {
@@ -78,6 +78,7 @@ const renderPropsLabel = {
 	'page_margin_x': ['2numbers', '页面左侧和右侧的边距', '1.15.8'],
 	'n': ['number', '每行小节数'],
 	'time_lining': ['boolean', '基于时值的小节宽度'],
+	'note_count_lining': ['boolean', '按音符数微调小节宽度', '1.15.8'],
 	'legacy_positioning': ['boolean', '使用旧版布局算法'],
 	'debug': ['boolean', '预览中显示校验信息'],
 	'sectionorder': ['"paren"|"bracket"|"plain"|"none"', '小节序号模式'],

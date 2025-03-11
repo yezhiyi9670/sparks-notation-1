@@ -143,6 +143,7 @@ export default {
 		'page_margin_x': '(11)页面左侧和右侧的边距',
 		'n': '每行小节数',
 		'time_lining': '基于时值的小节宽度',
+		'note_count_lining': '按音符数微调小节宽度',
 		'legacy_positioning': '使用旧版布局算法',
 		'debug': '显示错误警告',
 		'sectionorder': '小节序号模式',

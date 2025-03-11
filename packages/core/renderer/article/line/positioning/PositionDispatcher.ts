@@ -208,12 +208,32 @@ export class PositionDispatcher {
 				return weight * beatWeight
 			})
 		}
+		if(this.context.render.note_count_lining!) {
+			weights = weights.map((weight, index) => {
+				let maxBeatCount = 0
+				let maxNoteCount = 0
+				this.line.parts.forEach((part) => {
+					const section = part.notes.sections[index]
+					maxBeatCount = Math.max(
+						maxBeatCount,
+						(section.separator.after.attrs.filter(item => item.type == 'beats').length > 0 ? 1 : 0) +
+						(section.separator.before.attrs.filter(item => item.type == 'beats').length > 0 ? 1 : 0)
+					)
+					if(section.type == 'section') {
+						// 暂时不含替代旋律
+						maxNoteCount = Math.max(maxNoteCount, section.notes.length)
+					}
+				})
+				let beatWeight = Math.min(1.35, 1 + maxNoteCount * 0.03 + maxBeatCount * 0.05)
+				return weight * beatWeight
+			})
+		}
 
 		let totalWeights = 0
 		weights.forEach((weight) => {
 			totalWeights += weight
 		})
-		if(this.context.render.time_lining! && this.line.sectionCount > 0) {
+		if(this.line.timeLining! && this.line.sectionCount > 0) {
 			totalWeights += totalWeights / this.line.sectionCount * (this.line.sectionCountShould - this.line.sectionCount)
 		} else {
 			totalWeights += this.line.sectionCountShould - this.line.sectionCount
