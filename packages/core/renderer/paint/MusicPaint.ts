@@ -666,9 +666,6 @@ export class MusicPaint {
 		let noteText = ''
 		if(note.type == 'extend') {
 			noteText = '-'
-			if(note.voided) {
-				noteText = ''
-			}
 		} else {
 			noteText = note.char.char
 		}
@@ -699,6 +696,10 @@ export class MusicPaint {
 			grayoutStyle = {
 				opacity: 0.5
 			}
+		}
+		if(note.type == 'extend' && note.voided) {
+			// 弱起占位延时线，不渲染
+			return
 		}
 		// ===== 音符 =====
 		const noteMeasure = this.measureNoteChar(context, isSmall, scale)
