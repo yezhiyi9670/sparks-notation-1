@@ -8,6 +8,7 @@ import { FontLoaderProxy } from "@sparks-notation/core/renderer/FontLoaderProxy"
 import { Util } from "../util/util"
 import $ from 'jquery'
 import { EquifieldSection } from "@sparks-notation/core/equifield/equifield"
+import { createUseStyles } from "react-jss"
 
 const heightCacheMap: {[_: string]: number} = {}
 
@@ -15,6 +16,22 @@ const countInfo = {
 	alive: 0,
 	rendered: 0
 }
+
+const useStyles = createUseStyles({
+	previewWrapBox: {
+		margin: '0 -0%'
+	},
+	'@media(max-width: 996px)': {
+		previewWrapBox: {
+			margin: '0 -1%'
+		}
+	},
+	'@media(max-width: 440px)': {
+		previewWrapBox: {
+			margin: '0 -2%'
+		}
+	}
+})
 
 /**
  * Sparks NMN 实时渲染预览版本
@@ -30,6 +47,8 @@ export function NMNDisplay(props: {
 	style?: React.CSSProperties
 	doPagination?: boolean
 }) {
+	const classes = useStyles()
+
 	const playgroundUrl = usePlaygroundUrl()
 	const fontStaticPath = playgroundUrl + 'core-resources/font'
 	const ref = createRef<HTMLDivElement>()
@@ -85,8 +104,7 @@ export function NMNDisplay(props: {
 		...props.style
 	}}>
 		<div ref={ref}>
-			{init && <div style={{
-				margin: props.narrow ? '0 -2%' : '0 -1%',
+			{init && <div className={classes.previewWrapBox} style={{
 				...(!rendered && {
 					visibility: 'hidden',
 					height: 0

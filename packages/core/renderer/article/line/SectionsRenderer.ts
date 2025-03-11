@@ -556,7 +556,7 @@ export class SectionsRenderer {
 						const endX = this.columns.fracPosition(sectionIndex, Frac.add(section.startPos, decor.endPos)) + noteMeasure[0] / 2
 						// const lowY = currY - noteMeasure[1] / 2 - 0.5
 						let highY = currY - noteMeasure[1] / 2 - 2
-						const heightSpacing = noteMeasure[1] * (tripletText == '3' ? 0.25 : 0.4)
+						const heightSpacing = noteMeasure[1] * 0.4
 						checkNoteList((note) => { // 检查连音线高度
 							highY = Math.min(highY, note.leftTop - heightSpacing)
 							highY = Math.min(highY, note.rightTop - heightSpacing)

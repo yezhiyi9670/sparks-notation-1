@@ -2,7 +2,7 @@
 title: 更新日志
 ---
 
-import { New, Fix, Mod, Del, Dep, Important, Source } from '@site/src/mdx/changelog/changelog-tags'
+import { New, Fix, Mod, Del, Dep, Important, Source, PocLink } from '@site/src/mdx/changelog/changelog-tags'
 
 <div class="theme-doc-markdown markdown">
 
@@ -37,6 +37,12 @@ import { New, Fix, Mod, Del, Dep, Important, Source } from '@site/src/mdx/change
 
 ### 1.15.8 (2025-03-10)
 
+<PocLink name="1.15.8" />
+
+- <Mod/> 延时线现在可以带有附点。
+- <Fix/> 修复了四分三连音/多连音语法下使用延时线导致的问题。
+- <Mod/> 试用模式：修改了顶部「重要提醒」框的样式。
+- <Mod/> 渲染属性名的自动补全不再显示当前不可用的属性。
 - <New/> 添加了新的渲染属性 `page_margin_x` 用来调整页面水平边距。默认值为 `11,11`。
   - 其值为逗号隔开的两个数，例如 `14,10`，分别指定左侧和右侧的边距，单位为 `em`。也可以只写一个数，这样两侧边距会被设置为同一个值。
   - 单位 `em` 不再定义为页面宽度的 $\frac{1}{122}$，而是定义为页面除去水平边距后的宽度的 $\frac{1}{100}$。之前版本乐谱也遵循这一设定，外观不会改变。

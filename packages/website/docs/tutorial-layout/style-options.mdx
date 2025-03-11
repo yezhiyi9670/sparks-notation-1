@@ -11,10 +11,10 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 
 ## 所有样式选项 {#all-style-options}
 
-<Cr.RenderPropsReference filters={['misc', 'offset']} />
+<Cr.RenderPropsReference filters={['family:misc', 'family:offset']} />
 
 - `boolean` 类型的取值为 `true`(开) 或 `false`(关)。
-- 所有间距、边距、宽度选项的单位均为 `em`，表示文档页面宽度的 $\frac{1}{122}$。
+- 所有间距、边距、宽度选项的单位均为 `em`，表示除去页面边距后的页面宽度的 $\frac{1}{100}$。
 
 ## 样式选项介绍 {#style-options-intro}
 
@@ -71,9 +71,7 @@ N: 6d. ((6d3)) (2(23~))(34) | (5.(3~))(37d) 1 - | 4. ((32)) (2(17d~))(7d2) | 1 -
 
 ### 额外左边距 `_left` {#_left}
 
-<Cr.RenderPropType name='gutter_left' />
-
-<Cr.RenderPropType name='connector_left' />
+<Cr.RenderPropsReference filters={['gutter_left', 'connector_left']} />
 
 前者控制每行第一个小节的左端与左侧装订线之间的距离，后者控制连谱号与左侧装订线之间的距离。
 

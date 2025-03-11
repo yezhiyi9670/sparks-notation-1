@@ -21,7 +21,7 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 
 :::tip 提示
 
-当渲染属性行变得过长难以编辑的时候，可以使用[软折行](/docs/reference/document-structure#soft-wrap)将其分行。
+当渲染属性行变得过长难以编辑的时候，可以使用[软折行](/docs/reference/document-structure#soft-wrap)将其分行<C.MinVersion min='1.15.8' inline>，或者将其拆分为多个渲染属性行</C.MinVersion>。
 
 :::
 
@@ -36,13 +36,14 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
   - 设置为 `0`，将禁用页面精排。
 - `2numbers` 类型应当指定两个由逗号分隔的数，例如 `14,10`。也可以只指定一个一个数，例如 `11` 等价于 `11,11`。**注意逗号后不能有空格**。
 - `boolean` 类值应当为 `true` 或 `false`。
-- 边距与间距选项的单位是 `em`，表示页面宽度的 $\frac{1}{122}$。
+- 边距与间距选项的单位是 `em`，表示除去页面边距后页面宽度的 $\frac{1}{100}$。
 - `font` 类的写法应当是 `<字体名>/<字重>/<大小>`。
   - 字重和大小可以省略。
   - 字重参考值：`400` - 普通，`700` - 加粗。
   - 大小指的是相对默认大小的倍数。
   - 字体名中的空格用下划线 `_` 代替，名称中原来的下划线用两个连续的下划线 `__` 代替。
   - 字体名称可以是多个字体，使用逗号 `,` 隔开，例如 `Roman,CommonSerif`。**注意逗号后不能有空格**。
+- 与页面设置相关的渲染属性只能在 `Rp:` 开头的全局渲染属性行中使用。
 
 ## 关于字体的信息 {#font-info}
 
@@ -50,6 +51,6 @@ import FontInfo from '../_common/font-info.mdx'
 
 <FontInfo />
 
-## 那 Frp 呢？
+## 碎片级渲染属性？ {#fragment-level}
 
 你可能看到**碎片**也能拥有渲染属性，写在 `Frp:` 开头的行中。事实是，在 `Frp:` 开头的行中，只有 `n` <C.MinVersion min='1.15.5' inline>和 `time_lining`</C.MinVersion> 属性是有效的，其他都会被忽略。

@@ -183,7 +183,7 @@ export function TestApp() {
 			dirty: LNG('title.newDirty'),
 		},
 		importantWarning: {html: `
-			<div class="demo-important-warning-title" style="width: 100%; font-size: 1.8em; padding: 1.2em; border-radius: 1em; background: #f6f8fa; color: #193c47">
+			<div class="demo-important-warning-title" style="font-family: sans-serif; width: 100%; font-size: 1.8em; padding: 1.2em; border-radius: 1em; background: #f6f8fa; color: #193c47">
 				<div style="display: flex; align-items: center; height: 2.7em; gap: 0.6em;">
 					<a target="_blank" href="${LNG('preview.heading#html.backlink')}" style="display: flex; height: 2.7em; gap: 0.6em; align-items: center; color: inherit; text-decoration: none;">
 						<img style="height: 2.7em; width: 2.7em; object-fit: contain" src="${LNG('preview.heading#html.icon')}" />
@@ -196,24 +196,24 @@ export function TestApp() {
 					${LNG('preview.heading#html.text.2')}<br />
 					${LNG('preview.heading#html.text.3')}
 				</div>
-				<div class="demo-important-warning-keys" style="font-size: 1.05em; margin-top: 0.85em; line-height: 1.5em; height: 3.05em; color: #7d9198; white-space: nowrap;">
-					<code style="background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">Ctrl</code>
+				<div class="demo-important-warning-keys" style="font-size: 1.05em; margin-top: 0.85em; line-height: 1.4em; height: 2.85em; color: #7d9198; white-space: nowrap;">
+					<code style="font-family: CommonBlack; background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">Ctrl</code>
 					+
-					<code style="background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">S</code>
+					<code style="font-family: CommonBlack; background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">S</code>
 					${LNG('preview.heading#html.key.save')}
 
-					<span style="display: inline-block; width: 1.5em"></span>
+					<span style="display: inline-block; width: 1.35em"></span>
 					
-					<code style="background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">Ctrl</code>
+					<code style="font-family: CommonBlack; background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">Ctrl</code>
 					+
-					<code style="background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">R</code>
+					<code style="font-family: CommonBlack; background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">R</code>
 					${LNG('preview.heading#html.key.refresh')}
 
-					<span style="display: inline-block; width: 1.5em"></span>
+					<span style="display: inline-block; width: 1.35em"></span>
 
-					<code style="background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">Ctrl</code>
+					<code style="font-family: CommonBlack; background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">Ctrl</code>
 					+
-					<code style="background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">P</code>
+					<code style="font-family: CommonBlack; background: #f9f9f9; border: 0.1em solid #7d9198; border-radius: 0.3em; padding: 0.05em 0.15em">P</code>
 					${LNG('preview.heading#html.key.print')}
 
 					<br />
@@ -221,7 +221,7 @@ export function TestApp() {
 					${LNG('preview.heading#html.key.hint')}
 				</div>
 			</div>
-		`, height: 30},
+		`, height: 29.5},
 		temporarySave: true,
 		isMobile: isMobileInitially,
 		inspectorOpen: false,

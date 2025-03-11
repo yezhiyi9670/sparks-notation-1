@@ -41,9 +41,9 @@ const useStyles = createUseStyles({
 	}
 })
 
-function transformEfRange(efRange?: string | number | (string | number)[]) {
+function transformEfRange(efRange?: string | number | (string | number)[]): [string, string] | undefined {
 	if(efRange == undefined) {
-		return efRange
+		return efRange as undefined
 	}
 	const tr = (thing: number | string) => {
 		if(typeof(thing) == 'number') {
@@ -226,7 +226,7 @@ export function TryButton(props: {
 		>
 			在试用模式中尝试
 			{' '}
-			<Icons.FaExternalLinkAlt style={{transform: 'translateY(0.15em)'}} />
+			<Icons.FaExternalLinkAlt style={{transform: 'translateY(0.12em)'}} />
 		</Link>
 	</LinkSanitizer>
 }
@@ -315,7 +315,7 @@ export function TryYourself() {
 		<p style={{textAlign: 'left'}}><Link href={playgroundUrl} onClick={() => window.sendAnalyticsEvent('Try yourself')}>
 			在试用模式中自行尝试
 			{' '}
-			<Icons.FaExternalLinkAlt style={{transform: 'translateY(0.15em)'}} />
+			<Icons.FaExternalLinkAlt style={{transform: 'translateY(0.12em)'}} />
 		</Link></p>
 	)
 }

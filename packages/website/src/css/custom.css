@@ -44,6 +44,11 @@
   margin-top: var(--ifm-list-item-margin);
 }
 
+/* Search box mobile fix */
+.navbar__search>span>pre {
+  display: none;
+}
+
 /* Challenge tabs */
 .tabs.challenge-tabs>li {
   padding: 0.50rem var(--ifm-tabs-padding-horizontal);

@@ -23,7 +23,7 @@ import * as Cr from '@site/src/mdx/reference/previewedref'
 
 文本标记是最简单的标记符号，作用是将自定义文本标记在乐谱指定时值的位置。
 
-音符（休止符 `0`、延音线 `-` 除外）由双引号引起的标记字符串代替，音符所占时值无关紧要。之前的章节中就有许多使用文本标记来添加解释说明的例子，例如：
+音符（休止符 `0`、延时线 `-` 除外）由双引号引起的标记字符串代替，音符所占时值无关紧要。之前的章节中就有许多使用文本标记来添加解释说明的例子，例如：
 
 <C.RealtimeScore efRange={1} children={
 `P: 1=? 4/4
@@ -105,7 +105,7 @@ A: 0 | mp < - - | - - - - | - - - - |
 
 :::caution 避免滥用
 
-跨小节延长仅能用在这一种情况下，其他情况下是不规范的，并且会导致错误的结果。
+跨小节延时线仅能用在这一种情况下，其他情况下是不规范的，并且会导致错误的结果。
 
 :::
 
@@ -141,7 +141,7 @@ A: c"6m/1" | c"3maj/4" | c"6m/1". 0. 0. c"3maj/#5" | c"6m/1" |
 
 :::caution 注意
 
-大和弦（当需要强调时）类型修饰符应当写作 $\rm maj$，而不是 $\rm M$。后者在 Sparks NMN 中也无法被正常识别。  
+大和弦（当需要强调时）类型修饰符应当写作 $\rm maj$ 或 $\rm t$，而不是 $\rm M$。后者在 Sparks NMN 中也无法被正常识别。  
 属和弦（当需要强调时）类型修饰符写作 $\rm d$，例如 $1^{\rm d7}$。
 
 :::
@@ -192,9 +192,94 @@ A: c"F" | c"C" | c"Dm" | c"G" |
 
 :::caution 非标准特性
 
-移调不是简谱的标准特性，并且也是严格不推荐的，因为类似地目的可以通过用数字或罗马数字表示根音来实现。
+移调不是简谱的标准特性，并且也是严格不推荐的。类似的目的可以通过用数字或罗马数字表示根音来实现。
 
 :::
+
+### 文本型小节线属性 {#separator-attrs}
+
+<C.MinVersion min='1.15.8' />
+
+部分前置/后置小节线属性会以文本形式显示在小节线的左上方或右上方，例如变速记号。在有标记符号行的情况下，它们会显示在标记符号行之下。这有时不是我们想要的结果：
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=bB 12/8 q.pm=67
+Rp: n=3
+---
+// preserve-start
+// highlight-next-line
+N: 2. 1. 2. (434) |{q.pm=69} 3.~ 3(0) &lpr; (2e2e2e)(3e#2e3e) &rpr; | 6~ - - 6~ - - !|
+A: c"2m7" | c"3s7" | c"6m6" |
+A: 0. r"rit. _  _  _  _  _  _  _  _" |
+// preserve-end
+`
+} />
+
+我们希望让此变速记号显示在和弦标记上方，可以将该变速记号移到相应**标记符号行的小节线**上。
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=bB 12/8 q.pm=67
+Rp: n=3
+---
+// preserve-start
+N: 2. 1. 2. (434) | 3.~ 3(0) &lpr; (2e2e2e)(3e#2e3e) &rpr; | 6~ - - 6~ - - !|
+A: c"2m7" | c"3s7" | c"6m6" |
+// highlight-next-line
+A: 0. r"rit. _  _  _  _  _  _  _  _" |{q.pm=69} e |
+// preserve-end
+`
+} />
+
+<C.SpoilerAlert variant='caution' title='常见错误' desc='小节序列的最后一个小节线不能有后置属性，因此，上面的例子中添加了一个空小节。'>
+
+下面的写法不能正确添加变速记号，且会报错：
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=bB 12/8 q.pm=67
+Rp: n=3
+---
+// preserve-start
+N: 2. 1. 2. (434) | 3.~ 3(0) &lpr; (2e2e2e)(3e#2e3e) &rpr; | 6~ - - 6~ - - !|
+A: c"2m7" | c"3s7" | c"6m6" |
+// highlight-next-line
+A: 0. r"rit. _  _  _  _  _  _  _  _" |{q.pm=69}
+// preserve-end
+`
+} />
+
+</C.SpoilerAlert>
+
+但是，标记符号行中的小节线属性**除显示外没有其他效果**，因此，在「音效试听与结构检查」工具中，你会发现上面的片段中的变速记号并没有变速。要使音效试听中的拍速正确，仍然需要在音符序列中**加入一个隐藏的变速记号**。下面两种都是可行的方法：
+
+- 利用上方属性，[会处理但不会显示](/docs/tutorial-basics/musical-variation#tldr)；
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=bB 12/8 q.pm=67
+Rp: n=3
+---
+// preserve-start
+// highlight-next-line
+N: 2. 1. 2. (434) | 3.~ 3(0) &lpr; (2e2e2e)(3e#2e3e) &rpr; |[q.pm=69] 6~ - - 6~ - - !|
+// preserve-end
+A: c"2m7" | c"3s7" | c"6m6" |
+A: 0. r"rit. _  _  _  _  _  _  _  _" |{q.pm=69} e |
+`
+} />
+
+- 使用一个[替代文本](/docs/tutorial-basics/complicated-beats#tldr)为空的变速记号，并添加 `*` 属性（见下一节）避免标记符号行抬升。
+
+<C.RealtimeScore efRange={[1,5]} children={
+`P: 1=bB 12/8 q.pm=67
+Rp: n=3
+---
+// preserve-start
+// highlight-next-line
+N: 2. 1. 2. (434) | 3.~ 3(0) &lpr; (2e2e2e)(3e#2e3e) &rpr; |{q.pm=69/, *} 6~ - - 6~ - - !|
+// preserve-end
+A: c"2m7" | c"3s7" | c"6m6" |
+A: 0. r"rit. _  _  _  _  _  _  _  _" |{q.pm=69} e |
+`
+} />
 
 ### 段标题标记 {#text-header-annotation}
 
@@ -213,7 +298,7 @@ A: c"6m/1" | c"3maj/4" | c"6m/1". 0. 0. c"3maj/#5" | c"6m/1" |
 `
 } />
 
-段标题标记就是用来解决这一问题的。对于这种情况，我们可以另起一个标记行，将段落标题放在标记行中。音符的格式是字符 `h`，后面紧跟段落标题字符串，例如 `h"A"` 或 `h"A"_"2"`。
+&#xFEFF;<C.MinVersion min='1.15.8' inline>上面所述的的小节线属性是一种解决方法。另</C.MinVersion>一种解决方案是段标题标记。我们可以另起一个标记行，将段落标题放在标记行中。音符的格式是字符 `h`，后面紧跟段落标题字符串，例如 `h"A"` 或 `h"A"_"2"`。
 
 <C.RealtimeScore efRange={[1,5]} children={
 `P: 1=? 12/8
@@ -229,6 +314,8 @@ A: c"6m/1" | c"3maj/4" | c"6m/1". 0. 0. c"3maj/#5" | c"6m/1" |
 A: h"A"_"2"
 `
 } />
+
+利用这一机制，不但可以解决段标题和其他标记符号的顺序问题，还可以将段落标题标在小节中间的某音符上。
 
 这种段落标题使用的字体将与小节线属性中的段落标题保持一致。
 

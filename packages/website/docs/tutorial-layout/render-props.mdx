@@ -20,7 +20,7 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 `
 } />
 
-渲染属性指令并**不能拆分**成多个指令行。如果一行内容过长，可以使用**软折行**方法进行处理——当一行末尾是 `\` 字符时，这个 `\` 字符会被忽略，并且下一行会被当成这一行的延续。
+&#xFEFF;<C.MinVersion max='1.15.8' inline>渲染属性指令并**不能拆分**成多个指令行。</C.MinVersion>如果一行内容过长，可以使用**软折行**方法进行处理——当一行末尾是 `\` 字符时，这个 `\` 字符会被忽略，并且下一行会被当成这一行的延续。
 
 <C.ScoreExample children={
 `Rp: font_lyrics=Roman,CommonSerif/600/0.95 grayout=true \\
@@ -28,15 +28,23 @@ import * as Cr from '@site/src/mdx/reference/renderprops'
 `
 } />
 
-:::success 计划
+&#xFEFF;<C.MinVersion min='1.15.8' inline>还可以将渲染属性行拆分成多个。它们的内容会自动合并。</C.MinVersion>
 
-将来可能会为编辑器添加「渲染属性调节器」窗口，其中会列出所有可用的渲染属性并允许你通过图形界面进行调节。不过，所有更改仍然会反映到文本代码上，而不是被存储在文本代码以外的其他地方。
-
-:::
+<C.ScoreExample children={
+`Rp: font_lyrics=Roman,CommonSerif/600/0.95 grayout=true
+Rp: margin_after_part=0 offset_lyrics_iter=0.8
+`
+} />
 
 :::caution 常见错误
 
 与乐理属性类似，渲染属性行的内容是按照空格分割的，因此，单个属性内不能有空格。例如 `grayout=true` 不能写成 `grayout = true`。
+
+:::
+
+:::success 计划
+
+将来可能会为编辑器添加「渲染属性调节器」窗口，其中会列出所有可用的渲染属性并允许你通过图形界面进行调节。不过，所有更改仍然会反映到文本代码上，而不是被存储在文本代码以外的其他地方。
 
 :::
 

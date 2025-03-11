@@ -217,34 +217,6 @@ export class NoteEater {
 						continue
 					}
 				}
-				// ===== 检测延音线 =====
-				// * 延音线是单独的 symbol，不存在字符读取一半的问题。
-				if(!('bracket' in token) && token.type == 'symbol' && token.content == '-') {
-					// 延长上一个音符
-					if(extendingNote) {
-						extendingNote.length = Frac.add(extendingNote.length, Frac.mul(ratio, Frac.create(1)))
-					}
-					// 推入延音线
-					section.notes.push({
-						type: 'extend',
-						lineNumber: this.lineNumber,
-						uuid: '',
-						range: token.range,
-						startPos: Frac.add(startPos, Frac.mul(ratio, position)),
-						length: Frac.mul(ratio, Frac.create(1)),
-						attrs: [],
-						suffix: [],
-						// 在本函数结束处，小节开头的延音线将被添加 voided 标记，作用见相应位置的注释
-						voided: false
-					})
-					// 更新最后一列
-					lastColumn = Frac.copy(
-						Frac.add(startPos, Frac.mul(position, ratio))
-					)
-					position = Frac.add(position, Frac.create(1))
-					this.pass()
-					continue
-				}
 				// ===== 检测连音前置符 =====
 				const reductionChar1 = this.getchar()
 				if(reductionChar1 !== undefined) {
@@ -352,7 +324,16 @@ export class NoteEater {
 				}
 				// ===== 读取音符及音符后缀 =====
 				const range0 = this.peek() ? this.peek()!.range[0] + this.charPtr : 0
-				const noteChar = this.eatNoteChar<TypeSampler>(issues, typeSampler)
+				const noteChar = (() => {
+					if(!('bracket' in token) && token.type == 'symbol' && token.content == '-') {
+						// ===== 延时线音符 =====
+						// * 延时线是单独的 symbol，不存在字符读取一半或额外跳过的问题。
+						this.pass()
+						return '-'
+					} else {
+						return this.eatNoteChar<TypeSampler>(issues, typeSampler)
+					}
+				})()
 				const suffixes: ('^' | '~' | '.')[] = []
 				const attrs: NoteAttr[] = []
 				let length = Frac.create(1)
@@ -371,8 +352,16 @@ export class NoteEater {
 							break
 						}
 						if(c.content == '~' || c.content == '^' || c.content == '.') {
-							suffixes.push(c.content)
 							this.pass()
+							if((c.content == '~' || c.content == '^') && noteChar == '-') {
+								addIssue(issues,
+									this.lineNumber, range0, 'error',
+									'extend_no_link',
+									'Extender cannot have links.'
+								)
+								continue
+							}
+							suffixes.push(c.content)
 							if(c.content == '.') {
 								lengthAdd = Frac.div(lengthAdd, Frac.create(2))
 								length = Frac.add(length, lengthAdd)
@@ -383,6 +372,14 @@ export class NoteEater {
 					} else {
 						if(c.bracket == '[') {
 							this.pass()
+							if(noteChar == '-') {
+								addIssue(issues,
+									this.lineNumber, range0, 'error',
+									'extend_no_note_attrs',
+									'Extender cannot have note attributes.'
+								)
+								continue
+							}
 							this.eatNoteAttr(attrs, c.tokens, issues)
 						} else {
 							break
@@ -394,20 +391,43 @@ export class NoteEater {
 				)
 				const noteStartPos = Frac.add(startPos, Frac.mul(ratio, position))
 				const noteRatio = tripletData.remain > 0 ? tripletData.ratio : Frac.create(1)
-				extendingNote = {
-					type: 'note',
-					lineNumber: this.lineNumber,
-					uuid: '',
-					range: [range0, Tokens.rangeSafe(this.input, this.tokenPtr, 0)],
-					startPos: noteStartPos,
-					length: Frac.mul(ratio, Frac.mul(length, noteRatio)),
-					attrs: attrs,
-					suffix: suffixes,
-					voided: false,
-					char: noteChar
-				}
+				const thisNote = ((): MusicNote<NoteCharAny & {
+					sampler: TypeSampler;
+				}> => {
+					if(noteChar == '-') {
+						const realLength = Frac.mul(ratio, Frac.mul(length, noteRatio))
+						if(extendingNote) {
+							extendingNote.length = Frac.add(extendingNote.length, realLength)
+						}
+						return {
+							type: 'extend',
+							lineNumber: this.lineNumber,
+							uuid: '',
+							range: [range0, Tokens.rangeSafe(this.input, this.tokenPtr, 0)],
+							startPos: noteStartPos,
+							length: realLength,
+							attrs: [],
+							suffix: suffixes,
+							// 在本函数结束处，小节开头的延时线将被添加 voided 标记，作用见相应位置的注释
+							voided: false
+						}
+					} else {
+						return extendingNote = {
+							type: 'note',
+							lineNumber: this.lineNumber,
+							uuid: '',
+							range: [range0, Tokens.rangeSafe(this.input, this.tokenPtr, 0)],
+							startPos: noteStartPos,
+							length: Frac.mul(ratio, Frac.mul(length, noteRatio)),
+							attrs: attrs,
+							suffix: suffixes,
+							voided: false,
+							char: noteChar
+						}
+					}
+				})()
 				position = Frac.add(position, Frac.mul(length, noteRatio))
-				section.notes.push(extendingNote)
+				section.notes.push(thisNote)
 				// ===== 三连音计数 =====
 				if(tripletData.remain > 0) {
 					tripletData.remain -= 1
@@ -482,14 +502,14 @@ export class NoteEater {
 			lastColumn = swingPos(lastColumn)
 		}
 
-		// 统计弱起前的拍数，同时为小节开头的延音线添加 voided 标记，作用为：
-		// - 对于曲谱小节，隐藏这些延音线和相关的减时线，这样就可以用延音线作为弱起占位符；
-		// - 对于标记符号小节中的渐强渐弱符号，被标记 voided 的延音线可以继续延长上一小节末尾的音符。
+		// 统计弱起前的拍数，同时为小节开头的延时线添加 voided 标记，作用为：
+		// - 对于曲谱小节，隐藏这些延时线和相关的减时线，这样就可以用延时线作为弱起占位符；
+		// - 对于标记符号小节中的渐强渐弱符号，被标记 voided 的延时线可以继续延长上一小节末尾的音符。
 		const totalQuarters = Frac.mul(ratio, position)
-		let upbeatQuarters = totalQuarters  // 如果找不到非延音线音符，那么整个小节都是弱起前区间
+		let upbeatQuarters = totalQuarters  // 如果找不到非延时线音符，那么整个小节都是弱起前区间
 		for(let note of section.notes) {
 			if(note.type != 'extend') {
-				upbeatQuarters = note.startPos  // 弱起前区间截止于第一个非延音线音符
+				upbeatQuarters = note.startPos  // 弱起前区间截止于第一个非延时线音符
 				break
 			}
 			note.voided = true

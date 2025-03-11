@@ -30,11 +30,11 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: '可以启动',
+    title: '可以播放',
     icon: <Icons.VscPlay fontSize={featureIconSize} />,
     description: (
       <>
-        乐谱不再是冷冰冰的符号。Sparks NMN 支持以简单的音色播放乐谱，让你能随时听到自己的作品。乐谱，启动！
+        乐谱不再是冷冰冰的符号。Sparks NMN 支持以简单的音色播放乐谱，让你能随时听到并检查自己的谱面。
       </>
     )
   },
@@ -57,11 +57,11 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: '开源免费',
+    title: '自由开源',
     icon: <Icons.VscUnlock fontSize={featureIconSize} />,
     description: (
       <>
-        Sparks NMN 是开源且免费的，你可以始终不受限制地使用，还可以将其集成到自己的项目中。
+        Sparks NMN 是自由开源软件，你可以始终不受限制地使用，还可以将其集成到自己的项目中。
       </>
     ),
   },

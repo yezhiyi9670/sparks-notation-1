@@ -23,7 +23,7 @@ export default flattenI18nData({
 			"title_ext": appNameShortExt,
 			"text": {
 				"1": "此页面不支持文件保存和偏好设置功能。要留存文件，可复制代码并使用自己的文本编辑器保存。",
-				"2": "本页面上的暂存功能利用浏览器的本地存储，只能存放<strong>一份</strong>代码，且<strong>随时都可能会被覆盖</strong>。请注意做好备份。",
+				"2": "本页面上的暂存功能利用浏览器的本地存储，只能存放<strong style='font-weight: 500; text-decoration: wavy #7d9198 underline'>一份</strong>代码，且<strong style='font-weight: 500; text-decoration: wavy #7d9198 underline'>随时都可能会被覆盖</strong>。请注意做好备份。",
 				"3": "如需要日常使用，建议下载桌面版。"
 			},
 			"key": {

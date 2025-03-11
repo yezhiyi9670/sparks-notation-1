@@ -71,6 +71,9 @@ export default {
 		'triplet_invalid_number': '无效的连音数 ${0}',
 		'notes_unexpected_bracket': '音符序列中出现未曾设想的括号 ${0}',
 		'unknown_note_attr': '无法将 `${0}` 解析为音符属性',
+		'extend_no_link': '延时线不能有连音线',
+		'extend_no_note_attrs': '延时线不能有音符属性',
+
 		'note_char_music_unknown': '`${0}` 不是正确的音符字符',
 		
 		'note_char_force_unknown1': '未知的力度标记词 ${0}',

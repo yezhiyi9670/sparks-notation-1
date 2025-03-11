@@ -27,23 +27,25 @@ function determineFamily(name: string): PropsFamily {
 export function RenderPropType(props: {
 	name: string
 }) {
-	return <p>
-		名称：<code>{props.name}</code>，
-		类型：<code>{(renderPropsLabel[props.name] ?? ['', ''])[0]}</code>，
-		默认值：<code>{(renderPropsDefault as {[_: string]: any})[props.name].toString()}</code>
-	</p>
+	// return <p>
+	// 	名称：<code>{props.name}</code>，
+	// 	类型：<code>{(renderPropsLabel[props.name] ?? ['', ''])[0]}</code>，
+	// 	默认值：<code>{(renderPropsDefault as {[_: string]: any})[props.name].toString()}</code>
+	// </p>
+	return <RenderPropsReference filters={[props.name]} />
 }
 
 export function RenderPropsReference(props: {
-	filters?: string[]
+	filters?: string[],
+	noMinVersion?: boolean
 }) {
 	const lst: React.ReactNode[] = []
 	for(let key in renderPropsDefault) {
-		if(!props.filters || props.filters.includes(key) || props.filters.includes(determineFamily(key))) {
+		if(!props.filters || props.filters.includes(key) || props.filters.includes('family:' + determineFamily(key))) {
 			lst.push(<tr key={key}>
 				<td>
 					<code>{key}</code>
-					{renderPropsLabel[key] && renderPropsLabel[key][2] && <>
+					{!props.noMinVersion && renderPropsLabel[key] && renderPropsLabel[key][2] && <>
 						<br />
 						<MinVersion min={renderPropsLabel[key][2]} inline />
 					</>}

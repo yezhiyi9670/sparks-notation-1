@@ -25,7 +25,7 @@ export function CommandReference(props: {
 						<td>{description[def.head] ?? '-'}</td>
 						<td>{def.required ?? '-'}</td>
 						<td>{def.unique ?? '-'}</td>
-						<td>{{none: '-', text: '文本', separated: '空格分割', tokenized: '令牌化'}[def.contentType]}</td>
+						<td>{{none: '-', text: '文本', separated: '空格分割', tokenized: '符号化'}[def.contentType]}</td>
 						<td>{{none: '-', optional: '可选', required: '必须'}[def.hasProps]}</td>
 					</tr>
 				})}

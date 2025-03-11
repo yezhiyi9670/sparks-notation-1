@@ -394,7 +394,7 @@ export function sectionSeparatorInset(sep: SectionSeparators, isFirstSection: bo
 /**
  * 音符行中的音符字符
  *
- * 延音线不要放进去
+ * 延时线不要放进去
  *
  * delta 的标记方法：
  * - 未标记 `` = NaN

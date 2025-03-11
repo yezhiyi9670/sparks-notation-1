@@ -706,18 +706,6 @@ export class MusicPaint {
 		const noteMetric = getLineFont(isSmall ? 'noteSmall' : 'note', context)
 		let leftCur = x - noteMeasure[0] / 2
 		let rightCur = x + noteMeasure[0] / 2
-		if(note.type != 'note') {
-			return
-		}
-		// ===== 变化音符号 =====
-		if(note.char.delta == note.char.delta) {
-			const accidentalToken = new PaintTextToken(
-				this.symbolAccidental(note.char.delta), getLineFont(isSmall ? 'accidentalSmall' : 'accidental', context),
-				scale, { ...extraStyles, ...grayoutStyle }
-			)
-			accidentalToken.drawFast(this.root, leftCur, y, 'right', 'bottom')
-			leftCur -= accidentalToken.measureFast(this.root)[0]
-		}
 		// ===== 附点 =====
 		note.suffix.forEach((suf) => {
 			if(suf == '.') {
@@ -730,6 +718,19 @@ export class MusicPaint {
 				rightCur += noteMeasure[0] * 0.5
 			}
 		})
+		// ===== (之后的内容只与非延时线音符有关) =====
+		if(note.type != 'note') {
+			return
+		}
+		// ===== 变化音符号 =====
+		if(note.char.delta == note.char.delta) {
+			const accidentalToken = new PaintTextToken(
+				this.symbolAccidental(note.char.delta), getLineFont(isSmall ? 'accidentalSmall' : 'accidental', context),
+				scale, { ...extraStyles, ...grayoutStyle }
+			)
+			accidentalToken.drawFast(this.root, leftCur, y, 'right', 'bottom')
+			leftCur -= accidentalToken.measureFast(this.root)[0]
+		}
 		// ===== 八度跨越 =====
 		let topCur = y - noteMeasure[1] / 2
 		let bottomCur = y + noteMeasure[1] / 2 + reductionLineSpace * reductionLevel
@@ -843,6 +844,8 @@ export class MusicPaint {
 		
 		let noteMetric = getLineFont(isSmall ? 'noteSmall' : 'note', context)
 		noteMetric.fontSize *= addNotesScale
+		let accidentalMetric = getLineFont(isSmall ? 'accidentalSmall' : 'accidental', context)
+		accidentalMetric.fontSize *= addNotesScale
 		let noteMeasure = this.measureNoteChar(context, isSmall, scale)
 		noteMeasure = [ noteMeasure[0] * addNotesScale, noteMeasure[1] * addNotesScale ]
 
@@ -880,18 +883,6 @@ export class MusicPaint {
 			this.drawMusicNoteChar(context, currX, currY / addNotesScale, note, 0, isSmall, scale * addNotesScale, extraStyles)
 			let leftCur = currX - noteMeasure[0] / 2
 			let rightCur = currX + noteMeasure[0] / 2
-			if(note.type != 'note') {
-				return
-			}
-			// ===== 变化音符号 =====
-			if(note.char.delta == note.char.delta) {
-				const accidentalToken = new PaintTextToken(
-					this.symbolAccidental(note.char.delta), getLineFont(isSmall ? 'accidentalSmall' : 'accidental', context),
-					scale, extraStyles
-				)
-				accidentalToken.drawFast(this.root, leftCur, currY, 'center', 'bottom')
-				leftCur -= accidentalToken.measureFast(this.root)[0]
-			}
 			// ===== 附点 =====
 			note.suffix.forEach((suf) => {
 				if(suf == '.') {
@@ -903,6 +894,19 @@ export class MusicPaint {
 					rightCur += dotToken.measureFast(this.root)[0]
 				}
 			})
+			// ===== (之后的内容只与非延时线音符有关) =====
+			if(note.type != 'note') {
+				return
+			}
+			// ===== 变化音符号 =====
+			if(note.char.delta == note.char.delta) {
+				const accidentalToken = new PaintTextToken(
+					this.symbolAccidental(note.char.delta), accidentalMetric,
+					scale, extraStyles
+				)
+				accidentalToken.drawFast(this.root, leftCur, currY, 'center', 'bottom')
+				leftCur -= accidentalToken.measureFast(this.root)[0]
+			}
 			// ===== 八度跨越 =====
 			let topCur = currY - noteMeasure[1] / 2
 			let bottomCur = currY + noteMeasure[1] / 2

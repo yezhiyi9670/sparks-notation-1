@@ -1,7 +1,9 @@
 import Link from '@docusaurus/Link'
 import React, { ReactNode } from 'react'
+import * as Icons from 'react-icons/fa'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import { createUseStyles } from 'react-jss'
+import { usePlaygroundUrl } from "../../mdx/component/playground"
 
 const useStyles = createUseStyles({
   externalLink: {
@@ -58,5 +60,21 @@ export function Source(props: {
     <Link className={classes.externalLink} href={props.to}>
       <FaExternalLinkAlt className={classes.externalLinkIcon} />
     </Link>
+  )
+}
+
+export function PocLink(props: {
+  name: string,
+}) {
+  const playgroundUrl = usePlaygroundUrl()
+  
+  return (
+    <p><Link href={playgroundUrl + '?load-example=' + encodeURIComponent('version-poc/' + props.name + '.spnmn')}>
+      漏洞测试样例
+			{' '}
+			<Icons.FaBug style={{transform: 'translateY(0.12em)'}} />
+      {' '}
+      <Icons.FaExternalLinkAlt style={{transform: 'translateY(0.12em)'}} />
+    </Link></p>
   )
 }

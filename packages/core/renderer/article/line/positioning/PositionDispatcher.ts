@@ -303,13 +303,15 @@ export class PositionDispatcher {
 						let leftAddCount = -1
 						let rightAddCount = -1
 						let dotCount = 0
-						if(note.type == 'note') {
-							const noteChar = note.char
-							if(noteChar.type != 'music') {
-								throw new Error('Position dispatching occured with a non-music note.')
-							}
-							if(noteChar.delta == noteChar.delta) {
-								accidentalSymbol = msp.symbolAccidental(noteChar.delta)
+						if(note.type == 'note' || note.type == 'extend') {
+							if(note.type == 'note') {
+								const noteChar = note.char
+								if(noteChar.type != 'music') {
+									throw new Error('Position dispatching occured with a non-music note.')
+								}
+								if(noteChar.delta == noteChar.delta) {
+									accidentalSymbol = msp.symbolAccidental(noteChar.delta)
+								}
 							}
 							for(let attr of note.attrs) {
 								if(attr.type == 'notes') {

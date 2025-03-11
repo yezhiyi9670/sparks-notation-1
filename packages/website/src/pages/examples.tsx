@@ -76,8 +76,8 @@ export default function ExamplesPage() {
 			<PreloadPlaygroundFonts />
 			<h1>示例乐谱</h1>
 
-			<p>这里是我们提供的一些乐谱文件。如果你喜欢通过例子自己探索功能和语法，而不是按部就班地阅读教程，那么你可以参考这些东西。</p>
-			
+			<p>这里是我们提供的一些乐谱文件。乐谱会在试用模式中打开，<strong>可自行编辑进行探索</strong>。</p>
+
 			<Admonition type='caution' title='注意'>
 				这里的乐谱仅用于参考和学习。因为除了前两个以外，别的都是听写出来的，所以内容不一定完全正确，请谨慎对待。将这些示例谱用于音乐排演是严格不推荐的行为。
 			</Admonition>

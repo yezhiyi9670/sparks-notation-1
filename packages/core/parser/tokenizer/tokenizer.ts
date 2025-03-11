@@ -123,7 +123,7 @@ export function tokenizer_unescapeLine(code: string, startPos: number, endPos: n
 }
 
 /**
- * 代码令牌化
+ * 代码符号化
  */
 export function tokenize(code: string, options: TokenizerOption = TokenizerOptions.defaults): TokenizeResult {
 	let ret: CodeToken[] = []
