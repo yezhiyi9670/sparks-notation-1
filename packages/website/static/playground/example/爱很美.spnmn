@@ -7,6 +7,7 @@ P: 4/4 1=E3 qpm=105
 Rp: page=A4 grayout=true \
     font_lyrics=Roman,CommonSerif/600/0.95 \
     font_annotation1=CommonSerif/600/0.95
+Rp: note_count_lining=true
 ====
 Frp: n=5
 N: - - &lpr; (05d)(12) | 3. (3)(3.(2~))(21) | 2 (65~) 5 - | 1. (1)(1.(7d~))(7d6d) | 7d (17d~) 7d (05d) |

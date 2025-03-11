@@ -405,6 +405,7 @@ Da[作词]: 成方言
 Da[作曲]: 依溪禾
 P: 1=C 6/8
 Rp: page=A4
+Rp: note_count_lining=true
 ====
 Srp: font_lyrics=Roman,CommonSerif/600/0.95
 ---
@@ -454,6 +455,8 @@ N: 4. (43#2) | 3.~3 (0) | (6(671e2e)) (b3e2e1e) | (6(671e2e)) (3e3e#5) |
 N: (3(34)3) (#2(23)2) | (27d2) 3. | 3. 3 (1) | #2. 7d. |
 `
 } />
+
+你可能疑惑为什么此答案中小节宽度都是一样的，方方正正的网格显得很死板，但上面给的预览中却不是这样。这是因为，上面的预览中启用了[「按音符数微调小节宽度」](/docs/tutorial-layout/section-lining#note-count-lining)特性。这一特性专门用来打破乐谱的「网格感」，使其更加自然。如果你认为需要，在乐谱开头添加一行 `Rp: note_count_lining=true` 即可启用。
 
 </C.Solution>
 </C.HintSolution>
@@ -556,6 +559,7 @@ N: omit
 `Dt: 万圣节魔方
 Ds: 《跳舞的线》游戏音乐 Halloween Puzzle
 P: 1=C 4/4 qpm=115
+Rp: note_count_lining=true
 ---
 N: 6d - 6d - | 6d - 6d - ||{[A]} 6d (6d7d) 1 3 | #2 - 1 #5d |
 ---

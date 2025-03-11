@@ -5,6 +5,7 @@ Pi: 1=bB 6/4 qpm=120
 Rp: page=A4 scale=0.95 double_sided=true page_margin_x=12.5,9.5
 Rp: margin_between_parts=1
 Rp: font_title=Roman,CommonSerif/700/1.15 font_subtitle=Roman,CommonSerif/400/1.05
+Rp: note_count_lining=true
 Dl: Copyright 2023 叶E大帝. Do not distribute.
 ====
 T: 此乐曲是 [redacted] 项目的一部分。

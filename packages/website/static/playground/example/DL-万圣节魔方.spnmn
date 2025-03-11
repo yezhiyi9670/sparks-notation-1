@@ -1,6 +1,7 @@
 Dt: 万圣节魔方
 Ds: 《跳舞的线》游戏音乐 Halloween Puzzle
 P: 1=C 4/4 qpm=115
+Rp: note_count_lining=true
 ---
 N: 6d - 6d - | 6d - 6d - ||{[A]} 6d (6d7d) 1 3 | #2 - 1 #5d |
 ---

@@ -3,6 +3,7 @@ Dt: Childhood
 Ds: 来源不明的历史遗留物
 P: 1=B3 4/4
 Rp: page=A4 margin_between_parts=0.6 margin_before_line=0.9
+Rp: note_count_lining=true
 ====
 N: e / e / e / 0 0 0 0 ||
 ---

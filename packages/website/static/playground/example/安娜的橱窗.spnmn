@@ -6,6 +6,7 @@ Da[词曲]: 未知艺术家
 // Da[作曲]:
 P: 1=? 4/4
 Rp: page=A4
+Rp: note_count_lining=true
 Dl: * 测试文档，内容可能有误，勿用于其他用途。
 ====
 Srp: font_lyrics=Roman,CommonSerif/600/0.95

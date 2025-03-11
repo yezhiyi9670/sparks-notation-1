@@ -33,9 +33,9 @@ N["Mtr."]: (-.. ((-)) - (-. (-)) Y0)Y|XYYY|XYYY|XYYY|||
 ===
 S: ????
 Sp: 1=? 0/4 qpm=54.5/
-Srp: grayout=true
+Srp: grayout=true note_count_lining=true
 ---
-Frp: time_lining=true n=5
+Frp: time_lining=true n=4
 N: /{t=1} b6e[sld,str]^ ((1e^0)X) (XX) &int; | (5[sl]X) (0.(X)) | ((1656~)) ((60)X) b6e[sld,str] - |||
 A: r"Rubato"
 Lc: [Sparks_ N M N] [yee] 点十五___ 点 八！
