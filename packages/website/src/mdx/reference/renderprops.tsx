@@ -88,7 +88,7 @@ const renderPropsLabel = {
 	'left_separator': ['number', '显示行首的小节线'],
 	'grayout': ['boolean', '降低延长连音音符的不透明度'],
 	'explicitmarkers': ['boolean', '总是显示声部标签'],
-	'font_sectionorder': ['font', '字体 - 小节序号', '1.15.1'],
+	'font_sectionorder': ['font', '字体 - 小节序号'],
 	'font_part': ['font', '字体 - 声部标签'],
 	'font_article': ['font', '字体 - 章节标题'],
 	'font_title': ['font', '字体 - 大标题'],

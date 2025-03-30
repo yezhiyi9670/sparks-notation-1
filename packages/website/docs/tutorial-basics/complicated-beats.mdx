@@ -288,7 +288,7 @@ N: - - (-1) (12) | 3 5 (54) 3 | (22) (25) 5 (02) | 1 (07d) (17d) (16) | 5 -
 `Dp: 电影《冰雪奇缘》曲集 - 05
 Dt: Let It Go
 Dv: Version 20220203
-P: 1=$C4 4/4 qpm=136 有多个拍速
+P: 1=$C4 4/4 qpm=136
 Rp: n=4 page=A4 grayout=true left_separator=false margin_before_line=2.0 \
     font_lyrics=Roman,CommonSerif/600/0.93 font_annotation4=RomanItalic/400 font_annotation2=楷体/400/1
 Rp: note_count_lining=true
@@ -991,7 +991,7 @@ N: 1 2 3 2 | 5 4 3 2 | 5 4 3 4 5 | 3 1 |
 这是一个六拍子的曲子，但是中间出于渲染气氛的需要，某个小节只有四拍（仍然遵循六拍子的强弱规律，但是被强行截断），后面又立刻恢复。这种情况下可以使用不完整小节表示。下面例子来自歌曲[《秘境茶会》](https://y.qq.com/n/ryqq/songDetail/003d9zJy03q4Gh)。
 
 <C.RealtimeScore efRange={1} noCode children={
-`P: 6/8 1=C qpm=117 有多个拍速
+`P: 6/8 1=C qpm=117
 ---
 // highlight-next-line
 N: /{6/4} 6d (3#2) 3 4 3 2 | 2 7d - - 0 0 | 1 (17d) 1 3 (#5d6d) 7d | (6dd7dd) (1d3d) (6d7d) (1.(3)) /||
@@ -1001,7 +1001,7 @@ N: /{6/4} 6d (3#2) 3 4 3 2 | 2 7d - - 0 0 | 1 (17d) 1 3 (#5d6d) 7d | (6dd7dd) (1
 这里第四个小节就是不完整小节。不完整小节右侧应当以特定的「不完整小节线」结束，不完整小节线的特点是带有一条虚线。普通小节线 `|` 的不完整版本写作 `/||`，终止线 `|||` 没有不完整版本。（歌曲结尾处的不完整小节还叫不完整小节吗？）
 
 <C.ScoreExample canLoad children={
-`P: 6/8 1=C qpm=117 有多个拍速
+`P: 6/8 1=C qpm=117
 ---
 // highlight-next-line
 N: /{6/4} 6d (3#2) 3 4 3 2 | 2 7d - - 0 0 | 1 (17d) 1 3 (#5d6d) 7d | (6dd7dd) (1d3d) (6d7d) (1.(3)) /||`

@@ -1,7 +1,7 @@
 Dp: 电影《冰雪奇缘》曲集 - 05
 Dt: Let It Go
 Dv: Version 20220203
-P: 1=$C4 4/4 qpm=136 有多个拍速
+P: 1=$C4 4/4 qpm=136
 Rp: n=4 page=A4 grayout=true left_separator=false margin_before_line=2.0 \
     font_lyrics=Roman,CommonSerif/600/0.93 font_annotation4=RomanItalic/400 font_annotation2=楷体/400/1
 Rp: note_count_lining=true
