@@ -11,15 +11,20 @@ import { usePlaygroundUrl } from '../mdx/component/playground';
 import { PreloadPlaygroundFonts } from '../mdx/component/playground';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
+function useFooledPlaygroundUrl() {
+  // return '/examples'
+  // Happy April Fools!
+  return usePlaygroundUrl() + '?load-example=' + encodeURIComponent('Never Gonna Give You Up.spnmn')
+}
+function useFooledPlaygroundLabel() {
+  // return '在线试玩'
+  return '试玩？？？'
+}
+
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
-  const iframeRef = createRef<HTMLIFrameElement>()
-
-  useEffect(() => {
-    if(iframeRef.current) {
-      // iframeRef.current.src = playgroundUrl
-    }
-  }, [])
+  const playgroundUrl = useFooledPlaygroundUrl()
+  const playgroundLabel = useFooledPlaygroundLabel()
 
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
@@ -37,9 +42,9 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to='/examples'
+            to={playgroundUrl}
             style={{margin: '0 8px'}}>
-            在线试玩
+            {playgroundLabel}
           </Link>
         </div>
         <div className={styles.buttons}>
@@ -56,8 +61,9 @@ function HomepageHeader() {
 }
 
 export default function Home(): JSX.Element {
-  const playgroundUrl = usePlaygroundUrl()
-  const {siteConfig} = useDocusaurusContext();
+  const playgroundUrl = useFooledPlaygroundUrl()
+  const playgroundLabel = useFooledPlaygroundLabel()
+
   return (
     <Layout
       description="Sparks NMN 是一个使用文本格式高效编写简谱的工具" title='用文本格式高效地编写简谱'>
@@ -79,9 +85,9 @@ export default function Home(): JSX.Element {
               </Link>
               <Link
                 className="button button--secondary button--lg"
-                to='/examples'
+                to={playgroundUrl}
                 style={{margin: '0 8px'}}>
-                在线试玩
+                {playgroundLabel}
               </Link>
             </div>
           </div>

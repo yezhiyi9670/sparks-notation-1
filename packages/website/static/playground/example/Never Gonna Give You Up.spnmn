@@ -1,0 +1,78 @@
+Dt: Never Gonna Give You Up
+Da[创作]: Stock Aitken Waterman
+//链接：https://www.bilibili.com/video/BV1kW411m7VP/
+
+Dl: Happy April Fools!
+Dr: Page ${0}/${1}
+
+P: 1=bD 4/4 qpm=114
+Rp: page=A4 page_margin_x=12.5,9.5 double_sided=true font_lyrics=Roman,CommonSerif/600/0.95
+Rp: n=3 time_lining=true note_count_lining=true
+===
+Frp: n=4
+N: &lpr; 1. 2. 5d | 2. 3. ((54)3) | 1. 2. 5d | 0 0 (0(5d5d))((6d16d1)) |
+---
+Frp: n=4
+N: 1. 2. 5d | 2. 3. ((54)3) | 1. 2. 5d | 5d. (1~) ((1101))((1111)) &rpr; ||
+---
+N: 0 (6d7d)(11)(27d~^) | ((7d6d)5d~) 5d^ - 0 | (06d)(6d7d)(1^6d^)(05d) |{w=1.05} (5[tip] 0) (52) &cas; &lpr; (52) &cas; (52) &rpr; |
+Lw: We're no stran-gers to love,_{2} You know the rules_ and so do I. "("do I do I")"
+---
+N: (06d)(6d7d)(16d)(12) | (07d)(6d6d^~)(6d5d~) 5d^ | (06d)(6d7d)(16d)(5d0) | (22)(23) 2 0 |
+Lw: A full com-mit-ment's what I'm thin-king of,_ You woul-dn't get this from a-ny o-ther guy.
+---
+N: ||:{4.} 1~ - (12)(31) | (22)(23) (2^5d^) 5d~ | (5d0) 0 (6d7d)(16d) | (02)(32~)(20)((5d6d16d)) |
+Lw: I just wan-na tell you how I'm fee%-ling, Got-ta make you un-der-stand. Ne-ver gon-na
+---
+N: ||:{2., 5., 6.} (3.3.2~) (20)((5d6d16d)) | (2.2.1~^)((1)6d^(0)) ((5d6d16d)) | 1 (27d~^)((7d6d^)5d)(05d) | 2 1 0 ((5d6d16d)) |
+Lw: give you up, Ne-ver gon-na let you down,_ Ne-ver gon-na run a-round_ and de-sert you. Ne-ver gon-na
+---
+N: (3.3.2~) (20)((5d6d16d)) | (5^5^[sld]) (7d1~^)((1)6d^(0)) ((5d6d16d)) | 1 (27d~^)((7d6d^)5d)(05d) |
+Lw: make you cry, Ne-ver gon-na say_ good-bye,_ Ne-ver gon-na tell a lie__ and
+---
+J: 1., 3., *
+N: (2^1^) 1 0 0 |
+Lw: hurt_ you.
+---
+J:
+N: ||:{3.} (01)(16d)(12~)(20) | (07d)(6d6d^) 5d^ 0 | (06d)(6d7d)(16d) 5d | (05)(52~)(23)(21) |
+Lw: We've known each o-ther for so long,_ Your heart's been a-ching but you're too shy to say it.
+---
+J:
+N: /{w=1.3} (01)(16d)(16d)(12) | (07d)(6d6d^) 5d^ 0 |{w=1.2} (06d)(6d7d)(16d) 5d |
+Lw: In-side we both know what's been go-ing on,_ We know the game and we're
+---
+J: 1., *
+N: (02)(33~)(32~)(20) || 1~ - (12)(32~) | (22)(23)(2^5d^) 5d | 0 (05d)(6d7d)(16d) | (02)(32~) 2 ((5d6d16d)) :||
+Lw: gon-na play it. And if you ask me how I'm fee%-ling, Don't tell me you're too blind to see. Ne-ver gon-na
+---
+J: 3.
+N: (02)(33~)(32~)(20) :||
+Lw: gon-na play it.
+---
+J: 2., *
+N: (2^1^) 1 0 0 |
+Lw: hurt_ you.
+---
+J:
+N: 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 |
+N["Aux."]: 5^ - - (5(21^)) | (1e.1e.7) 0 5d^ | 5 - - (5(21^)) | (1e.1e.7) 0 5d^ |
+Lw: Oo___ Give you up, Oo____ Give you up, Oo_{0}
+---
+J:
+N: /{w=1.7} (0(5d6d))((16d30))((5d6d16d))((30)0) | 0 0 0 0 |{w=1.7} (0(5d6d))((16d30))((5d6d16d))((30)0) | 0 0 0 0 :||
+Lw: Ne-ver gon-na give, Ne-ver gon-na give, Ne-ver gon-na give, Ne-ver gon-na give,
+N["Aux."]: 5 - - (5(21^)) | (1e.1e.7) 0 5d^ | 5 - - (5(21^)) | (1e.1e.7) 0 0 :||
+Lw: ____ Give you up, Oo____ Give you up.
+---
+J: 4.
+N: /{w=1.1} (2^1^) 1 0 ((5d6d16d)) :||
+Lw: hurt_ you. Ne-ver gon-na
+---
+J: 5.
+N: /{w=1.1} (2^1^) 1 0 ((5d6d16d)) {"下一遍副歌渐弱收尾"}:||
+Lw: hurt_ you. Ne-ver gon-na
+---
+J: 6.
+N: (2^1^) 1 0 0 {"此处渐弱至0结束"}|||
+Lw: hurt_ you.
