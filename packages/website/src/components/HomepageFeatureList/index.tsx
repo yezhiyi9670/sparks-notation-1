@@ -159,9 +159,9 @@ const featureGroups: FeatureGroup[] = [
         extra: '中文歌词内夹杂英文'
       },
       {
-        label: '自定义歌词划分',
+        label: '手动歌词划分',
         state: 'yes',
-        extra: '如需完全自定义，语法会较为繁琐'
+        extra: '通常没有必要使用，已不再推荐'
       },
       {
         label: '力度标记',
@@ -170,12 +170,12 @@ const featureGroups: FeatureGroup[] = [
       {
         label: '和弦标记',
         state: 'yes',
-        extra: '可基于音名、简谱级数或调性级数'
+        extra: '可基于音名或级数'
       },
       {
         label: '自定义文本标记',
         state: 'partial',
-        extra: '目前可以标在音符行或歌词行上方'
+        extra: '只能标在音符行或歌词行上方'
       },
       {
         label: '吉他谱/广义和弦谱',
@@ -223,7 +223,7 @@ const featureGroups: FeatureGroup[] = [
       {
         label: '摇摆节奏 (Swing)',
         state: 'yes',
-        extra: '将两个八分音符扭曲为 2:1 的比例'
+        extra: '支持摇摆八分或十六分音符'
       },
       {
         label: '三等分法则',
@@ -246,6 +246,7 @@ const featureGroups: FeatureGroup[] = [
       {
         label: '带音高的节奏记号',
         state: 'no',
+        extra: '对应五线谱的「叉形音符」'
       },
       {
         label: '广义调性',
@@ -264,7 +265,7 @@ const featureGroups: FeatureGroup[] = [
     extra: '应用形式与乐谱的展示',
     features: [
       {
-        label: '开源',
+        label: '自由且开源',
         state: 'yes'
       },
       {
@@ -293,7 +294,7 @@ const featureGroups: FeatureGroup[] = [
       },
       {
         label: '移动端支持',
-        extra: '保证在移动端上能够查看',
+        extra: '在线试用模式保证移动端能看',
         state: 'partial'
       },
       {
@@ -301,7 +302,7 @@ const featureGroups: FeatureGroup[] = [
         state: 'yes'
       },
       {
-        label: '导出数据',
+        label: '导出 JSON 数据',
         state: 'yes'
       },
       {
@@ -329,8 +330,7 @@ const featureGroups: FeatureGroup[] = [
       },
       {
         label: '导出 OGG 音频',
-        extra: '渲染可能需要亿点时间',
-        state: 'experimental',
+        state: 'yes',
       },
       {
         label: '生成 MIDI',
@@ -346,7 +346,7 @@ const featureGroups: FeatureGroup[] = [
       {
         label: '极其优秀的性能',
         state: 'partial',
-        extra: '较大乐谱难以完全实时预览'
+        extra: '一般能保证百毫秒级预览延时'
       },
     ]
   }

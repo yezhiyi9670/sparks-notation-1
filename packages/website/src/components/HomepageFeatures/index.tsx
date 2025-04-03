@@ -43,7 +43,7 @@ const FeatureList: FeatureItem[] = [
     icon: <Icons.VscEdit fontSize={featureIconSize} />,
     description: (
       <>
-        Sparks NMN 的灵感与设计来源于作者亲自进行的大量扒谱与记谱实践，力求贴合记谱的自然逻辑，经得起实践的检验。
+        Sparks NMN 的灵感与设计来源于作者亲自进行的大量旋律记谱实践，力求贴合记谱的自然逻辑，经得起实践的检验。
       </>
     ),
   },
@@ -58,10 +58,10 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: '自由开源',
-    icon: <Icons.VscUnlock fontSize={featureIconSize} />,
+    icon: <Icons.VscKey fontSize={featureIconSize} />,
     description: (
       <>
-        Sparks NMN 是自由开源软件，你可以始终不受限制地使用，还可以将其集成到自己的项目中。
+        Sparks NMN 是自由开源软件，且提供可以离线运行的桌面应用。你不必相信我们「永久免费无广告」的承诺——掌控权在你自己手里。
       </>
     ),
   },
