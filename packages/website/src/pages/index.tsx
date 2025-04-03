@@ -11,14 +11,25 @@ import { usePlaygroundUrl } from '../mdx/component/playground';
 import { PreloadPlaygroundFonts } from '../mdx/component/playground';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
+function isAprilFoolsDay() {
+  const now = new Date();
+
+  return (now.getMonth() + 1) == 4 && now.getDate() == 1;
+}
+
 function useFooledPlaygroundUrl() {
-  // return '/examples'
-  // Happy April Fools!
-  return usePlaygroundUrl() + '?load-example=' + encodeURIComponent('Never Gonna Give You Up.spnmn')
+  if(isAprilFoolsDay()) {
+    return usePlaygroundUrl() + '?load-example=' + encodeURIComponent('Never Gonna Give You Up.spnmn')
+  } else {
+    return '/examples'
+  }
 }
 function useFooledPlaygroundLabel() {
-  // return '在线试玩'
-  return '试玩？？？'
+  if(isAprilFoolsDay()) {
+    return '试玩？？？'
+  } else {
+    return '在线试玩'
+  }
 }
 
 function HomepageHeader() {
