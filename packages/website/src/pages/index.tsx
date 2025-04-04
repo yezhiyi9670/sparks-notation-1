@@ -9,7 +9,6 @@ import styles from './index.module.css';
 import HomepageFeatureList from '../components/HomepageFeatureList';
 import { usePlaygroundUrl } from '../mdx/component/playground';
 import { PreloadPlaygroundFonts } from '../mdx/component/playground';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 
 function isAprilFoolsDay() {
   const now = new Date();
@@ -81,9 +80,7 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        <BrowserOnly>{() => (
-          <HomepageFeatureList />
-        )}</BrowserOnly>
+        <HomepageFeatureList />
         <section style={{padding: '3rem 0', width: '100%'}}>
           <div className="container">
             <h1 style={{textAlign: 'center'}}>准备试一试?</h1>

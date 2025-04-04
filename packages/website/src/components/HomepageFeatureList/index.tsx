@@ -3,24 +3,6 @@ import clsx from 'clsx'
 import * as Icons from 'react-icons/vsc'
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles({
-  featureList: {
-    padding: '2rem 0',
-    width: '100%'
-  },
-  title1: {
-    textAlign: 'center',
-  },
-  subtitle1: {
-    textAlign: 'center',
-  },
-  featureIcon: {
-    height: '1ex',
-    transform: 'scale(2)',
-    marginRight: '0.3em'
-  }
-})
-
 type FeatureItem = {
   label: string
   extra?: string
@@ -352,21 +334,39 @@ const featureGroups: FeatureGroup[] = [
   }
 ]
 
+// react-jss 发育不太正常，先用这个
+const styles = {
+  featureList: {
+    padding: '2rem 0',
+    width: '100%'
+  },
+  featureListTitle: {
+    textAlign: 'center',
+  },
+  featureListSubtitle: {
+    textAlign: 'center',
+  },
+  featureIcon: {
+    height: '1ex',
+    transform: 'scale(2)',
+    marginRight: '0.3em'
+  }
+} as const
+
 function FeatureItem(props: {
   item: FeatureItem
 }) {
-  const styles = useStyles()
   const { item } = props
   const iconSize = '22px'
-  let icon = <Icons.VscCheck color='#00C853' fontSize={iconSize} className={styles.featureIcon} />
+  let icon = <Icons.VscCheck color='#00C853' fontSize={iconSize} style={styles.featureIcon} />
   if(item.state == 'no') {
-    icon = <Icons.VscClose color='#D50000' fontSize={iconSize} className={styles.featureIcon} />
+    icon = <Icons.VscClose color='#D50000' fontSize={iconSize} style={styles.featureIcon} />
   } else if(item.state == 'partial') {
-    icon = <Icons.VscWarning color='#FF6D00' fontSize={iconSize} className={styles.featureIcon} />
+    icon = <Icons.VscWarning color='#FF6D00' fontSize={iconSize} style={styles.featureIcon} />
   } else if(item.state == 'noplan') {
-    icon = <Icons.VscError color='#9E9E9E' fontSize={iconSize} className={styles.featureIcon} />
+    icon = <Icons.VscError color='#9E9E9E' fontSize={iconSize} style={styles.featureIcon} />
   } else if(item.state == 'experimental') {
-    icon = <Icons.VscBeaker color='#00C853' fontSize={iconSize} className={styles.featureIcon} />
+    icon = <Icons.VscBeaker color='#00C853' fontSize={iconSize} style={styles.featureIcon} />
   }
   let titleText = {
     yes: '支持',
@@ -409,13 +409,11 @@ function FeatureGroup(props: {
 }
 
 export default function HomepageFeatureList(): JSX.Element {
-  const styles = useStyles()
-
   return (
-    <section className={styles.featureList}>
+    <section style={styles.featureList}>
       <div className="container">
-        <h1 className={styles.title1}>尽可能完整的功能列表</h1>
-        <p className={styles.subtitle1}>我们也希望告诉你缺点，避免你在不合适的东西上浪费时间</p>
+        <h1 style={styles.featureListTitle}>尽可能完整的功能列表</h1>
+        <p style={styles.featureListSubtitle}>我们也希望告诉你缺点，避免你在不合适的东西上浪费时间</p>
         <div className="row">
           {featureGroups.map((group) => {
             return <FeatureGroup key={group.label} group={group} />
