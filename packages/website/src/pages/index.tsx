@@ -76,7 +76,9 @@ export default function Home(): JSX.Element {
 
   return (
     <Layout
-      description="Sparks NMN 是一个使用文本格式高效编写简谱的工具" title='用文本格式高效地编写简谱'>
+      title="基于文本的高效简谱制作工具"
+      description="Sparks NMN 是一款由 Sparks Lab 自主研发的自由开源简谱工具。与其他可视化编辑工具不同，Sparks NMN 通过转换纯文本代码的方式生成简谱，因此大多数时候只需要使用键盘编辑，具有很高的灵活性和高效性。软件可以完全离线使用，网站提供在线试用版本。"
+    >
       <HomepageHeader />
       <main>
         <HomepageFeatures />

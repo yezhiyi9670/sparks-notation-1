@@ -5,7 +5,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 const title = 'Sparks NMN'
-const desc = '用文本格式高效地编写简谱'
+const desc = '基于文本的高效简谱制作工具'
 const domain = 'notation.sparkslab.art'
 const site = 'https://' + domain + '/'
 
