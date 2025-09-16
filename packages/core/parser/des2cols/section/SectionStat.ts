@@ -111,25 +111,29 @@ export module SectionStat {
 		let pendingNote: MusicNote<CharType> | undefined = undefined as any
 		let lastPlace = Frac.create(0)
 		let leftSplit = false
+		let prevSymbolCount = 0
 		let lastSection: MusicSection<CharType> | undefined = undefined as any
 		sections.forEach((section, index) => {
 			if(section.type != 'section') {
 				pendingNote = undefined
 				return
 			}
-			if(section.leftSplit) {
+			if(section.leftSplit > 0) {
 				// 创建左分割的连音线
 				lastPlace = Frac.copy(section.startPos)
 				pendingNote = true as any
 				leftSplit = true
+				prevSymbolCount = section.leftSplit
 				lastSection = undefined
 			}
 			let isFirst = true
 			section.notes.forEach((note) => {
 				isFirst = false
-				if(note.suffix.indexOf('^') != -1) {
+				const suffixCount = note.suffix.filter(s => s == '^').length
+				if(suffixCount > 0) {
 					if(undefined === pendingNote) {
 						pendingNote = note
+						prevSymbolCount = suffixCount
 						lastSection = section
 						lastPlace = Frac.add(section.startPos, note.startPos)
 					} else {
@@ -141,7 +145,8 @@ export module SectionStat {
 							startPos: lastPlace,
 							startSplit: leftSplit,
 							endPos: currPlace,
-							char: '^'
+							char: '^',
+							heightAddition: Math.max(suffixCount, prevSymbolCount) - 1
 						})
 						leftSplit = false
 					}
@@ -158,7 +163,8 @@ export module SectionStat {
 					startSplit: leftSplit,
 					endSplit: true,
 					endPos: currPlace,
-					char: '^'
+					char: '^',
+					heightAddition: prevSymbolCount - 1
 				})
 				leftSplit = false
 				pendingNote = undefined
@@ -174,13 +180,14 @@ export module SectionStat {
 				pendingNote = undefined
 				return
 			}
-			if(section.leftSplitVoid) {
+			if(section.leftSplitVoid > 0) {
 				// 创建左分割的连音线
 				connectState = true
 				lastSection = undefined
 				pendingNote = undefined
 				lastPlace = Frac.copy(section.startPos)
 				leftSplit = true
+				prevSymbolCount = section.leftSplitVoid
 			}
 			section.notes.forEach((note) => {
 				if(note.type == 'extend') {
@@ -191,6 +198,7 @@ export module SectionStat {
 					}
 					return
 				}
+				const suffixCount = note.suffix.filter(s => s == '~').length
 				if(connectState) {
 					note.voided = true
 					if(pendingNote) {
@@ -205,16 +213,20 @@ export module SectionStat {
 						startSplit: leftSplit,
 						endPos: currPlace,
 						char: '~',
+						heightAddition: prevSymbolCount - 1
 					})
 					leftSplit = false
 					lastSection = section
 					lastPlace = currPlace
-					if(note.suffix.indexOf('~') == -1) {
+					if(suffixCount <= 0) {
 						connectState = false
+					} else {
+						prevSymbolCount = suffixCount
 					}
 				} else {
-					if(note.suffix.indexOf('~') != -1) {
+					if(suffixCount > 0) {
 						connectState = true
+						prevSymbolCount = suffixCount
 						pendingNote = note
 						const currPlace = Frac.add(section.startPos, note.startPos)
 						lastSection = section
@@ -237,6 +249,7 @@ export module SectionStat {
 					endPos: currPlace,
 					endSplit: true,
 					char: '~',
+					heightAddition: prevSymbolCount - 1
 				})
 				leftSplit = false
 				lastSection = section

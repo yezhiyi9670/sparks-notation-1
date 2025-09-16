@@ -384,6 +384,9 @@ export class SectionsRenderer {
 		})
 
 		// ===== 连音线 =====
+		/**
+		 * 绘制连音线，返回实际高度
+		 */
 		const drawConnect = (startX: number, linkStart: boolean, endX: number, linkEnd: boolean, baseY: number, maxHeight: number) => {
 			const connectorHeightRatio = 1 - Math.sin(Math.PI / 2 * this.connectorAngle)
 
@@ -417,8 +420,14 @@ export class SectionsRenderer {
 			// const anchorPadding = Math.min((endAnchorX - startAnchorX) * 0.1, 0.1)  // 有的渲染器精度不太行，我不说是谁
 			const anchorPadding = 1e-4
 			root.drawLine(startAnchorX, topY, endAnchorX, topY, 0.25, anchorPadding, scale)
+
+			return height * connectorHeightRatio
 		}
 		const drawConnector = (decor: MusicDecorationRange, decors: MusicDecorationRange[]) => {
+			if(decor.char != '^' && decor.char != '~') {
+				throw new Error('Unexpected connector with symbol ' + decor.char)
+			}
+			
 			const connectorHeightRatio = 1 - Math.sin(Math.PI / 2 * this.connectorAngle)
 
 			let maxTopOctave = 0
@@ -503,7 +512,7 @@ export class SectionsRenderer {
 			const baseHeight = Math.min(
 				Math.max(baseHeightMin, baseHeightMax - octaveHeightOffset),
 				connectorHeightRatio * (endX - startX) / ((+linkStart) + (+linkEnd))
-			)
+			) + decor.heightAddition * separatedSpacing
 			
 			let baseY = topY - baseHeight
 			
@@ -515,16 +524,15 @@ export class SectionsRenderer {
 					baseY = Math.min(baseY, note.rightTop - heightSpacing)
 				}
 			}, decor.startPos, decor.endPos, linkStart, linkEnd)
+			const realHeight = drawConnect(startX, linkStart, endX, linkEnd, topY, -(baseY - topY))
 			checkNoteList((note, hasLeft, hasRight) => {
 				if(hasLeft) {
-					note.leftTop = Math.min(note.leftTop, baseY)
+					note.leftTop = Math.min(note.leftTop, topY - realHeight)
 				}
 				if(hasRight) {
-					note.rightTop = Math.min(note.rightTop, baseY)
+					note.rightTop = Math.min(note.rightTop, topY - realHeight)
 				}
 			}, decor.startPos, decor.endPos, linkStart, linkEnd)
-
-			drawConnect(startX, linkStart, endX, linkEnd, topY, -(baseY - topY))
 		}
 		part.decorations.map((decor) => {
 			if(decor.char == '~') {

@@ -366,8 +366,8 @@ export module AttrMatcher {
 			structureValidation: 'pass',
 			notes: [],
 			decoration: [],
-			leftSplit: false,
-			leftSplitVoid: false,
+			leftSplit: 0,
+			leftSplitVoid: 0,
 			rightSplit: false
 		}
 		// level 从 1 开始计算，避免应用 TSs 节奏变化规则

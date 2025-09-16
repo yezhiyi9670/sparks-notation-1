@@ -12,8 +12,8 @@ type SampledSectionBase<TypeSampler> = {
 	type: 'section'
 	notes: MusicNote<(NoteCharAny & {sampler: TypeSampler})>[]
 	decoration: MusicDecoration[]
-	leftSplit: boolean
-	leftSplitVoid: boolean
+	leftSplit: number
+	leftSplitVoid: number
 	rightSplit: boolean
 }
 
@@ -160,12 +160,12 @@ export class NoteEater {
 				// ===== 检测连音线左分割符号 =====
 				if(new TokenFilter('symbol', '^').test(token) && leftSplitFlag) {
 					this.pass()
-					section.leftSplit = true
+					section.leftSplit += 1
 					continue
 				}
 				if(new TokenFilter('symbol', '~').test(token) && leftSplitFlag) {
 					this.pass()
-					section.leftSplitVoid = true
+					section.leftSplitVoid += 1
 					continue
 				}
 				leftSplitFlag = false

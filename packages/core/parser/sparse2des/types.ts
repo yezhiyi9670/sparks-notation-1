@@ -596,13 +596,25 @@ export type MusicDecorationRange = {
 	/**
 	 * 类型
 	 */
-	char: '_' | '~' | '^'
+	char: '_'
 } | {
 	/**
 	 * 类型：三连音
 	 */
 	char: 'T'
-	extraNumber?: number // 需要显示的分子
+	/**
+	 * 多连音的时值分子
+	 */
+	extraNumber?: number
+} | {
+	/**
+	 * 类型：连音线
+	 */
+	char: '~' | '^'
+	/**
+	 * 高度增加量
+	 */
+	heightAddition: number
 })
 /**
  * 插入装饰符
@@ -722,13 +734,13 @@ export type MusicSection<NoteChar> = {
 	 */
 	decoration: MusicDecoration[]
 	/**
-	 * 联合连音线从左侧断开
+	 * 联合连音线从左侧断开（数值表示 `^` 符号的数量）
 	 */
-	leftSplit: boolean
+	leftSplit: number
 	/**
-	 * 延长连音线从左侧断开
+	 * 延长连音线从左侧断开（数值表示 `~` 符号的数量）
 	 */
-	leftSplitVoid: boolean
+	leftSplitVoid: number
 	/**
 	 * 连音线从右侧断开
 	 */
