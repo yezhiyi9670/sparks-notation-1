@@ -444,8 +444,8 @@ class SectionsParserClass {
 			structureValidation: 'pass' as 'pass',
 			notes: [],
 			decoration: [],
-			leftSplit: false,
-			leftSplitVoid: false,
+			leftSplit: 0,
+			leftSplitVoid: 0,
 			rightSplit: false
 		})
 		const [ writtenQuarters, _lastColumn, upbeatQuarters ] = new NoteEater(tokens, lineNumber, context).parse<TypeSampler>(ret, Frac.create(1), Frac.create(0), issues, typeSampler)
