@@ -1,6 +1,6 @@
 {
   "name": "@sparks-notation/desktop",
-  "version": "1.15.8",
+  "version": "1.15.9",
   "description": "A natural text format for composing numbered music notation or guitar tabulate scores, formerly known as Sparks NMN.",
   "author": "yezhiyi9670 <yezhiyi9670@sparks-lab.art>",
   "license": "Apache-2.0",
