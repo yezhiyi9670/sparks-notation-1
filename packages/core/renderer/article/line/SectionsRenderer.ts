@@ -437,7 +437,12 @@ export class SectionsRenderer {
 					const connectorRaiseProps = note.attrs.filter(attr => attr.type == 'connector_raise')
 					const validConnectorRaises = connectorRaiseProps.filter(attr => {
 						if(decor.char == '^') return attr.suffix == '^'  // 联合连音线，仅接受联合连音线抬升
-						if(decor.char == '~') return attr.suffix == '~' && startOrEnd == 0  // 延长连音线，只有左端的抬升有效
+						if(decor.char == '~') {
+							return (
+								(attr.suffix == '~' && startOrEnd == 0)  // 延长连音线左端
+								|| (attr.suffix == '!' && startOrEnd == 1)  // 延长连音线右端
+							)
+						}
 					})
 					validConnectorRaises.forEach(attr => {
 						maxTopOctave = Math.max(maxTopOctave, attr.value)

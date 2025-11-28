@@ -192,7 +192,7 @@ export type AttrDelta = {
  */
 export type AttrConnectorRaise = {
 	type: 'connector_raise'
-	suffix: '~' | '^'  // 何种连音线？
+	suffix: '~' | '^' | '!'  // 何种连音线？(`~` 表示延长连音线左端，`!` 表示延长连音线右端)
 	value: number
 }
 /**
