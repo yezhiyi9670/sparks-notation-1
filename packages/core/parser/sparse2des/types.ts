@@ -192,6 +192,7 @@ export type AttrDelta = {
  */
 export type AttrConnectorRaise = {
 	type: 'connector_raise'
+	suffix: '~' | '^'  // 何种连音线？
 	value: number
 }
 /**

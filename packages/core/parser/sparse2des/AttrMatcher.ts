@@ -328,13 +328,14 @@ export module AttrMatcher {
 		tokens: BracketTokenList, lineNumber: number, issues: LinedIssue[]
 	): AttrConnectorRaise | undefined {
 		const str = Tokens.stringify(tokens, '', ',')
-		if(/^\^(.*?)$/.test(str)) {
+		if(/^[\^\~](.*?)$/.test(str)) {
 			let val = +str.slice(1)
 			if(val != val || val > 65536 || val < 0) {
 				return undefined
 			}
 			return {
 				type: 'connector_raise',
+				suffix: str[0] as any,
 				value: val
 			}
 		}

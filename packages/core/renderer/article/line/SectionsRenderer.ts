@@ -431,12 +431,18 @@ export class SectionsRenderer {
 			const connectorHeightRatio = 1 - Math.sin(Math.PI / 2 * this.connectorAngle)
 
 			let maxTopOctave = 0
-			;[ decor.startPos, decor.endPos ].forEach((pos) => {
+			;[ decor.startPos, decor.endPos ].forEach((pos, startOrEnd) => {
 				const note = SectionStat.locateNote(pos, part.notes.sections)
 				if(note && note.type == 'note') {
-					const connectorRaiseProp = findWithKey(note.attrs, 'type', 'connector_raise') as AttrConnectorRaise
-					const connectorRaise = connectorRaiseProp?.value ?? 0
-					maxTopOctave = Math.max(maxTopOctave, connectorRaise, note.char.octave)
+					const connectorRaiseProps = note.attrs.filter(attr => attr.type == 'connector_raise')
+					const validConnectorRaises = connectorRaiseProps.filter(attr => {
+						if(decor.char == '^') return attr.suffix == '^'  // 联合连音线，仅接受联合连音线抬升
+						if(decor.char == '~') return attr.suffix == '~' && startOrEnd == 0  // 延长连音线，只有左端的抬升有效
+					})
+					validConnectorRaises.forEach(attr => {
+						maxTopOctave = Math.max(maxTopOctave, attr.value)
+					})
+					maxTopOctave = Math.max(maxTopOctave, note.char.octave)
 				}
 			})
 			let linkStart = !decor.startSplit
