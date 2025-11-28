@@ -575,6 +575,9 @@ export class NoteEater {
 			success ||= pushIfNonNull(attrs,
 				AttrMatcher.matchDelta(tokens, this.lineNumber, issues)
 			)
+			success ||= pushIfNonNull(attrs,
+				AttrMatcher.matchConnectorRaise(tokens, this.lineNumber, issues)
+			)
 			if(!success) {
 				addIssue(issues,
 					this.lineNumber, tokens[0] ? tokens[0].range[0] : 0,

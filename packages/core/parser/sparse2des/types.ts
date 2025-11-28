@@ -187,6 +187,14 @@ export type AttrDelta = {
 	value: number
 }
 /**
+ * 连音线下方距离
+ * 写法：delta(-3)
+ */
+export type AttrConnectorRaise = {
+	type: 'connector_raise'
+	value: number
+}
+/**
  * 插入符号
  */
 export type AttrInsert = {
@@ -284,7 +292,8 @@ export type NoteAttr =
 	AttrDecor |
 	AttrNotes |
 	AttrSlide |
-	AttrDelta
+	AttrDelta |
+	AttrConnectorRaise
 /**
  * 插入符号
  */

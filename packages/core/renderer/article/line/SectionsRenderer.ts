@@ -1,7 +1,7 @@
 import { NMNI18n, NMNResult } from "../../..";
 import { I18n } from "../../../i18n";
 import { SectionStat } from "../../../parser/des2cols/section/SectionStat";
-import { MusicDecorationRange, MusicNote, MusicSection, NoteCharMusic } from "../../../parser/sparse2des/types";
+import { AttrConnectorRaise, MusicDecorationRange, MusicNote, MusicSection, NoteCharMusic } from "../../../parser/sparse2des/types";
 import { findWithKey } from "@sparks-notation/util/array";
 import { Frac, Fraction } from "@sparks-notation/util/frac";
 import { DomPaint } from "../../backend/DomPaint";
@@ -434,7 +434,9 @@ export class SectionsRenderer {
 			;[ decor.startPos, decor.endPos ].forEach((pos) => {
 				const note = SectionStat.locateNote(pos, part.notes.sections)
 				if(note && note.type == 'note') {
-					maxTopOctave = Math.max(maxTopOctave, note.char.octave)
+					const connectorRaiseProp = findWithKey(note.attrs, 'type', 'connector_raise') as AttrConnectorRaise
+					const connectorRaise = connectorRaiseProp?.value ?? 0
+					maxTopOctave = Math.max(maxTopOctave, connectorRaise, note.char.octave)
 				}
 			})
 			let linkStart = !decor.startSplit

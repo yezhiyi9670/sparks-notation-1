@@ -7,7 +7,7 @@ import { LinedIssue, addIssue } from "../parser";
 import { BracketFilter, BracketPairFilters, BracketTokenList, TokenFilter, Tokens } from "../tokenizer/tokens";
 import { scoreContextDefault } from "./context";
 import { NoteEater } from "./sections/NoteEater";
-import { AttrBeats, AttrDecor, attrDecorCheck, attrDecorPriority, AttrDelta, AttrDurability, AttrIter, AttrLabel, AttrNotes, AttrOctave, AttrOpenRange, AttrPadding, AttrQpm, AttrRepeat, AttrReset, AttrScriptedText, AttrShift, AttrSlide, AttrText, AttrTop, AttrWeight, Beats, MusicSection, NoteCharMusic, Qpm } from "./types";
+import { AttrBeats, AttrConnectorRaise, AttrDecor, attrDecorCheck, attrDecorPriority, AttrDelta, AttrDurability, AttrIter, AttrLabel, AttrNotes, AttrOctave, AttrOpenRange, AttrPadding, AttrQpm, AttrRepeat, AttrReset, AttrScriptedText, AttrShift, AttrSlide, AttrText, AttrTop, AttrWeight, Beats, MusicSection, NoteCharMusic, Qpm } from "./types";
 
 export module AttrMatcher {
 	export function matchIter(tokens: BracketTokenList): AttrIter | undefined {
@@ -323,6 +323,21 @@ export module AttrMatcher {
 			}
 		}
 		return undefined
+	}
+	export function matchConnectorRaise(
+		tokens: BracketTokenList, lineNumber: number, issues: LinedIssue[]
+	): AttrConnectorRaise | undefined {
+		const str = Tokens.stringify(tokens, '', ',')
+		if(/^\^(.*?)$/.test(str)) {
+			let val = +str.slice(1)
+			if(val != val || val > 65536 || val < 0) {
+				return undefined
+			}
+			return {
+				type: 'connector_raise',
+				value: val
+			}
+		}
 	}
 	export function matchNotes(tokens: BracketTokenList, lineNumber: number, issues: LinedIssue[]): AttrNotes | undefined {
 		let tokenIn: BracketPair | undefined = undefined as any
