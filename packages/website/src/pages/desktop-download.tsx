@@ -54,7 +54,7 @@ export default function DownloadPage() {
 					<ul>
 						<li><b>Zip</b>。解压运行 <code>sparks-nmn-desktop.exe</code> 即可使用。数据存储在同一文件夹下的 <code>data</code> 文件夹中。</li>
 					</ul>
-					<p>注意，请勿收藏或分享网站上带有版本号的下载直链，因为网站上只会保留最近两个版本。</p>
+					<p>注意，若要分享下载链接，请分享此页链接而非下载按钮指向的直链，因为网站上只会保留最近两个版本，之前版本的直链会失效。</p>
 					<Link className={`button button--primary`} style={buttonStyles} href={urls.winDownload} onClick={() => window.sendAnalyticsEvent('Download')}>
 						<Icons.FaDownload style={faIconStyles} />
 						直链 Zip <Mdx.DesktopVersion />
@@ -74,7 +74,7 @@ export default function DownloadPage() {
 						<li><b>Zip</b>。解压运行 <code>sparks-nmn-desktop</code> 即可使用。数据存储在 <code>~/.config/sparks-nmn-desktop</code> 文件夹中。</li>
 						<li><b>AppImage</b>。直接双击即可运行。数据存储在 <code>~/.config/sparks-nmn-desktop</code> 文件夹中。</li>
 					</ul>
-					<p>注意，请勿收藏或分享网站上带有版本号的下载直链，因为网站上只会保留最近两个版本。</p>
+					<p>注意，若要分享下载链接，请分享此页链接而非下载按钮指向的直链，因为网站上只会保留最近两个版本，之前版本的直链会失效。</p>
 					<Link className={`button button--primary`} style={buttonStyles} href={urls.gnuLinuxDownload} onClick={() => window.sendAnalyticsEvent('Download')}>
 						<Icons.FaDownload style={faIconStyles} />
 						直链 Zip <Mdx.DesktopVersion />
