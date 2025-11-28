@@ -128,7 +128,9 @@ export function NMNDisplay(props: {
 								if($docbox.length > 0 && !$docbox.hasClass('SparksNMN-display-loaded')) {
 									$docbox.addClass('SparksNMN-display-loaded')
 									if(location.hash) {
-										location.href = location.hash
+										setTimeout(() => {
+											location.href = location.hash
+										}, 0)
 									}
 								}
 							}
