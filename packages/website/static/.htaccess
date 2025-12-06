@@ -1,17 +1,24 @@
-DirectorySlash Off
+######
+## The server is now using nginx.
+## This htaccess file is left here for information only.
+######
 
-<Files "index.html">
-	Header set Cache-Control "no-cache"
-</Files>
-<Files "latest-version.json">
-	Header set Access-Control-Allow-Origin "*"
-</Files>
+## Refer to the <no-index-cache> tag in the site configuration.
+# <Files "index.html">
+# 	Header set Cache-Control "no-cache"
+# </Files>
 
-Options -Indexes
+## Likely default
+# Options -Indexes
 
-ErrorDocument 404 /404.html
+## This directive can be replaced with `error_page 404 /404.html;` in nginx.
+## (which is likely already included by default)
+# ErrorDocument 404 /404.html
 
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.+[^\/])$ /$1/index.html [L]
-RewriteRule ^(.+[^\/])\/+$ /$1 [R=302]
+## The directory slash stripping part need to be reimplemented in nginx conf.
+## Refer to the <no-trailing-slash> tag in the site configuration.
+# DirectorySlash Off
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} -d
+# RewriteRule ^(.+[^\/])$ /$1/index.html [L]
+# RewriteRule ^(.+[^\/])\/+$ /$1 [R=302]

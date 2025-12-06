@@ -1,2 +1,9 @@
-DirectorySlash On
-RewriteEngine On
+######
+## The server is now using nginx.
+## This htaccess file is left here for information only.
+######
+
+## Re-enable directory slash in playground to ensure correct relative paths
+## Refer to <yes-trailing-slash-for-playground> tag in the site configuration.
+# DirectorySlash On
+# RewriteEngine On
