@@ -27,22 +27,22 @@ ErrorDocument 404 /404.html
 ## This works on nginx with the compat module, despite the module not supporting DirectorySlash.
 DirectorySlash Off
 RewriteEngine On
+# Strip trailing slashes if you have some
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+[^/])/+$ $1 [L,R=302]
 # Try index.html
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteRule ^(.+[^\/])$ $1/index.html [L]
+RewriteRule ^ %{REQUEST_URI}/index.html [L]
 # Try index.htm
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.htm -f
-RewriteRule ^(.+[^\/])$ $1/index.htm [L]
+RewriteRule ^ %{REQUEST_URI}/index.htm [L]
 # Try index.php
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.php -f
-RewriteRule ^(.+[^\/])$ $1/index.php [L]
+RewriteRule ^ %{REQUEST_URI}/index.php [L]
 # Eat flaming death (prevent redirect loop)
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.+[^\/])$ $1/index.html [L,R=403]
-# Strip trailing slashes if you have some
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.+[^\/])\/+$ $1 [R=302]
+RewriteRule ^ %{REQUEST_URI}/index.html [L,R=403]
 ## </no-trailing-slash>
