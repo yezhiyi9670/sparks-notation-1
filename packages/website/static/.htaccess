@@ -1,24 +1,48 @@
 ######
-## The server is now using nginx.
-## This htaccess file is left here for information only.
+## The server is now using nginx with an htaccess compat module.
+## See: https://github.com/yezhiyi9670/htaccess-for-nginx-fork/tree/cef26822d58d02cbb2035fb62f82a5e362c5135f
 ######
 
-## Refer to the <no-index-cache> tag in the site configuration.
-# <Files "index.html">
-# 	Header set Cache-Control "no-cache"
-# </Files>
+## <no-index-cache>
+## Not supported by the compat module yet. Need rephrasing in nginx config.
+## Refer to the same tag in the site configuration.
+<Files "index.html">
+	Header set Cache-Control "no-cache"
+</Files>
+## </no-index-cache>
 
-## Likely default
-# Options -Indexes
+## <no-autoindex>
+## Not supported by the compat module yet, but is included in default nginx config.
+Options -Indexes
+## </no-autoindex>
 
-## This directive can be replaced with `error_page 404 /404.html;` in nginx.
-## (which is likely already included by default)
-# ErrorDocument 404 /404.html
+## <error-document-404>
+## Not supported by the compat module yet.
+## This directive can be replaced with `error_page 404 /404.html;` in nginx,
+## which is included in default nginx config.
+ErrorDocument 404 /404.html
+## </error-document-404>
 
-## The directory slash stripping part need to be reimplemented in nginx conf.
-## Refer to the <no-trailing-slash> tag in the site configuration.
-# DirectorySlash Off
-# RewriteEngine On
-# RewriteCond %{REQUEST_FILENAME} -d
-# RewriteRule ^(.+[^\/])$ /$1/index.html [L]
-# RewriteRule ^(.+[^\/])\/+$ /$1 [R=302]
+## <no-trailing-slash>
+## This works on nginx with the compat module, despite the module not supporting DirectorySlash.
+DirectorySlash Off
+RewriteEngine On
+# Try index.html
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+[^\/])$ $1/index.html [L]
+# Try index.htm
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.htm -f
+RewriteRule ^(.+[^\/])$ $1/index.htm [L]
+# Try index.php
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.php -f
+RewriteRule ^(.+[^\/])$ $1/index.php [L]
+# Eat flaming death (prevent redirect loop)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+[^\/])$ $1/index.html [L,R=403]
+# Strip trailing slashes if you have some
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+[^\/])\/+$ $1 [R=302]
+## </no-trailing-slash>

@@ -1,9 +1,10 @@
 ######
-## The server is now using nginx.
-## This htaccess file is left here for information only.
+## The server is now using nginx with an htaccess compat module.
+## See: https://github.com/yezhiyi9670/htaccess-for-nginx-fork/tree/cef26822d58d02cbb2035fb62f82a5e362c5135f
 ######
 
-## Re-enable directory slash in playground to ensure correct relative paths
-## Refer to <yes-trailing-slash-for-playground> tag in the site configuration.
-# DirectorySlash On
-# RewriteEngine On
+## <disable-no-trailing-slash>
+## Unclear whether works on vanilla Apache.
+DirectorySlash On
+RewriteEngine Off
+## </disable-no-trailing-slash>
