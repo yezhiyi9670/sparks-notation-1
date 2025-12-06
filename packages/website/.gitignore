@@ -26,3 +26,6 @@ yarn.lock
 !/static/playground/example
 !/static/playground/.htaccess
 /static/latest-version.json
+
+# Deploy script
+/-manual-deploy.cmd
