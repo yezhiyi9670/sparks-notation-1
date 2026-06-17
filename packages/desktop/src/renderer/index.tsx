@@ -408,9 +408,12 @@ function AppIn() {
 	// ===== 键盘事件 =====
 	useEffect(() => {
 		const keyHandler = (evt: KeyboardEvent) => {
-			if(evt.ctrlKey && evt.shiftKey && evt.key.toLowerCase() == 'i') {
+			// 同时支持Windows的Ctrl和macOS的Command键
+			const isCtrlOrCmd = evt.ctrlKey || evt.metaKey
+
+			if(isCtrlOrCmd && evt.key.toLowerCase() == 'i') {
 				window.AppMain.openDevTools()
-			} else if(evt.ctrlKey && !evt.shiftKey) {
+			} else if(isCtrlOrCmd && !evt.shiftKey) {
 				if(evt.altKey && evt.key.toLowerCase() == 's') {
 					saveAs()
 				} else if(evt.key.toLowerCase() == 's') {
