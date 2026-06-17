@@ -1,10 +1,11 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import path from 'path'
 import { PrefBackend } from '../common/prefs/PrefBackend'
 import { EventAppMain } from './evt/appmain'
 import { EventSettings } from './evt/settings'
 import { EventFileSystem } from './evt/filesystem'
+import { menu } from './menu'
 
 EventAppMain.init()
 
@@ -34,6 +35,7 @@ PrefBackend.initialize()
 
 	// 准备好之后
 	app.whenReady().then(() => {
+		Menu.setApplicationMenu(menu)
 		const win = createWindow()
 
 		if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
