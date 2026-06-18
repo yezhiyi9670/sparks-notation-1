@@ -31,7 +31,7 @@ export function buildMenu(win: BrowserWindow) {
 		{
 			label: 'File',
 			submenu: [
-				isMac ? { role: 'close' } : { role: 'quit' },
+				
 				{
 					label: '新建',
 					accelerator: 'CmdOrCtrl+N',
@@ -42,6 +42,8 @@ export function buildMenu(win: BrowserWindow) {
 					accelerator: 'CmdOrCtrl+O',
 					click: () => win.webContents.send('menu-command', 'open')
 				},
+				isMac ? { role: 'close' } : { role: 'quit' },
+				{ type: 'separator' },
 				{
 					label: '保存',
 					accelerator: 'CmdOrCtrl+S',
