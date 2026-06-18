@@ -98,6 +98,9 @@ function AppIn() {
 				case 'print':
 					printHtml();
 					break;
+				case 'settings':
+					setSettingsOpen(true);
+					break;
 				// 可以继续添加更多命令
 				default:
 					console.warn('Unknown menu command:', command);

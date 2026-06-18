@@ -11,6 +11,12 @@ export function buildMenu(win: BrowserWindow) {
 				submenu: [
 					{ role: 'about' },
 					{ type: 'separator' },
+					{
+						label: 'Preferences...',
+						accelerator: 'CmdOrCtrl+,',
+						click: () => win.webContents.send('menu-command', 'settings')
+					},
+					{ type: 'separator' },
 					{ role: 'services' },
 					{ type: 'separator' },
 					{ role: 'hide' },
