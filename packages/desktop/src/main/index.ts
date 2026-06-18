@@ -35,7 +35,6 @@ PrefBackend.initialize()
 
 	// 准备好之后
 	app.whenReady().then(() => {
-		Menu.setApplicationMenu(menu)
 		const win = createWindow()
 
 		if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -59,5 +58,6 @@ PrefBackend.initialize()
 		EventAppMain.register(win)
 		EventSettings.register(win, settingsPref)
 		EventFileSystem.register(win, settingsPref)
+		Menu.setApplicationMenu(menu)
 	})
 })()

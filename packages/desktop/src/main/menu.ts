@@ -1,6 +1,5 @@
-import { Menu, BrowserWindow, app, MenuItemConstructorOptions } from 'electron'
+import { Menu, BrowserWindow, app, MenuItemConstructorOptions, shell } from 'electron'
 import { EventFileSystem } from './evt/filesystem'
-
 const isMac = process.platform === 'darwin'
 
 // 定义菜单模板
@@ -86,7 +85,6 @@ export const menuTemplate = [
 			{
 				label: '在线手册',
 				click: async () => {
-					const { shell } = require('electron')
 					await shell.openExternal('https://notation.sparkslab.art/docs/intro')
 				}
 			},
@@ -95,14 +93,12 @@ export const menuTemplate = [
 			{
 				label: '赞助作者',
 				click: async () => {
-					const { shell } = require('electron')
 					await shell.openExternal('https://afdian.com/a/yezhiyi9670')
 				}
 			},
 			{
 				label: '帮忙开发',
 				click: async () => {
-					const { shell } = require('electron')
 					await shell.openExternal('https://github.com/yezhiyi9670/sparks-notation-1')
 				}
 			},
