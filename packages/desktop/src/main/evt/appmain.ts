@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain, systemPreferences } from "electron";
 
 let openingPath: string | undefined = undefined
-export module EventAppMain {
+export namespace EventAppMain {
 	export function init() {
 		// 处理打开文件
 		const fileArgPos = app.isPackaged ? 1 : 2

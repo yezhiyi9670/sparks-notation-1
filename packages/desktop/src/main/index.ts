@@ -1,10 +1,11 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import path from 'path'
 import { PrefBackend } from '../common/prefs/PrefBackend'
 import { EventAppMain } from './evt/appmain'
 import { EventSettings } from './evt/settings'
 import { EventFileSystem } from './evt/filesystem'
+import { buildMenu } from './menu'
 
 EventAppMain.init()
 
@@ -57,5 +58,7 @@ PrefBackend.initialize()
 		EventAppMain.register(win)
 		EventSettings.register(win, settingsPref)
 		EventFileSystem.register(win, settingsPref)
+		const menu = buildMenu(win)
+		Menu.setApplicationMenu(menu)
 	})
 })()

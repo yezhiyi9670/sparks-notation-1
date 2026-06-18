@@ -57,7 +57,7 @@ function AppIn() {
 
 	// ===== 更新检查 =====
 	useOnceEffect(() => {
-		if(prefs.getValue('allowUpdateCheck') == 'on') {
+		if (prefs.getValue('allowUpdateCheck') == 'on') {
 			setTimeout(() => {
 				$.ajax({
 					dataType: 'json',
@@ -65,7 +65,7 @@ function AppIn() {
 					timeout: 15000,
 					url: checkUpdateUrl,
 					success: (testObj) => {
-						if(compareVersions(testObj.desktop_version, window.Versions.app) > 0) {
+						if (compareVersions(testObj.desktop_version, window.Versions.app) > 0) {
 							showToast(LNG('toast.new_version', testObj.desktop_version), 3500)
 						}
 					},
@@ -77,18 +77,54 @@ function AppIn() {
 		}
 	})
 
+	useEffect(() => {
+		const handleMenuCommand = (event: any, command: string) => {
+			switch (command) {
+				case 'open':
+					openDocument();   // 调用已定义的函数
+					break;
+				case 'save':
+					saveDocument();
+					break;
+				case 'save-as':
+					saveAs();
+					break;
+				case 'new':
+					newDocument();
+					break;
+				case 'export-html':
+					exportHtml();
+					break;
+				case 'print':
+					printHtml();
+					break;
+				case 'settings':
+					setSettingsOpen(true);
+					break;
+				// 可以继续添加更多命令
+				default:
+					console.warn('Unknown menu command:', command);
+			}
+		};
+
+		window.ipc?.on('menu-command', handleMenuCommand);
+		return () => {
+			window.ipc?.off('menu-command', handleMenuCommand);
+		};
+	}, [openDocument, saveDocument, saveAs, newDocument, exportHtml]);
+
 	const fileFiltersOpen: Electron.FileFilter[] = useMemo(() => [
-		{name: LNG('browse.format.spnmn'), extensions: ['spnmn', 'spnmn.txt']},
-		{name: LNG('browse.format.all'), extensions: ['*']}
+		{ name: LNG('browse.format.spnmn'), extensions: ['spnmn', 'spnmn.txt'] },
+		{ name: LNG('browse.format.all'), extensions: ['*'] }
 	], [LNG])
 	const fileFiltersSave: Electron.FileFilter[] = useMemo(() => [
-		{name: LNG('browse.format.spnmn'), extensions: ['spnmn']},
-		{name: LNG('browse.format.spnmn_txt'), extensions: ['spnmn.txt']},
-		{name: LNG('browse.format.all'), extensions: ['*']}
+		{ name: LNG('browse.format.spnmn'), extensions: ['spnmn'] },
+		{ name: LNG('browse.format.spnmn_txt'), extensions: ['spnmn.txt'] },
+		{ name: LNG('browse.format.all'), extensions: ['*'] }
 	], [LNG])
 	const fileFilterSaveAudio: Electron.FileFilter[] = useMemo(() => [
-		{name: LNG('browse.format.ogg'), extensions: ['ogg']},
-		{name: LNG('browse.format.all'), extensions: ['*']},
+		{ name: LNG('browse.format.ogg'), extensions: ['ogg'] },
+		{ name: LNG('browse.format.all'), extensions: ['*'] },
 	], [LNG])
 
 	function dirtyConfirm() {
@@ -96,7 +132,7 @@ function AppIn() {
 			callRef(editorApiRef, async api => {
 				callRef(hintApiRef, async hint => {
 					let ch = true
-					if(api.getIsDirty()) {
+					if (api.getIsDirty()) {
 						ch = await hint.invoke('unsavedChanges')
 					}
 					resolve(ch)
@@ -106,7 +142,7 @@ function AppIn() {
 	}
 	async function newDocument() {
 		callRef(editorApiRef, async api => {
-			if(await dirtyConfirm()) {
+			if (await dirtyConfirm()) {
 				api.triggerNew(LNG('new_document'))
 			}
 		})
@@ -115,7 +151,7 @@ function AppIn() {
 		const times = Math.min(prefs.getValue<number>('openTimes') + 1, 999)
 		await prefs.setValueAsync('openTimes', times)
 		await prefs.commit()
-		if(times > 3) {
+		if (times > 3) {
 			callRef(hintApiRef, hint => {
 				hint.trigger('rate')
 			})
@@ -123,18 +159,18 @@ function AppIn() {
 	}
 	async function openDocument() {
 		callRef(editorApiRef, async api => {
-			if(await dirtyConfirm()) {
+			if (await dirtyConfirm()) {
 				const data = await window.FileSystem.browseOpenText(LNG('browse.open'), fileFiltersOpen)
-				if(undefined === data) {
+				if (undefined === data) {
 					return
 				}
 				const content = data.content
-				if(content === undefined) {
+				if (content === undefined) {
 					showToast(LNG('toast.open_fail', window.Path.basename(data.path)))
 					return
 				}
 				await recordOpenTimes()
-				api.triggerOpen({path: data.path, content})
+				api.triggerOpen({ path: data.path, content })
 			}
 		})
 	}
@@ -147,15 +183,15 @@ function AppIn() {
 	async function saveIn() {
 		callRef(editorApiRef, async api => {
 			const filename = api.getFilename()
-			if(filename === undefined) {
+			if (filename === undefined) {
 				await saveAsIn()
 				return
 			}
-			if(!api.getIsDirty()) {
+			if (!api.getIsDirty()) {
 				return
 			}
 			const result = await window.FileSystem.saveText(filename, api.getValue())
-			if(result) {
+			if (result) {
 				api.triggerSaved(filename)
 			} else {
 				showToast(LNG('toast.save_fail', window.Path.basename(filename)))
@@ -172,11 +208,11 @@ function AppIn() {
 	async function saveAsIn() {
 		callRef(editorApiRef, async api => {
 			const filename = await window.FileSystem.browseSave(LNG('browse.save'), fileFiltersSave)
-			if(filename === undefined) {
+			if (filename === undefined) {
 				return
 			}
 			const result = await window.FileSystem.saveText(filename, api.getValue())
-			if(result) {
+			if (result) {
 				api.triggerSaved(filename)
 			} else {
 				showToast(LNG('toast.save_fail', window.Path.basename(filename)))
@@ -186,27 +222,27 @@ function AppIn() {
 	}
 	const handleSaveAudio = useMethod(async (data: Uint8Array) => {
 		const filename = await window.FileSystem.browseSave(LNG('browse.save'), fileFilterSaveAudio)
-		if(filename === undefined) {
+		if (filename === undefined) {
 			return
 		}
 		const result = await window.FileSystem.saveBinary(filename, data)
-		if(!result) {
+		if (!result) {
 			showToast(LNG('toast.export_fail', window.Path.basename(filename)))
 		}
 	})
 	const autoSave = useMethod(() => {
-		if(prefs.getValue<string>('autoSave') == 'off') {
+		if (prefs.getValue<string>('autoSave') == 'off') {
 			return
 		}
 		callRef(editorApiRef, async api => {
-			if(api.getIsDirty() && api.getFilename() !== undefined) {
+			if (api.getIsDirty() && api.getFilename() !== undefined) {
 				await saveIn()
 			}
 		})
 	})
 	const lastExportTime = useRef(0)
 	function checkExportCooldown() {
-		if(+new Date() - lastExportTime.current < exportCooldown) {
+		if (+new Date() - lastExportTime.current < exportCooldown) {
 			return false
 		}
 		lastExportTime.current = +new Date()
@@ -216,24 +252,24 @@ function AppIn() {
 		const localFontLocation = 'file:///' + window.FileSystem.getResourceUnpackedPath().replace(/\\/g, '/') + '/dist/renderer/core-resources/font'
 		const exportContent = editorApi.exportHtml(exportTemplate, localFontLocation)
 		const basename = window.Path.basename(path)
-		if(await window.FileSystem.saveText(path, exportContent)) {
+		if (await window.FileSystem.saveText(path, exportContent)) {
 			showToast(LNG('toast.preview_exported', basename))
 		} else {
 			showToast(LNG('toast.preview_export_fail', basename))
 		}
 	}
 	function exportHtml() {
-		if(!checkExportCooldown()) {
+		if (!checkExportCooldown()) {
 			return
 		}
 		callRef(editorApiRef, api => {
 			callRef(hintApiRef, async hint => {
 				const filename = api.getFilename()
-				if(filename === undefined) {
+				if (filename === undefined) {
 					showToast(LNG('toast.save_before_export'))
 					return
 				}
-				if(!await hint.invoke('largeHtml')) {
+				if (!await hint.invoke('largeHtml')) {
 					return
 				}
 				const parsedFn = window.Path.parse(filename)
@@ -243,24 +279,24 @@ function AppIn() {
 		})
 	}
 	function exportJson() {
-		if(!checkExportCooldown()) {
+		if (!checkExportCooldown()) {
 			return
 		}
 		callRef(editorApiRef, api => {
 			callRef(hintApiRef, async hint => {
 				const filename = api.getFilename()
-				if(filename === undefined) {
+				if (filename === undefined) {
 					showToast(LNG('toast.save_before_export'))
 					return
 				}
-				if(!await hint.invoke('jsonUsage')) {
+				if (!await hint.invoke('jsonUsage')) {
 					return
 				}
 				const parsedFn = window.Path.parse(filename)
 				const exportPath = window.Path.join(parsedFn.dir, parsedFn.name + '.json')
 				const exportContent = api.exportJson()
 				const basename = window.Path.basename(exportPath)
-				if(await window.FileSystem.saveText(exportPath, exportContent)) {
+				if (await window.FileSystem.saveText(exportPath, exportContent)) {
 					showToast(LNG('toast.json_exported', basename))
 				} else {
 					showToast(LNG('toast.json_export_fail', basename))
@@ -269,18 +305,18 @@ function AppIn() {
 		})
 	}
 	function printHtml() {
-		if(!checkExportCooldown()) {
+		if (!checkExportCooldown()) {
 			return
 		}
 		callRef(editorApiRef, api => {
 			callRef(hintApiRef, async hint => {
-				if(!await hint.invoke('printEssence')) {
+				if (!await hint.invoke('printEssence')) {
 					return
 				}
 				const filename = api.getFilename()
 				const tempPath = await window.FileSystem.getTempPath()
 				let exportPath = ''
-				if(filename === undefined || prefs.getValue<string>('tempHtmlLocation') == 'temp') {
+				if (filename === undefined || prefs.getValue<string>('tempHtmlLocation') == 'temp') {
 					exportPath = window.Path.join(tempPath, 'print.html')
 				} else {
 					const parsedFn = window.Path.parse(filename)
@@ -291,12 +327,12 @@ function AppIn() {
 				const preHtml = '<script>location.href=' + JSON.stringify(
 					'file://' + exportPath.replace(/\\/g, '/') + '#print'
 				).replace('/</g', "\\x3c") + '</script>'
-				if(!await window.FileSystem.saveText(prePath, preHtml)) {
+				if (!await window.FileSystem.saveText(prePath, preHtml)) {
 					showToast(LNG('toast.print_fail'))
 					return
 				}
 				await exportHtmlIn(exportPath, api)
-				if(!await window.FileSystem.openHtml(prePath)) {
+				if (!await window.FileSystem.openHtml(prePath)) {
 					showToast(LNG('toast.print_launch_fail'))
 				}
 			})
@@ -311,28 +347,28 @@ function AppIn() {
 			clearInterval(interval)
 		}
 	})
-	
+
 	async function handleAppBarItem(key: string) {
-		if(key == 'about') {
+		if (key == 'about') {
 			setAboutOpen(true)
-		} else if(key == 'settings') {
+		} else if (key == 'settings') {
 			setSettingsOpen(true)
-		} else if(key == 'save') {
+		} else if (key == 'save') {
 			saveDocument()
-		} else if(key == 'save_as') {
+		} else if (key == 'save_as') {
 			saveAs()
-		} else if(key == 'new') {
+		} else if (key == 'new') {
 			await newDocument()
-		} else if(key == 'open') {
+		} else if (key == 'open') {
 			await openDocument()
-		} else if(key == 'export') {
+		} else if (key == 'export') {
 			exportHtml()
-		} else if(key == 'print') {
+		} else if (key == 'print') {
 			printHtml()
 		}
 	}
 	async function handleAppBarRightItem(key: string) {
-		if(key == 'export') {
+		if (key == 'export') {
 			exportJson()
 		}
 	}
@@ -340,19 +376,19 @@ function AppIn() {
 		callRef(editorApiRef, async api => {
 			const data = await window.FileSystem.openText(path)
 			const content = data.content
-			if(content === undefined) {
+			if (content === undefined) {
 				showToast(LNG('toast.open_fail', window.Path.basename(data.path)))
 				return
 			}
 			await recordOpenTimes()
-			api.triggerOpen({path: data.path, content})
+			api.triggerOpen({ path: data.path, content })
 		})
 	}
 	// 处理命令行打开文件
 	useOnceEffect(() => {
-		const handleOpenFile = async() => {
+		const handleOpenFile = async () => {
 			const filename = await window.AppMain.queryOpen()
-			if(filename === undefined) {
+			if (filename === undefined) {
 				newDocument()
 				return
 			}
@@ -367,7 +403,7 @@ function AppIn() {
 		evt.preventDefault()
 	}
 	function handleDrag(evt: React.DragEvent) {
-		if(evt.dataTransfer.files.length == 0) {
+		if (evt.dataTransfer.files.length == 0) {
 			return
 		}
 		const path = evt.dataTransfer.files[0].path
@@ -376,7 +412,7 @@ function AppIn() {
 
 	// ===== 关闭事件 =====
 	const handleClose = useMethod(async () => {
-		if(await dirtyConfirm()) {
+		if (await dirtyConfirm()) {
 			window.AppMain.close()
 		}
 	})
@@ -385,8 +421,8 @@ function AppIn() {
 	})
 
 	// ===== 对话框 =====
-	const [ aboutOpen, setAboutOpen ] = useState(false)
-	const [ settingsOpen, setSettingsOpen ] = useState(false)
+	const [aboutOpen, setAboutOpen] = useState(false)
+	const [settingsOpen, setSettingsOpen] = useState(false)
 	const aboutDialog = useMemo(() => (
 		<AboutDialog open={aboutOpen} onClose={() => setAboutOpen(false)} />
 	), [aboutOpen])
@@ -400,7 +436,7 @@ function AppIn() {
 	), [hintApiRef])
 	useOnceEffect(() => {
 		const api = hintApiRef.current
-		if(api) {
+		if (api) {
 			api.trigger('welcome')
 		}
 	})
@@ -408,22 +444,22 @@ function AppIn() {
 	// ===== 键盘事件 =====
 	useEffect(() => {
 		const keyHandler = (evt: KeyboardEvent) => {
-			if(evt.ctrlKey && evt.shiftKey && evt.key.toLowerCase() == 'i') {
+			if (evt.ctrlKey && evt.shiftKey && evt.key.toLowerCase() == 'i') {
 				window.AppMain.openDevTools()
-			} else if(evt.ctrlKey && !evt.shiftKey) {
-				if(evt.altKey && evt.key.toLowerCase() == 's') {
+			} else if (evt.ctrlKey && !evt.shiftKey) {
+				if (evt.altKey && evt.key.toLowerCase() == 's') {
 					saveAs()
-				} else if(evt.key.toLowerCase() == 's') {
+				} else if (evt.key.toLowerCase() == 's') {
 					saveDocument()
-				} else if(evt.key.toLowerCase() == 'n') {
+				} else if (evt.key.toLowerCase() == 'n') {
 					newDocument()
-				} else if(evt.key.toLowerCase() == 'o') {
+				} else if (evt.key.toLowerCase() == 'o') {
 					openDocument()
-				} else if(evt.key.toLowerCase() == 'r') {
+				} else if (evt.key.toLowerCase() == 'r') {
 					callRef(editorApiRef, api => {
 						api.triggerBeforeSave()
 					})
-				} else if(evt.key.toLowerCase() == 'p') {
+				} else if (evt.key.toLowerCase() == 'p') {
 					printHtml()
 				}
 			}
@@ -469,7 +505,7 @@ function AppIn() {
 			`}</style>
 			<div className={classes.appbar}>
 				<AppBar onItemClick={handleAppBarItem} onItemRightClick={handleAppBarRightItem} />
-			s</div>
+				s</div>
 			<div className={classes.content}>
 				<IntegratedEditor
 					ref={editorApiRef}
@@ -517,7 +553,7 @@ SparksNMN.fontLoader.requestFontLoad('./core-resources/font', () => {
 	$.get('static/export-template.txt', (data) => {
 		createRoot(document.getElementById('root')!).render(
 			<ErrorBoundary fallback={(recover) => (<>
-				<div style={{padding: '16px'}}>
+				<div style={{ padding: '16px' }}>
 					<h1>寄！Rendering error</h1>
 					<p>An error occured in this application.</p>
 					<button type='button' onClick={() => recover()}>Try to recover</button>
@@ -534,7 +570,7 @@ SparksNMN.fontLoader.requestFontLoad('./core-resources/font', () => {
 		)
 	})
 }, (progress, total) => {
-	if($('.root-loading').length == 0) {
+	if ($('.root-loading').length == 0) {
 		return
 	}
 	$('.root-progress').text(progress)
