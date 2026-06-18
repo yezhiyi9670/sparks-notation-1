@@ -7,7 +7,7 @@ const isMac = process.platform === 'darwin'
 export const menuTemplate = [
 	...(isMac
 		? [{
-			label: "app",
+			label: app.getName(),
 			submenu: [
 				{ role: 'about' },
 				{ type: 'separator' },
@@ -25,7 +25,11 @@ export const menuTemplate = [
 	{
 		label: 'File',
 		submenu: [
-			isMac ? { role: 'close' } : { role: 'quit' }
+			isMac ? { role: 'close' } : { role: 'quit' },
+			{
+				label: "打开文件",
+				click: async () => { }
+			}
 		]
 	},
 	// 编辑菜单
